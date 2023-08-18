@@ -57,6 +57,23 @@ struct OrderItem: View {
             }
         }
         .opacity(order.activeForCount ? 1 : 0.3)
+        .contextMenu {
+            Button {
+                copyAsPlainText(order.orderNumber)
+            } label: {
+                Label("Copy order number", systemImage: "doc.on.doc")
+            }
+            
+            Button {
+                copyAsPlainText(order.advNo)
+            } label: {
+                Label("Copy adv. number", systemImage: "doc.on.doc")
+            }
+
+        } preview: {
+            OrderDetailsView(order: order)
+        }
+
     }
 }
 

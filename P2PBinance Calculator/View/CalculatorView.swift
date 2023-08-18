@@ -54,6 +54,17 @@ struct CalculatorView: View {
         }
     }
     
+    private var textToShare: String {
+        """
+        My P2P orders results:
+        Value - \((firstOrdersValue + secondOrdersValue).currencyRU) \(c2cOrders.first?.fiatSymbol ?? "")
+        Profit - \(ordersProfit.currencyRU) \(c2cOrders.first?.fiatSymbol ?? "")
+        Medium spread - \(ordersSpread.currencyRU)%
+        
+        P2P Calculator helped me to calculate it in couple clicks 😜
+        """
+    }
+    
     var body: some View {
         if #available(iOS 16.4, macOS 13.3, *) {
             craateViewForCalculator()
@@ -68,14 +79,25 @@ struct CalculatorView: View {
     @ViewBuilder
     private func craateViewForCalculator() -> some View {
         VStack(alignment: .leading) {
-            Text("Calculator")
-                .font(.largeTitle)
-                .bold()
-                .padding(.top)
-                .padding(.bottom)
+            HStack(alignment: .top) {
+                Text("Calculator")
+                    .font(.largeTitle)
+                    .bold()
+                
+                Spacer()
+                
+                ShareLink(item: textToShare) {
+                    Image(systemName: "square.and.arrow.up.circle")
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .bottomTrailing)
+                        .foregroundColor(Color("binanceColor"))
+                }
+            }
+            .padding(.top)
+            .padding(.bottom)
             
             HStack(spacing: 0) {
-                Text("Orders value \(currentOrderFiat.rawValue): ")
+                Text("Value \(currentOrderFiat.rawValue): ")
                 Text((firstOrdersValue + secondOrdersValue).currencyRU).underline(color: .gray)
                     .contextMenu {
                         Button {
@@ -96,7 +118,7 @@ struct CalculatorView: View {
             .padding(.bottom, 1)
             
             HStack(spacing: 0) {
-                Text("Orders profit: ")
+                Text("Profit: ")
                 Text(ordersProfit.currencyRU).underline(color: .gray)
                     .contextMenu {
                         Button {
@@ -118,7 +140,7 @@ struct CalculatorView: View {
             .padding(.bottom, 1)
             
             HStack(spacing: 0) {
-                Text("Orders medium spread: ")
+                Text("Medium spread: ")
                 Text("\(ordersSpread.currencyRU)%").underline(color: .gray)
                     .contextMenu {
                         Button {
@@ -160,6 +182,7 @@ struct CalculatorView: View {
 //                        .underline()
 //                }
         }
+        .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(
             Rectangle()

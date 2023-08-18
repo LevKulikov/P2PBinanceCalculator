@@ -72,6 +72,8 @@ struct OrderDetailsView: View {
                                 .bold()
                             Text(order.orderNumber)
                                 .underline(color: .gray)
+                                .lineLimit(0...1)
+                                .truncationMode(.head)
                         }
                         .font(.title3)
                         .padding(.bottom)
@@ -85,6 +87,8 @@ struct OrderDetailsView: View {
                                 .bold()
                             Text(order.advNo)
                                 .underline(color: .gray)
+                                .lineLimit(0...1)
+                                .truncationMode(.head)
                         }
                         .font(.title3)
                         .padding(.bottom)

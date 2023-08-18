@@ -219,10 +219,25 @@ struct ContentView: View {
                                 didChangeAPI = false
                                 presentAPISheet.toggle()
                             } label: {
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .frame(width: 30, height: 30, alignment: .topTrailing)
-                                    .foregroundColor(Color("binanceColor"))
+                                HStack {
+                                    Image(systemName: "person.circle")
+                                        .resizable()
+                                        .frame(width: 30, height: 30, alignment: .topTrailing)
+                                        .foregroundColor(Color("binanceColor"))
+                                    
+                                    Text(viewModel.selectedAccount?.name ?? "")
+                                        .font(.title2)
+                                        .bold()
+                                }
+                            }
+                            .contextMenu {
+                                ForEach(viewModel.getAccounts()) { account in
+                                    Button(account.name) {
+                                        viewModel.selectedAccount = nil
+                                        viewModel.selectedAccount = account
+                                        getBothTypesOrders()
+                                    }
+                                }
                             }
                         }
                     }

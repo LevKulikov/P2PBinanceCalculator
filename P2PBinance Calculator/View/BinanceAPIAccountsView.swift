@@ -24,6 +24,15 @@ struct BinanceAPIAccountsView: View {
                         Text(account.name)
                             .font(.title3)
                     }
+                    .contextMenu {
+                        Button {
+                            viewModel.selectedAccount = account
+                            isPresented.toggle()
+                            didChangeAPI.toggle()
+                        } label: {
+                            Label("Select", systemImage: "checkmark.circle")
+                        }
+                    }
                 }
                 .onDelete { indexes in
                     for index in indexes {
