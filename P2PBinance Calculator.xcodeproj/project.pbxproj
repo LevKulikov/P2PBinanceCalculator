@@ -1,0 +1,475 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		73168A072A821193007F0F5C /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A062A821193007F0F5C /* CalculatorView.swift */; };
+		73168A0C2A85F138007F0F5C /* APIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0B2A85F138007F0F5C /* APIStorage.swift */; };
+		73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0D2A85F4DA007F0F5C /* DataStorage.swift */; };
+		73168A102A86055F007F0F5C /* BinanceAPISettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0F2A86055F007F0F5C /* BinanceAPISettingView.swift */; };
+		7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330C2B32A7FB9B10054E43F /* FilterView.swift */; };
+		7330C2B62A8048600054E43F /* OrderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330C2B52A8048600054E43F /* OrderList.swift */; };
+		7385B6A52A7ED85D003D474D /* OrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7385B6A42A7ED85D003D474D /* OrderItem.swift */; };
+		739BBFEB2A86CDEB007EB6F8 /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */; };
+		73CD6F1F2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F1E2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift */; };
+		73CD6F232A7E6DD3007D4DBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73CD6F222A7E6DD3007D4DBC /* Assets.xcassets */; };
+		73CD6F262A7E6DD3007D4DBC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73CD6F252A7E6DD3007D4DBC /* Preview Assets.xcassets */; };
+		73CD6F282A7E6DD3007D4DBC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F272A7E6DD3007D4DBC /* Persistence.swift */; };
+		73CD6F2B2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F292A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld */; };
+		73CD6F342A7E6F5D007D4DBC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F332A7E6F5D007D4DBC /* ContentView.swift */; };
+		73CD6F392A7E7018007D4DBC /* C2CHistoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F382A7E7018007D4DBC /* C2CHistoryResponse.swift */; };
+		73CD6F3D2A7E747C007D4DBC /* GeneralViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F3C2A7E747C007D4DBC /* GeneralViewModel.swift */; };
+		73CD6F432A7EA950007D4DBC /* BinanceErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F422A7EA950007D4DBC /* BinanceErrorResponse.swift */; };
+		73CD6F452A7EAF04007D4DBC /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F442A7EAF04007D4DBC /* Extentions.swift */; };
+		73CD6F4B2A7EB73D007D4DBC /* BinanceConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F4A2A7EB73D007D4DBC /* BinanceConnection.swift */; };
+		73CD6F4D2A7EB757007D4DBC /* BinanceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F4C2A7EB757007D4DBC /* BinanceResponse.swift */; };
+		73D338F22A81760100F7F3E2 /* CalculatorItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D338F12A81760100F7F3E2 /* CalculatorItem.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		73168A062A821193007F0F5C /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
+		73168A0B2A85F138007F0F5C /* APIStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStorage.swift; sourceTree = "<group>"; };
+		73168A0D2A85F4DA007F0F5C /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
+		73168A0F2A86055F007F0F5C /* BinanceAPISettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceAPISettingView.swift; sourceTree = "<group>"; };
+		7330C2B32A7FB9B10054E43F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		7330C2B52A8048600054E43F /* OrderList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderList.swift; sourceTree = "<group>"; };
+		7385B6A42A7ED85D003D474D /* OrderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItem.swift; sourceTree = "<group>"; };
+		739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
+		73CD6F1B2A7E6DD2007D4DBC /* P2PBinance Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "P2PBinance Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		73CD6F1E2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PBinance_CalculatorApp.swift; sourceTree = "<group>"; };
+		73CD6F222A7E6DD3007D4DBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		73CD6F252A7E6DD3007D4DBC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		73CD6F272A7E6DD3007D4DBC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		73CD6F2A2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = P2PBinance_Calculator.xcdatamodel; sourceTree = "<group>"; };
+		73CD6F332A7E6F5D007D4DBC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		73CD6F382A7E7018007D4DBC /* C2CHistoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C2CHistoryResponse.swift; sourceTree = "<group>"; };
+		73CD6F3C2A7E747C007D4DBC /* GeneralViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralViewModel.swift; sourceTree = "<group>"; };
+		73CD6F422A7EA950007D4DBC /* BinanceErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceErrorResponse.swift; sourceTree = "<group>"; };
+		73CD6F442A7EAF04007D4DBC /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
+		73CD6F4A2A7EB73D007D4DBC /* BinanceConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceConnection.swift; sourceTree = "<group>"; };
+		73CD6F4C2A7EB757007D4DBC /* BinanceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceResponse.swift; sourceTree = "<group>"; };
+		73D338F12A81760100F7F3E2 /* CalculatorItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorItem.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		73CD6F182A7E6DD2007D4DBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		73168A0A2A85F112007F0F5C /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				73168A0D2A85F4DA007F0F5C /* DataStorage.swift */,
+				73168A0B2A85F138007F0F5C /* APIStorage.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		73CD6F122A7E6DD2007D4DBC = {
+			isa = PBXGroup;
+			children = (
+				73CD6F1D2A7E6DD2007D4DBC /* P2PBinance Calculator */,
+				73CD6F1C2A7E6DD2007D4DBC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		73CD6F1C2A7E6DD2007D4DBC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73CD6F1B2A7E6DD2007D4DBC /* P2PBinance Calculator.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73CD6F1D2A7E6DD2007D4DBC /* P2PBinance Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				73CD6F222A7E6DD3007D4DBC /* Assets.xcassets */,
+				73CD6F292A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld */,
+				73CD6F272A7E6DD3007D4DBC /* Persistence.swift */,
+				73CD6F1E2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift */,
+				73CD6F372A7E6FBD007D4DBC /* ViewModel */,
+				73CD6F362A7E6FA1007D4DBC /* Model */,
+				73CD6F352A7E6F99007D4DBC /* View */,
+				73168A0A2A85F112007F0F5C /* Managers */,
+				73CD6F242A7E6DD3007D4DBC /* Preview Content */,
+				73CD6F462A7EAF0B007D4DBC /* Other */,
+			);
+			path = "P2PBinance Calculator";
+			sourceTree = "<group>";
+		};
+		73CD6F242A7E6DD3007D4DBC /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				73CD6F252A7E6DD3007D4DBC /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		73CD6F352A7E6F99007D4DBC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				73CD6F332A7E6F5D007D4DBC /* ContentView.swift */,
+				7330C2B52A8048600054E43F /* OrderList.swift */,
+				7385B6A42A7ED85D003D474D /* OrderItem.swift */,
+				7330C2B32A7FB9B10054E43F /* FilterView.swift */,
+				73D338F12A81760100F7F3E2 /* CalculatorItem.swift */,
+				73168A062A821193007F0F5C /* CalculatorView.swift */,
+				73168A0F2A86055F007F0F5C /* BinanceAPISettingView.swift */,
+				739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		73CD6F362A7E6FA1007D4DBC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				73CD6F382A7E7018007D4DBC /* C2CHistoryResponse.swift */,
+				73CD6F422A7EA950007D4DBC /* BinanceErrorResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		73CD6F372A7E6FBD007D4DBC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				73CD6F3C2A7E747C007D4DBC /* GeneralViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		73CD6F462A7EAF0B007D4DBC /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				73CD6F442A7EAF04007D4DBC /* Extentions.swift */,
+				73CD6F4A2A7EB73D007D4DBC /* BinanceConnection.swift */,
+				73CD6F4C2A7EB757007D4DBC /* BinanceResponse.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		73CD6F1A2A7E6DD2007D4DBC /* P2PBinance Calculator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73CD6F2E2A7E6DD3007D4DBC /* Build configuration list for PBXNativeTarget "P2PBinance Calculator" */;
+			buildPhases = (
+				73CD6F172A7E6DD2007D4DBC /* Sources */,
+				73CD6F182A7E6DD2007D4DBC /* Frameworks */,
+				73CD6F192A7E6DD2007D4DBC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "P2PBinance Calculator";
+			packageProductDependencies = (
+			);
+			productName = "P2PBinance Calculator";
+			productReference = 73CD6F1B2A7E6DD2007D4DBC /* P2PBinance Calculator.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		73CD6F132A7E6DD2007D4DBC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					73CD6F1A2A7E6DD2007D4DBC = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 73CD6F162A7E6DD2007D4DBC /* Build configuration list for PBXProject "P2PBinance Calculator" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 73CD6F122A7E6DD2007D4DBC;
+			packageReferences = (
+			);
+			productRefGroup = 73CD6F1C2A7E6DD2007D4DBC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				73CD6F1A2A7E6DD2007D4DBC /* P2PBinance Calculator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		73CD6F192A7E6DD2007D4DBC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73CD6F262A7E6DD3007D4DBC /* Preview Assets.xcassets in Resources */,
+				73CD6F232A7E6DD3007D4DBC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73CD6F172A7E6DD2007D4DBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */,
+				73168A072A821193007F0F5C /* CalculatorView.swift in Sources */,
+				73CD6F282A7E6DD3007D4DBC /* Persistence.swift in Sources */,
+				73168A102A86055F007F0F5C /* BinanceAPISettingView.swift in Sources */,
+				73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */,
+				73CD6F2B2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld in Sources */,
+				7330C2B62A8048600054E43F /* OrderList.swift in Sources */,
+				73CD6F4B2A7EB73D007D4DBC /* BinanceConnection.swift in Sources */,
+				73CD6F392A7E7018007D4DBC /* C2CHistoryResponse.swift in Sources */,
+				73D338F22A81760100F7F3E2 /* CalculatorItem.swift in Sources */,
+				739BBFEB2A86CDEB007EB6F8 /* OrderDetailsView.swift in Sources */,
+				73CD6F342A7E6F5D007D4DBC /* ContentView.swift in Sources */,
+				7385B6A52A7ED85D003D474D /* OrderItem.swift in Sources */,
+				73CD6F4D2A7EB757007D4DBC /* BinanceResponse.swift in Sources */,
+				73168A0C2A85F138007F0F5C /* APIStorage.swift in Sources */,
+				73CD6F3D2A7E747C007D4DBC /* GeneralViewModel.swift in Sources */,
+				73CD6F1F2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift in Sources */,
+				73CD6F452A7EAF04007D4DBC /* Extentions.swift in Sources */,
+				73CD6F432A7EA950007D4DBC /* BinanceErrorResponse.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		73CD6F2C2A7E6DD3007D4DBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		73CD6F2D2A7E6DD3007D4DBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		73CD6F2F2A7E6DD3007D4DBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "\"P2PBinance Calculator/Preview Content\"";
+				DEVELOPMENT_TEAM = 7P2A9ACZ7S;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "P2P Calculator";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "financeApp.P2PBinance-Calculator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		73CD6F302A7E6DD3007D4DBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "\"P2PBinance Calculator/Preview Content\"";
+				DEVELOPMENT_TEAM = 7P2A9ACZ7S;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "P2P Calculator";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "financeApp.P2PBinance-Calculator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		73CD6F162A7E6DD2007D4DBC /* Build configuration list for PBXProject "P2PBinance Calculator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73CD6F2C2A7E6DD3007D4DBC /* Debug */,
+				73CD6F2D2A7E6DD3007D4DBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		73CD6F2E2A7E6DD3007D4DBC /* Build configuration list for PBXNativeTarget "P2PBinance Calculator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73CD6F2F2A7E6DD3007D4DBC /* Debug */,
+				73CD6F302A7E6DD3007D4DBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		73CD6F292A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				73CD6F2A2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodel */,
+			);
+			currentVersion = 73CD6F2A2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodel */;
+			path = P2PBinance_Calculator.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 73CD6F132A7E6DD2007D4DBC /* Project object */;
+}
