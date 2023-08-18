@@ -33,6 +33,7 @@ class APIStorage: APIStorageProtocol {
     private let userDefaultsApiKey = "userDefaultsApiKey"
     /// Key for UserDefaults to get Secret Key
     private let userDefaultsSecretKey = "userDefaultsSecretKey"
+//    private var accounts
     
     //MARK: Initializer
     init() {
