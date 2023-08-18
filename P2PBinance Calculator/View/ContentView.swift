@@ -241,7 +241,7 @@ struct ContentView: View {
                         }
                     } content: {
                         NavigationView {
-                            BinanceAPISettingView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
+                            BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
                                 .environmentObject(viewModel)
                         }
                     }
@@ -280,7 +280,7 @@ struct ContentView: View {
                 presentAPISheet = false
             } content: {
                 NavigationView {
-                    BinanceAPISettingView(isPresented: $presentAPISheet, didChangeAPI: .constant(false))
+                    BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
                         .environmentObject(viewModel)
                 }
             }
@@ -303,7 +303,7 @@ struct ContentView: View {
     
     //MARK: - Task Methods
     private func loadButtonPressed() {
-        if viewModel.apiDataSet {
+        if !viewModel.getAccounts().isEmpty {
             loadStatus = (isLoading: true, isResponseGet: false)
             setFiltersToDefault()
             getBothTypesOrders()

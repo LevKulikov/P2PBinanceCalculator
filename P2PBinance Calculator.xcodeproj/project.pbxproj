@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		730B55DB2A8FC9EC00B6E7E9 /* BinanceAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */; };
 		73168A072A821193007F0F5C /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A062A821193007F0F5C /* CalculatorView.swift */; };
 		73168A0C2A85F138007F0F5C /* APIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0B2A85F138007F0F5C /* APIStorage.swift */; };
 		73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0D2A85F4DA007F0F5C /* DataStorage.swift */; };
-		73168A102A86055F007F0F5C /* BinanceAPISettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0F2A86055F007F0F5C /* BinanceAPISettingView.swift */; };
 		7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330C2B32A7FB9B10054E43F /* FilterView.swift */; };
 		7330C2B62A8048600054E43F /* OrderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330C2B52A8048600054E43F /* OrderList.swift */; };
 		7385B6A52A7ED85D003D474D /* OrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7385B6A42A7ED85D003D474D /* OrderItem.swift */; };
 		739BBFEB2A86CDEB007EB6F8 /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */; };
 		73B60B922A8FB32300D930F8 /* APIAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B60B912A8FB32300D930F8 /* APIAccount.swift */; };
+		73B60B942A8FBF1700D930F8 /* BinanceAPIAccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */; };
 		73CD6F1F2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F1E2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift */; };
 		73CD6F232A7E6DD3007D4DBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73CD6F222A7E6DD3007D4DBC /* Assets.xcassets */; };
 		73CD6F262A7E6DD3007D4DBC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73CD6F252A7E6DD3007D4DBC /* Preview Assets.xcassets */; };
@@ -32,15 +33,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceAccountView.swift; sourceTree = "<group>"; };
 		73168A062A821193007F0F5C /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		73168A0B2A85F138007F0F5C /* APIStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStorage.swift; sourceTree = "<group>"; };
 		73168A0D2A85F4DA007F0F5C /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
-		73168A0F2A86055F007F0F5C /* BinanceAPISettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceAPISettingView.swift; sourceTree = "<group>"; };
 		7330C2B32A7FB9B10054E43F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		7330C2B52A8048600054E43F /* OrderList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderList.swift; sourceTree = "<group>"; };
 		7385B6A42A7ED85D003D474D /* OrderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItem.swift; sourceTree = "<group>"; };
 		739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
 		73B60B912A8FB32300D930F8 /* APIAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAccount.swift; sourceTree = "<group>"; };
+		73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceAPIAccountsView.swift; sourceTree = "<group>"; };
 		73CD6F1B2A7E6DD2007D4DBC /* P2PBinance Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "P2PBinance Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		73CD6F1E2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PBinance_CalculatorApp.swift; sourceTree = "<group>"; };
 		73CD6F222A7E6DD3007D4DBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -127,8 +129,9 @@
 				7330C2B32A7FB9B10054E43F /* FilterView.swift */,
 				73D338F12A81760100F7F3E2 /* CalculatorItem.swift */,
 				73168A062A821193007F0F5C /* CalculatorView.swift */,
-				73168A0F2A86055F007F0F5C /* BinanceAPISettingView.swift */,
 				739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */,
+				73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */,
+				730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -235,12 +238,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73B60B942A8FBF1700D930F8 /* BinanceAPIAccountsView.swift in Sources */,
 				7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */,
 				73168A072A821193007F0F5C /* CalculatorView.swift in Sources */,
 				73CD6F282A7E6DD3007D4DBC /* Persistence.swift in Sources */,
-				73168A102A86055F007F0F5C /* BinanceAPISettingView.swift in Sources */,
 				73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */,
 				73CD6F2B2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld in Sources */,
+				730B55DB2A8FC9EC00B6E7E9 /* BinanceAccountView.swift in Sources */,
 				7330C2B62A8048600054E43F /* OrderList.swift in Sources */,
 				73CD6F4B2A7EB73D007D4DBC /* BinanceConnection.swift in Sources */,
 				73CD6F392A7E7018007D4DBC /* C2CHistoryResponse.swift in Sources */,

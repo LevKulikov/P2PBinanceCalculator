@@ -72,7 +72,7 @@ struct BinanceAPISettingView: View {
                     isPresented = false
                 }
             } label: {
-                Text("Save")
+                Text("Save and select")
                     .bold()
                     .font(.title3)
                     .frame(width: 200)

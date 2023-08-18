@@ -9,9 +9,6 @@ import Foundation
 
 /// Protocol for object that stores app data
 protocol DataStorageProtocol: AnyObject, APIStorageProtocol {
-    /// Property that shows there exists saved API data
-    var apiDataSet: Bool { get }
-    
     /// Saves new fiat filter
     /// - Parameter newFiatFilter: New fiat filter set by user
     func setFiatFilter(for newFiatFilter: C2CHistoryResponse.C2COrderFiat)
@@ -24,9 +21,6 @@ protocol DataStorageProtocol: AnyObject, APIStorageProtocol {
 /// Object that stores app data
 class DataStorage: DataStorageProtocol {
     //MARK: Properties
-    var apiDataSet: Bool {
-        return apiStorage.getAPIKey() != nil && apiStorage.getSecretKey() != nil
-    }
     private let apiStorage: APIStorageProtocol
     /// Saved fiat filter set by user previously
     private var fiatFilter: C2CHistoryResponse.C2COrderFiat
@@ -60,13 +54,34 @@ class DataStorage: DataStorageProtocol {
     func getFiatFilter() -> C2CHistoryResponse.C2COrderFiat {
         return fiatFilter
     }
+    
+    func addAPIAccount(name: String, apiKey: String, secretKey: String, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, completionHandler: completionHandler)
+    }
+    
+    func addAPIAccount(_ newAccount: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.addAPIAccount(newAccount, completionHandler: completionHandler)
+    }
+    
+    func updateAccount(_ accountToUpdate: APIAccount, to newAccount: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.updateAccount(accountToUpdate, to: newAccount, completionHandler: completionHandler)
+    }
+    
+    func deleteAccount(_ accountToDelete: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.deleteAccount(accountToDelete, completionHandler: completionHandler)
+    }
+    
+    func deleteAccount(at index: Int, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.deleteAccount(at: index, completionHandler: completionHandler)
+    }
+    
+    func getAccounts() -> [APIAccount] {
+        apiStorage.getAccounts()
+    }
 }
 
 //MARK: Mock object
 class DataStorageMock: DataStorageProtocol {
-    var apiDataSet: Bool {
-        return true
-    }
     private let apiStorage: APIStorageProtocol
     private var fiatFilter: C2CHistoryResponse.C2COrderFiat
     
@@ -97,5 +112,29 @@ class DataStorageMock: DataStorageProtocol {
     
     func getFiatFilter() -> C2CHistoryResponse.C2COrderFiat {
         return fiatFilter
+    }
+    
+    func addAPIAccount(name: String, apiKey: String, secretKey: String, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, completionHandler: completionHandler)
+    }
+    
+    func addAPIAccount(_ newAccount: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.addAPIAccount(newAccount, completionHandler: completionHandler)
+    }
+    
+    func updateAccount(_ accountToUpdate: APIAccount, to newAccount: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.updateAccount(accountToUpdate, to: newAccount, completionHandler: completionHandler)
+    }
+    
+    func deleteAccount(_ accountToDelete: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.deleteAccount(accountToDelete, completionHandler: completionHandler)
+    }
+    
+    func deleteAccount(at index: Int, completionHandler: ((APIAccount?) -> Void)?) {
+        apiStorage.deleteAccount(at: index, completionHandler: completionHandler)
+    }
+    
+    func getAccounts() -> [APIAccount] {
+        apiStorage.getAccounts()
     }
 }

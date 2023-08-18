@@ -11,10 +11,6 @@ struct OrderDetailsView: View {
     let order: C2CHistoryResponse.C2COrderTransformed
     @State private var isCopied: Bool = false
     
-    init(order: C2CHistoryResponse.C2COrderTransformed) {
-        self.order = order
-    }
-    
     var body: some View {
         ZStack(alignment: .top) {
             ScrollView {

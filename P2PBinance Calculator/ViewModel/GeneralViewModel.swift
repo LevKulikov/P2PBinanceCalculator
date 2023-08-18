@@ -7,20 +7,26 @@
 
 import Foundation
 import Combine
-import CryptoKit
 
 /// Object to get API calls
 class GeneralViewModel: ObservableObject, DataStorageProtocol {
     //MARK: Properties
-    var apiDataSet: Bool {
-        return dataStorage.apiDataSet
+    @Published var selectedAccount: APIAccount? {
+        didSet {
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(selectedAccount), forKey: userDefaultsSelectedAccount)
+        }
     }
-    
     private let dataStorage: DataStorageProtocol
+    private let userDefaultsSelectedAccount = "userDefaultsSelectedAccount"
     
     //MARK: Initializer
     init(dataStorage: DataStorageProtocol) {
         self.dataStorage = dataStorage
+        
+        if let data = UserDefaults.standard.value(forKey: userDefaultsSelectedAccount) as? Data,
+           let account = try? PropertyListDecoder().decode(APIAccount.self, from: data) {
+            selectedAccount = account
+        }
     }
     
     //MARK: Methods
@@ -39,18 +45,13 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
         page: Int? = nil,
         rows: Int? = nil,
         completionHandler: @escaping (Result<[C2CHistoryResponse.C2COrderTransformed], BinanceConnection.BinanceError>) -> Void
-    ) {
-        guard let apiKey = dataStorage.getAPIKey() else {
+    ) { 
+        guard let selectedAccount else {
             completionHandler(.failure(.apiError))
             return
         }
         
-        guard let secretKey = dataStorage.getSecretKey() else {
-            completionHandler(.failure(.apiError))
-            return
-        }
-        
-        let connection = BinanceConnection(apiKey: apiKey, secretKey: secretKey)
+        let connection = BinanceConnection(apiKey: selectedAccount.apiKey, secretKey: selectedAccount.secretKey)
         connection.getC2COrderHistory(
             type: type,
             startTimestamp: startTimestamp != nil ? startTimestamp!.startOfDay : nil,
@@ -89,6 +90,30 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
     
     func getFiatFilter() -> C2CHistoryResponse.C2COrderFiat {
         dataStorage.getFiatFilter()
+    }
+    
+    func addAPIAccount(name: String, apiKey: String, secretKey: String, completionHandler: ((APIAccount?) -> Void)?) {
+        dataStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, completionHandler: completionHandler)
+    }
+    
+    func addAPIAccount(_ newAccount: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        dataStorage.addAPIAccount(newAccount, completionHandler: completionHandler)
+    }
+    
+    func updateAccount(_ accountToUpdate: APIAccount, to newAccount: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        dataStorage.updateAccount(accountToUpdate, to: newAccount, completionHandler: completionHandler)
+    }
+    
+    func deleteAccount(_ accountToDelete: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {
+        dataStorage.deleteAccount(accountToDelete, completionHandler: completionHandler)
+    }
+    
+    func deleteAccount(at index: Int, completionHandler: ((APIAccount?) -> Void)?) {
+        dataStorage.deleteAccount(at: index, completionHandler: completionHandler)
+    }
+    
+    func getAccounts() -> [APIAccount] {
+        dataStorage.getAccounts()
     }
 }
 

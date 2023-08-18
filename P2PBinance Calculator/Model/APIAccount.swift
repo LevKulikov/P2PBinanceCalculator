@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct APIAccount: Identifiable, Equatable, Hashable {
+struct APIAccount: Identifiable, Equatable, Hashable, Codable {
     let id = UUID()
     
     var name: String
