@@ -186,7 +186,7 @@ struct ContentView: View {
                                 }
                         }
                         
-                        CalculatorItem(orders: c2cOrdersFiltered)
+                        CalculatorItem(orders: orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered)
                             .onTapGesture {
                                 presentCalculatorSheet.toggle()
                             }
@@ -245,6 +245,8 @@ struct ContentView: View {
                         CalculatorView(
                             currentOrderFiat: orderFiat,
                             currentOrderTypeFilter: orderType != .bothTypes ? orderType : .buy,
+                            startDate: startDate,
+                            endDate: endDate,
                             c2cOrders: c2cOrdersFiltered,
                             c2cOrdersSecondType: c2cOrdersSecondTypeFiltered)
                     }

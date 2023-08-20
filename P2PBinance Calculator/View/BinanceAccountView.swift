@@ -31,7 +31,7 @@ struct BinanceAccountView: View {
         VStack {
             LabeledContent {
                 TextField("Name", text: $accountName, prompt: Text("Any name"))
-                    .font(.title3)
+                    .font(.title2)
                     .textFieldStyle(.roundedBorder)
                     .autocorrectionDisabled()
                     .submitLabel(.next)
@@ -48,7 +48,7 @@ struct BinanceAccountView: View {
             
             LabeledContent {
                 TextField("API Key", text: $apiKey, prompt: Text("6PnRGU..."))
-                    .font(.title3)
+                    .font(.title2)
                     .textFieldStyle(.roundedBorder)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.none)
@@ -67,7 +67,7 @@ struct BinanceAccountView: View {
             
             LabeledContent {
                 TextField("Secret Key", text: $secretKey, prompt: Text("mUdRm..."))
-                    .font(.title3)
+                    .font(.title2)
                     .textFieldStyle(.roundedBorder)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.none)
