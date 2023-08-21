@@ -157,7 +157,7 @@ struct OrderDetailsView: View {
         withAnimation {
             isCopied = true
         }
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1.6) {
             withAnimation {
                 isCopied = false
             }
