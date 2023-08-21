@@ -118,7 +118,7 @@ struct OrderDetailsView: View {
                             Text("Commission: ")
                                 .bold()
                             Text(
-                                order.commission == 0 ? "0" : "\(order.commission) \(order.asset) / \((order.commission * order.unitPrice).currencyRU) \(order.fiat)"
+                                order.commission == 0 ? "0" : "\(order.commission.currencyRU) \(order.asset) / \((order.commission * order.unitPrice).currencyRU) \(order.fiat)"
                             )
                         }
                         .font(.title3)
@@ -129,6 +129,13 @@ struct OrderDetailsView: View {
                 }
                 .navigationTitle("Order details")
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    Link(destination: URL(string: "https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.advNo)") ?? URL(string: "https://www.binance.com/")!) {
+                        Image(systemName: "globe")
+                            .foregroundColor(Color("binanceColor"))
+                    }
+                    .accessibilityLabel("Open order in Binance")
+                }
                 .padding()
             }
             
