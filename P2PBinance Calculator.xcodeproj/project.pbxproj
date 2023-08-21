@@ -38,6 +38,7 @@
 		73168A0B2A85F138007F0F5C /* APIStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStorage.swift; sourceTree = "<group>"; };
 		73168A0D2A85F4DA007F0F5C /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		7330C2B32A7FB9B10054E43F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		733D7B3A2A92BBC6001FCEE9 /* P2PBinance-Calculator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "P2PBinance-Calculator-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7385B6A42A7ED85D003D474D /* OrderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItem.swift; sourceTree = "<group>"; };
 		739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
 		73B2A5872A929F7700E05BBA /* AssetPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPicker.swift; sourceTree = "<group>"; };
@@ -98,6 +99,7 @@
 		73CD6F1D2A7E6DD2007D4DBC /* P2PBinance Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				733D7B3A2A92BBC6001FCEE9 /* P2PBinance-Calculator-Info.plist */,
 				73CD6F222A7E6DD3007D4DBC /* Assets.xcassets */,
 				73CD6F292A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld */,
 				73CD6F272A7E6DD3007D4DBC /* Persistence.swift */,
@@ -390,6 +392,7 @@
 				DEVELOPMENT_TEAM = 7P2A9ACZ7S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "P2PBinance-Calculator-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "P2P Calculator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -422,6 +425,7 @@
 				DEVELOPMENT_TEAM = 7P2A9ACZ7S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "P2PBinance-Calculator-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "P2P Calculator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

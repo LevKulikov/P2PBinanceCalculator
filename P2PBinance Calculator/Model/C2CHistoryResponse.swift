@@ -88,12 +88,12 @@ struct C2CHistoryResponse: Codable {
         let asset: String
         let fiat: String
         let fiatSymbol: String
-        let amount: String
-        let totalPrice: String
-        let unitPrice: String
+        let amount: Float
+        let totalPrice: Float
+        let unitPrice: Float
         let orderStatus: C2COrderStatus
-        let createTime: Int
-        let commission: String
+        let createTime: Date
+        let commission: Float
         let counterPartNickName: String
         let advertisementRole: String
         
@@ -104,12 +104,12 @@ struct C2CHistoryResponse: Codable {
             self.asset = asset
             self.fiat = fiat
             self.fiatSymbol = fiatSymbol
-            self.amount = amount
-            self.totalPrice = totalPrice
-            self.unitPrice = unitPrice
+            self.amount = Float(amount) ?? 0
+            self.totalPrice = Float(totalPrice) ?? 0
+            self.unitPrice = Float(unitPrice) ?? 0
             self.orderStatus = orderStatus
-            self.createTime = createTime
-            self.commission = commission
+            self.createTime = Date(timeIntervalSince1970: TimeInterval(createTime / 1000))
+            self.commission = Float(commission) ?? 0
             self.counterPartNickName = counterPartNickName
             self.advertisementRole = advertisementRole
         }
@@ -121,12 +121,12 @@ struct C2CHistoryResponse: Codable {
             self.asset = order.asset
             self.fiat = order.fiat
             self.fiatSymbol = order.fiatSymbol
-            self.amount = order.amount
-            self.totalPrice = order.totalPrice
-            self.unitPrice = order.unitPrice
+            self.amount = Float(order.amount) ?? 0
+            self.totalPrice = Float(order.totalPrice) ?? 0
+            self.unitPrice = Float(order.unitPrice) ?? 0
             self.orderStatus = order.orderStatus
-            self.createTime = order.createTime
-            self.commission = order.commission
+            self.createTime = Date(timeIntervalSince1970: TimeInterval(order.createTime / 1000))
+            self.commission = Float(order.commission) ?? 0
             self.counterPartNickName = order.counterPartNickName
             self.advertisementRole = order.advertisementRole
         }

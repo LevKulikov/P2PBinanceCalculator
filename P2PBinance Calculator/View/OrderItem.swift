@@ -10,10 +10,10 @@ import SwiftUI
 struct OrderItem: View {
     let order: C2CHistoryResponse.C2COrderTransformed
     private var orderAmountAsset: Float {
-        Float(Int(Float(order.amount)! * 100)) / 100
+        Float(Int(order.amount * 100)) / 100
     }
     private var orderTotalPrice: Float {
-        Float(Int(Float(order.totalPrice)! * 100)) / 100
+        Float(Int(order.totalPrice * 100)) / 100
     }
     
     var body: some View {
@@ -39,7 +39,7 @@ struct OrderItem: View {
                     ( Text("For ").bold() + Text(orderTotalPrice.currencyRU) + Text(" \(order.fiat)") )
                         .font(.title3)
                     
-                    ( Text("Price: ").bold() + Text(Float(order.unitPrice)?.currencyRU ?? "NaN") )
+                    ( Text("Price: ").bold() + Text(order.unitPrice.currencyRU) )
                         .font(.title3)
                 }
                 
@@ -50,7 +50,7 @@ struct OrderItem: View {
                         .font(C2CHistoryResponse.C2COrderStatus.basicStatus.contains(order.orderStatus) ? .footnote : .title2)
                         .foregroundColor(C2CHistoryResponse.C2COrderStatus.basicStatus.contains(order.orderStatus) ? .gray : .red)
                     
-                    Text(Date(timeIntervalSince1970: TimeInterval(order.createTime / 1000)), style: .date)
+                    Text(order.createTime, style: .date)
                         .font(.footnote)
                         .foregroundColor(.gray)
                 }
@@ -87,7 +87,7 @@ struct OrderItem_Previews: PreviewProvider {
                 asset: "USDT",
                 fiat: "RUB",
                 fiatSymbol: "₽",
-                amount: "7841.0842534200",
+                amount: "7841.08425342",
                 totalPrice: "750000",
                 unitPrice: "95.5",
                 orderStatus: .cancelled,

@@ -22,7 +22,7 @@ struct OrderDetailsView: View {
                                 .bold()
                                 .foregroundColor(order.tradeType == .buy ? Color.green : Color.red)
                             
-                            Text(Date(timeIntervalSince1970: TimeInterval(order.createTime / 1000)).formatted())
+                            Text(order.createTime.formatted())
                                 .font(.title3)
                                 .foregroundColor(.gray)
                             
@@ -118,7 +118,7 @@ struct OrderDetailsView: View {
                             Text("Commission: ")
                                 .bold()
                             Text(
-                                (Float(order.commission) ?? 0) == 0 ? "0" : "\(order.commission) \(order.asset) / \((Float(order.commission)! * (Float(order.unitPrice) ?? 0)).currencyRU) \(order.fiat)"
+                                order.commission == 0 ? "0" : "\(order.commission) \(order.asset) / \((order.commission * order.unitPrice).currencyRU) \(order.fiat)"
                             )
                         }
                         .font(.title3)
