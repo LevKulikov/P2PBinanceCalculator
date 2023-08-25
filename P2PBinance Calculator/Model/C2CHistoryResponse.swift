@@ -17,6 +17,7 @@ struct C2CHistoryResponse: Codable {
         case busd = "BUSD"
         case bnb = "BNB"
         case eth = "ETH"
+        case fdusd = "FDUSD"
         case rub = "RUB"
         case usd = "USD"
         case eur = "EUR"

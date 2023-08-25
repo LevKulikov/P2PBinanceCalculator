@@ -221,7 +221,7 @@ class GeneralViewModelMock: GeneralViewModel {
                 orderNumber: "43987209347950823403",
                 advNo: "84792837409127439234",
                 tradeType: type,
-                asset: "LTC",
+                asset: "FDUSD",
                 fiat: "RUB",
                 fiatSymbol: "₽",
                 amount: "7841.0842534200",

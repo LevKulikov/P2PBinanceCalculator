@@ -184,8 +184,17 @@ struct ContentView: View {
                                 .background {
                                     NavigationLink("", destination: OrderDetailsView(order: order)).opacity(0)
                                 }
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        setOrderInArray(order: order, count: !order.activeForCount)
+                                    } label: {
+                                        Label(order.activeForCount ? "Do not count" : "Count", systemImage: order.activeForCount ? "multiply" : "checkmark.circle")
+                                    }
+                                    .tint(order.activeForCount ? .red : .green)
+
+                                }
                         }
-                        
+                                                
                         CalculatorItem(orders: orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered)
                             .onTapGesture {
                                 presentCalculatorSheet.toggle()
@@ -226,6 +235,7 @@ struct ContentView: View {
                                         .foregroundColor(Color("binanceColor"))
                                     
                                     Text(viewModel.selectedAccount?.name ?? "")
+                                        .frame(width: 200, alignment: .leading)
                                         .font(.title2)
                                         .bold()
                                 }
@@ -394,6 +404,18 @@ struct ContentView: View {
         orderAsset = .allAssets
         startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!
         endDate = Date.now
+    }
+    
+    private func setOrderInArray(order: C2CHistoryResponse.C2COrderTransformed, count: Bool) {
+        var orderCountSet = order
+        orderCountSet.activeForCount = count
+        if let orderIndex = c2cOrders.firstIndex(of: order) {
+            c2cOrders.remove(at: orderIndex)
+            c2cOrders.insert(orderCountSet, at: orderIndex)
+        } else if let orderIndex = c2cOrdersSecondType.firstIndex(of: order) {
+            c2cOrdersSecondType.remove(at: orderIndex)
+            c2cOrdersSecondType.insert(orderCountSet, at: orderIndex)
+        }
     }
 }
 

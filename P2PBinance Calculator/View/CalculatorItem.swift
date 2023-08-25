@@ -9,8 +9,11 @@ import SwiftUI
 
 struct CalculatorItem: View {
     var orders: [C2CHistoryResponse.C2COrderTransformed]
+    private var ordersFiltered: [C2CHistoryResponse.C2COrderTransformed] {
+        orders.filter { $0.activeForCount }
+    }
     private var orderFiatSum: Float {
-        orders.compactMap { Float($0.totalPrice) }.reduce(0, +)
+        ordersFiltered.compactMap { Float($0.totalPrice) }.reduce(0, +)
     }
     private var ordersContainsDefferentFiat: Bool {
         guard let firstOrder = orders.first, orders.count != 1 else {
@@ -22,7 +25,7 @@ struct CalculatorItem: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Total orders: ").bold() + Text("\(orders.count)")
+            Text("Total orders: ").bold() + Text("\(ordersFiltered.count)")
             //TODO: Continue here
             if !ordersContainsDefferentFiat {
                 if !orders.isEmpty {

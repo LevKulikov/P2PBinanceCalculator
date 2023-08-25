@@ -21,26 +21,26 @@ struct CalculatorView: View {
     @State private var pickerSelection: String = ""
     // To use in calculations
     private var c2cOrdersCompleted: [C2CHistoryResponse.C2COrderTransformed] {
-        return c2cOrders.filter { $0.orderStatus == .completed }
+        return c2cOrders.filter { $0.orderStatus == .completed && $0.activeForCount }
     }
     private var c2cOrdersSecondTypeCompleted: [C2CHistoryResponse.C2COrderTransformed] {
-        return c2cOrdersSecondType.filter { $0.orderStatus == .completed }
+        return c2cOrdersSecondType.filter { $0.orderStatus == .completed && $0.activeForCount }
     }
     // Calculations
     private var firstOrdersValue: Float {
-        c2cOrdersCompleted.compactMap { Float($0.totalPrice) }.reduce(0, +)
+        c2cOrdersCompleted.map { $0.totalPrice }.reduce(0, +)
     }
     private var secondOrdersValue: Float {
-        c2cOrdersSecondTypeCompleted.compactMap { Float($0.totalPrice) }.reduce(0, +)
+        c2cOrdersSecondTypeCompleted.map { $0.totalPrice }.reduce(0, +)
     }
     private var firstOrdersCommissionFiat: Float {
         c2cOrdersCompleted.map {
-            (Float($0.commission) ?? 0) * (Float($0.unitPrice) ?? 0)
+            $0.commission * $0.unitPrice
         }.reduce(0, +)
     }
     private var secondOrdersCommissionFiat: Float {
         c2cOrdersSecondTypeCompleted.map {
-            (Float($0.commission) ?? 0) * (Float($0.unitPrice) ?? 0)
+            $0.commission * $0.unitPrice
         }.reduce(0, +)
     }
     /// Sell orders minus buy orders
@@ -74,7 +74,7 @@ struct CalculatorView: View {
     }
     /// Price range from minimum price minus 1 and maximum price plus 1
     private var priceRange: ClosedRange<Int> {
-        let allPrices = chartOrders.compactMap { Float($0.unitPrice) }
+        let allPrices = chartOrders.map { $0.unitPrice }
         let minPrice = allPrices.min() ?? 0 == 0 ? 0 : allPrices.min()! - 1
         let maxPrice = (allPrices.max() ?? 0) + 1
         return Int(minPrice)...Int(maxPrice)
@@ -224,7 +224,7 @@ struct CalculatorView: View {
                 ForEach(chartOrders) { order in
                     LineMark(
                         x: .value("Date of a price", order.createTime, unit: .hour),
-                        y: .value("Price", Float(order.unitPrice) ?? 0)
+                        y: .value("Price", order.unitPrice)
                     )
                     .foregroundStyle(by: .value("Order type", "\(order.tradeType.rawValue) Price"))
                 }

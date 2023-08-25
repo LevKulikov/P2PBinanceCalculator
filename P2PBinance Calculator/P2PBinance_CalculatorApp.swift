@@ -10,17 +10,19 @@ import SwiftUI
 @main
 struct P2PBinance_CalculatorApp: App {
     let persistenceController = PersistenceController.shared
-    var generalViewModel: GeneralViewModel {
+    @State private var generalViewModel: GeneralViewModel
+    
+    init() {
         let apiStorage = APIStorage()
         let dataStorage = DataStorage(apiStorage: apiStorage)
         let viewModel = GeneralViewModel(dataStorage: dataStorage)
-        return viewModel
+        generalViewModel = viewModel
     }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(/*GeneralViewModelMock() as*/ generalViewModel)
+                .environmentObject(generalViewModel)
 
         }
     }
