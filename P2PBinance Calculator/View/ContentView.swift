@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ContentView: View {
     //MARK: - Properties
@@ -209,7 +210,9 @@ struct ContentView: View {
                     .toolbar {
                         Button {
                             if orderFiat != .allFiat && orderFiat != .other {
-                                presentCalculatorSheet.toggle()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    presentCalculatorSheet.toggle()
+                                }
                             } else {
                                 presentCalculatorError.toggle()
                             }
@@ -224,8 +227,10 @@ struct ContentView: View {
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button {
-                                didChangeAPI = false
-                                presentAPISheet.toggle()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    didChangeAPI = false
+                                    presentAPISheet.toggle()
+                                }
                             } label: {
                                 HStack {
                                     Image(systemName: "person.circle")
