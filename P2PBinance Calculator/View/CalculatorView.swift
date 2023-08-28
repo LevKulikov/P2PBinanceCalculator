@@ -223,7 +223,7 @@ struct CalculatorView: View {
             Chart {
                 ForEach(chartOrders) { order in
                     LineMark(
-                        x: .value("Date of a price", order.createTime, unit: .hour),
+                        x: .value("Date of a price", order.createTime, unit: .second),
                         y: .value("Price", order.unitPrice)
                     )
                     .foregroundStyle(by: .value("Order type", "\(order.tradeType.rawValue) Price"))

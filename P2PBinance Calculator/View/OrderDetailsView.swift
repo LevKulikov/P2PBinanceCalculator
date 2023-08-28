@@ -132,9 +132,18 @@ struct OrderDetailsView: View {
                 .toolbar {
                     Link(destination: URL(string: "https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.advNo)") ?? URL(string: "https://www.binance.com/")!) {
                         Image(systemName: "globe")
+                            .font(.custom("title1.5", size: 25))
+                            .cornerRadius(15)
                             .foregroundColor(Color("binanceColor"))
                     }
                     .accessibilityLabel("Open order in Binance")
+                    .contextMenu {
+                        Button {
+                            copyAsPlainText("https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.advNo)")
+                        } label: {
+                            Label("Copy order link", systemImage: "doc.on.doc")
+                        }
+                    }
                 }
                 .padding()
             }

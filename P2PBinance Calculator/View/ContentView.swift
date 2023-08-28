@@ -215,8 +215,7 @@ struct ContentView: View {
                             }
                         } label: {
                             Image(systemName: "gauge.high")
-                                .resizable()
-                                .frame(width: 30, height: 30, alignment: .topTrailing)
+                                .font(.custom("title1.5", size: 25))
                                 .foregroundColor(Color("binanceColor"))
                         }
                         .disabled(c2cOrdersSecondTypeFiltered.isEmpty)
@@ -230,12 +229,11 @@ struct ContentView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "person.circle")
-                                        .resizable()
-                                        .frame(width: 30, height: 30, alignment: .topTrailing)
+                                        .font(.custom("title1.5", size: 25))
                                         .foregroundColor(Color("binanceColor"))
                                     
                                     Text(viewModel.selectedAccount?.name ?? "")
-                                        .frame(width: 200, alignment: .leading)
+                                        .frame(maxWidth: 200, alignment: .leading)
                                         .font(.title2)
                                         .bold()
                                 }
