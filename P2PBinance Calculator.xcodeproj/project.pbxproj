@@ -80,6 +80,17 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		736050D92A9D11DE0032BBE7 /* SupportingViews */ = {
+			isa = PBXGroup;
+			children = (
+				7385B6A42A7ED85D003D474D /* OrderItem.swift */,
+				7330C2B32A7FB9B10054E43F /* FilterView.swift */,
+				73D338F12A81760100F7F3E2 /* CalculatorItem.swift */,
+				73B2A5872A929F7700E05BBA /* AssetPicker.swift */,
+			);
+			path = SupportingViews;
+			sourceTree = "<group>";
+		};
 		73CD6F122A7E6DD2007D4DBC = {
 			isa = PBXGroup;
 			children = (
@@ -126,14 +137,11 @@
 			isa = PBXGroup;
 			children = (
 				73CD6F332A7E6F5D007D4DBC /* ContentView.swift */,
-				7385B6A42A7ED85D003D474D /* OrderItem.swift */,
-				7330C2B32A7FB9B10054E43F /* FilterView.swift */,
-				73D338F12A81760100F7F3E2 /* CalculatorItem.swift */,
 				73168A062A821193007F0F5C /* CalculatorView.swift */,
 				739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */,
 				73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */,
 				730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */,
-				73B2A5872A929F7700E05BBA /* AssetPicker.swift */,
+				736050D92A9D11DE0032BBE7 /* SupportingViews */,
 			);
 			path = View;
 			sourceTree = "<group>";

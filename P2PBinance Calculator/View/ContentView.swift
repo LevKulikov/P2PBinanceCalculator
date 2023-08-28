@@ -31,8 +31,8 @@ struct ContentView: View {
     @State private var orderStatus: C2CHistoryResponse.C2COrderStatus = .all
     @State private var orderFiat: C2CHistoryResponse.C2COrderFiat = .allFiat
     @State private var orderAsset: C2CHistoryResponse.C2COrderAsset = .allAssets
-    @State private var startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!
-    @State private var endDate = Date.now
+    @State private var startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!.startOfDay
+    @State private var endDate = Date.now.endOfDay
     
     //MARK: Computed props
     // Filters c2cOrders according to filter settings
@@ -400,8 +400,8 @@ struct ContentView: View {
         orderStatus = .all
         orderFiat = viewModel.getFiatFilter()
         orderAsset = .allAssets
-        startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!
-        endDate = Date.now
+        startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!.startOfDay
+        endDate = Date.now.endOfDay
     }
     
     private func setOrderInArray(order: C2CHistoryResponse.C2COrderTransformed, count: Bool) {

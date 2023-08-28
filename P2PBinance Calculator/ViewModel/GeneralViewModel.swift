@@ -54,8 +54,8 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
         let connection = BinanceConnection(apiKey: selectedAccount.apiKey, secretKey: selectedAccount.secretKey)
         connection.getC2COrderHistory(
             type: type,
-            startTimestamp: startTimestamp != nil ? startTimestamp!.startOfDay : nil,
-            endTimestamp: (endTimestamp ?? Date.now).startOfDay == Date.now.startOfDay ? Date.now : Calendar.current.date(byAdding: .second, value: -1, to: endTimestamp!.dayAfter.startOfDay),
+            startTimestamp: startTimestamp, //!= nil ? startTimestamp!.startOfDay : nil,
+            endTimestamp: endTimestamp, //(endTimestamp ?? Date.now).startOfDay == Date.now.startOfDay ? Date.now : Calendar.current.date(byAdding: .second, value: -1, to: endTimestamp!.dayAfter.startOfDay),
             page: page,
             rows: rows
         ) { result in
