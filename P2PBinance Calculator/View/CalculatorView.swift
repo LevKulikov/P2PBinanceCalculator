@@ -227,6 +227,8 @@ struct CalculatorView: View {
                         y: .value("Price", order.unitPrice)
                     )
                     .foregroundStyle(by: .value("Order type", "\(order.tradeType.rawValue) Price"))
+                    .symbol(.circle)
+                    .symbolSize(15)
                 }
             }
             .chartYScale(domain: priceRange)

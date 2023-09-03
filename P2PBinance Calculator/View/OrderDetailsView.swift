@@ -26,9 +26,9 @@ struct OrderDetailsView: View {
                                 .font(.title3)
                                 .foregroundColor(.gray)
                             
-                            Text(order.orderStatus.rawValue)
+                            Text(order.orderStatus.humanName())
                                 .font(.title3)
-                                .foregroundColor(.gray)
+                                .foregroundColor(C2CHistoryResponse.C2COrderStatus.basicStatus.contains(order.orderStatus) ? .gray : .red)
                         }
                         
                         Spacer()
@@ -42,7 +42,7 @@ struct OrderDetailsView: View {
                     HStack(spacing: 0) {
                         Text("Price: ")
                             .bold()
-                        Text((Float(order.unitPrice) ?? 0).currencyRU)
+                        Text(order.unitPrice.currencyRU)
                             
                     }
                     .font(.title3)
@@ -51,7 +51,7 @@ struct OrderDetailsView: View {
                     HStack(spacing: 0) {
                         Text("Amount \(order.asset): ")
                             .bold()
-                        Text((Float(order.amount) ?? 0).currencyRU)
+                        Text(order.amount.currencyRU)
                     }
                     .font(.title3)
                     .padding(.bottom)
@@ -59,7 +59,7 @@ struct OrderDetailsView: View {
                     HStack(spacing: 0) {
                         Text("For \(order.fiat): ")
                             .bold()
-                        Text("\((Float(order.totalPrice) ?? 0).currencyRU) \(order.fiatSymbol)")
+                        Text("\(order.totalPrice.currencyRU) \(order.fiatSymbol)")
                     }
                     .font(.title3)
                     
@@ -130,7 +130,7 @@ struct OrderDetailsView: View {
                 .navigationTitle("Order details")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    Link(destination: URL(string: "https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.advNo)") ?? URL(string: "https://www.binance.com/")!) {
+                    Link(destination: URL(string: "https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.orderNumber)") ?? URL(string: "https://www.binance.com/")!) {
                         Image(systemName: "globe")
                             .font(.custom("title1.5", size: 25))
                             .cornerRadius(15)

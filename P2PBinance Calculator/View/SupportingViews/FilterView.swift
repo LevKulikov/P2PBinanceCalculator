@@ -54,7 +54,7 @@ struct FilterView: View {
                         
                         Picker("Order status", selection: $orderStatus) {
                             ForEach(C2CHistoryResponse.C2COrderStatus.allCases, id: \.hashValue) {
-                                Text($0.rawValue)
+                                Text($0.humanName())
                                     .tag($0)
                             }
                         }

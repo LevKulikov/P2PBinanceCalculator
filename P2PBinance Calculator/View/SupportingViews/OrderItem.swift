@@ -46,7 +46,7 @@ struct OrderItem: View {
                 Spacer()
                 
                 VStack(alignment: .trailing) {
-                    Text(order.orderStatus.rawValue)
+                    Text(order.orderStatus.humanName())
                         .font(C2CHistoryResponse.C2COrderStatus.basicStatus.contains(order.orderStatus) ? .footnote : .title2)
                         .foregroundColor(C2CHistoryResponse.C2COrderStatus.basicStatus.contains(order.orderStatus) ? .gray : .red)
                     

@@ -56,6 +56,29 @@ struct C2CHistoryResponse: Codable {
         
         static let warningStatus: [C2COrderStatus] = [pending, trading, buyerPayed, distributing, inAppeal]
         static let basicStatus: [C2COrderStatus] = [completed, cancelled, cancelledBySystem]
+        
+        func humanName() -> String {
+            switch self {
+            case .all:
+                return "All"
+            case .completed:
+                return "Completed"
+            case .pending:
+                return "Pending"
+            case .trading:
+                return "Trading"
+            case .buyerPayed:
+                return "Buyer payed"
+            case .distributing:
+                return "Distributing"
+            case .inAppeal:
+                return "In appeal"
+            case .cancelled:
+                return "Cancelled"
+            case .cancelledBySystem:
+                return "Cancelled by system"
+            }
+        }
     }
     
     /// Model for one P2P (C2C) order data from JSON
