@@ -81,31 +81,51 @@ struct FilterView: View {
                         }
                         .buttonStyle(.bordered)
                         
-                        DatePicker("Date to pick", selection: $oneDaySet, in: startDateRange.lowerBound...endDateRange.upperBound, displayedComponents: .date)
-                            .labelsHidden()
-                            .datePickerStyle(.compact)
-                            .padding(.leading, 10)
-                            .applyTextColor(Color("binanceColor"))
-                            .onTapGesture {
-                                dateSetByPicker = .oneDayPicker
-                            }
-                            .onChange(of: oneDaySet) {
-                                if dateSetByPicker == .oneDayPicker {
-                                    fromDate = $0.startOfDay
-                                    toDate = $0.endOfDay
+                        if !detailedFilterShow {
+                            DatePicker("Date to pick", selection: $oneDaySet, in: startDateRange.lowerBound...endDateRange.upperBound, displayedComponents: .date)
+                                .labelsHidden()
+                                .datePickerStyle(.compact)
+                                .padding(.leading, 10)
+                                .applyTextColor(Color("binanceColor"))
+                                .onTapGesture {
+                                    dateSetByPicker = .oneDayPicker
                                 }
-                            }
+                                .onChange(of: oneDaySet) {
+                                    if dateSetByPicker == .oneDayPicker {
+                                        fromDate = $0.startOfDay
+                                        toDate = $0.endOfDay
+                                    }
+                                }
+                                .transition(.offset(x: -50, y: 46).combined(with: .opacity))
+                        }
                         
                         Button {
                             withAnimation {
                                 detailedFilterShow.toggle()
                             }
                         } label: {
-                            Image(systemName: "chevron.down.circle.fill")
-                                .font(.title)
-                                .foregroundColor(Color("binanceColor"))
-                                .rotationEffect(detailedFilterShow ? .degrees(-90) : .degrees(0))
+                            if detailedFilterShow {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 6.5)
+                                        .fill(Color("binanceColor"))
+                                        .frame(width: 155, height: 34)
+                                    HStack {
+                                        Image(systemName: "chevron.up")
+                                            .font(.title)
+                                        
+                                        Text("Hide")
+                                    }
+                                    .foregroundColor(.white)
+                                }
+                                .padding(.leading, 10)
                                 .animation(.easeInOut, value: detailedFilterShow)
+                            } else {
+                                Image(systemName: "chevron.down.circle.fill")
+                                    .font(.title)
+                                    .foregroundColor(Color("binanceColor"))
+                                    .rotationEffect(detailedFilterShow ? .degrees(-180) : .degrees(0))
+                                    .animation(.easeInOut, value: detailedFilterShow)
+                            }
                         }
                         .padding(.trailing, 15)
                         .accessibilityLabel("Button to open detailed filters")
@@ -151,7 +171,6 @@ struct FilterView: View {
                                             oneDaySet = $0
                                         }
                                     }
-                                    .id(2)
                             }
                             .padding(.top, 10)
                             
@@ -198,11 +217,10 @@ struct FilterView: View {
                             }
                         }
                         .padding(.horizontal, 15)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(.push(from: .top))
                     }
                 }
                 .tint(Color("binanceColor"))
-                .background(.background)
                 .onTapGesture {
                     fromFiatTextField = false
                     toFiatTextField = false

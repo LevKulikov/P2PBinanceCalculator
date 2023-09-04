@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OrderDetailsView: View {
     let order: C2CHistoryResponse.C2COrderTransformed
+    @Environment(\.openURL) private var openUrl
     @State private var isCopied: Bool = false
     
     var body: some View {
@@ -130,20 +131,21 @@ struct OrderDetailsView: View {
                 .navigationTitle("Order details")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    Link(destination: URL(string: "https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.orderNumber)") ?? URL(string: "https://www.binance.com/")!) {
-                        Image(systemName: "globe")
-                            .font(.custom("title1.5", size: 25))
-                            .cornerRadius(15)
-                            .foregroundColor(Color("binanceColor"))
-                    }
-                    .accessibilityLabel("Open order in Binance")
-                    .contextMenu {
+                    Menu {
                         Button {
                             copyAsPlainText("https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.advNo)")
                         } label: {
                             Label("Copy order link", systemImage: "doc.on.doc")
                         }
+                    } label: {
+                        Image(systemName: "globe")
+                            .font(.custom("title1.5", size: 25))
+                            .cornerRadius(15)
+                            .foregroundColor(Color("binanceColor"))
+                    } primaryAction: {
+                        openUrl(URL(string: "https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.orderNumber)") ?? URL(string: "https://www.binance.com/")!)
                     }
+
                 }
                 .padding()
             }
