@@ -81,10 +81,14 @@ struct C2CHistoryResponse: Codable {
         }
     }
     
+    enum C2COrderAdvertisementRole: String, Codable, CaseIterable {
+        case bothRoles = "Both roles"
+        case taker = "TAKER"
+        case maker = "MAKER"
+    }
+    
     /// Model for one P2P (C2C) order data from JSON
-    struct C2COrder: Codable, Identifiable, Equatable {
-        let id = UUID()
-        
+    struct C2COrder: Codable {        
         let orderNumber: String
         let advNo: String
         let tradeType: C2COrderType
@@ -98,7 +102,7 @@ struct C2CHistoryResponse: Codable {
         let createTime: Int
         let commission: String
         let counterPartNickName: String
-        let advertisementRole: String
+        let advertisementRole: C2COrderAdvertisementRole
     }
     
     /// Model for C2COrder that can contain other properties
@@ -119,9 +123,9 @@ struct C2CHistoryResponse: Codable {
         let createTime: Date
         let commission: Float
         let counterPartNickName: String
-        let advertisementRole: String
+        let advertisementRole: C2COrderAdvertisementRole
         
-        init(orderNumber: String, advNo: String, tradeType: C2COrderType, asset: String, fiat: String, fiatSymbol: String, amount: String, totalPrice: String, unitPrice: String, orderStatus: C2COrderStatus, createTime: Int, commission: String, counterPartNickName: String, advertisementRole: String) {
+        init(orderNumber: String, advNo: String, tradeType: C2COrderType, asset: String, fiat: String, fiatSymbol: String, amount: String, totalPrice: String, unitPrice: String, orderStatus: C2COrderStatus, createTime: Int, commission: String, counterPartNickName: String, advertisementRole: C2COrderAdvertisementRole) {
             self.orderNumber = orderNumber
             self.advNo = advNo
             self.tradeType = tradeType

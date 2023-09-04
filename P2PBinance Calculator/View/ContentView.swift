@@ -34,86 +34,19 @@ struct ContentView: View {
     @State private var orderAsset: C2CHistoryResponse.C2COrderAsset = .allAssets
     @State private var startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!.startOfDay
     @State private var endDate = Date.now.endOfDay
+    @State private var fromFiatValue = ""
+    @State private var toFiatValue = ""
+    @State private var orderAdvertisementRole: C2CHistoryResponse.C2COrderAdvertisementRole = .bothRoles
     
     //MARK: Computed props
     // Filters c2cOrders according to filter settings
     private var c2cOrdersFiltered: [C2CHistoryResponse.C2COrderTransformed] {
-        var statusFiltered = c2cOrders
-        if orderStatus != .all {
-            statusFiltered = statusFiltered.filter { $0.orderStatus == orderStatus }
-        }
-        
-        var fiatFiltered = statusFiltered
-        if orderFiat != .allFiat {
-            if orderFiat == .other {
-                fiatFiltered = fiatFiltered.filter { order in
-                    !C2CHistoryResponse.C2COrderFiat
-                        .mentionedFiat
-                        .contains { fiat in
-                            order.fiat == fiat.rawValue
-                        }
-                }
-            } else {
-                fiatFiltered = fiatFiltered.filter { $0.fiat == orderFiat.rawValue }
-            }
-        }
-        
-        var assetFiltered = fiatFiltered
-        if orderAsset != .allAssets {
-            if orderAsset == .other {
-                assetFiltered = assetFiltered.filter { order in
-                    !C2CHistoryResponse.C2COrderAsset
-                        .mentionedAssets
-                        .contains { asset in
-                            order.asset == asset.rawValue
-                        }
-                }
-            } else {
-                assetFiltered = assetFiltered.filter { $0.asset == orderAsset.rawValue }
-            }
-        }
-        
-        return assetFiltered
+        filterOrders(c2cOrders)
     }
     
     // Filters c2cOrdersSecond according to filter settings
     private var c2cOrdersSecondTypeFiltered: [C2CHistoryResponse.C2COrderTransformed] {
-        var statusFiltered = c2cOrdersSecondType
-        if orderStatus != .all {
-            statusFiltered = statusFiltered.filter { $0.orderStatus == orderStatus }
-        }
-        
-        var fiatFiltered = statusFiltered
-        if orderFiat != .allFiat {
-            if orderFiat == .other {
-                fiatFiltered = fiatFiltered.filter { order in
-                    !C2CHistoryResponse.C2COrderFiat
-                        .mentionedFiat
-                        .contains { fiat in
-                            order.fiat == fiat.rawValue
-                        }
-                }
-            } else {
-                fiatFiltered = fiatFiltered.filter { $0.fiat == orderFiat.rawValue }
-            }
-        }
-        
-        var assetFiltered = fiatFiltered
-        if orderAsset != .allAssets {
-            if orderAsset == .other {
-                assetFiltered = assetFiltered.filter { order in
-                    !C2CHistoryResponse.C2COrderAsset
-                        .mentionedAssets
-                        .contains { asset in
-                            order.asset == asset.rawValue
-                        }
-                }
-            } else {
-                assetFiltered = assetFiltered.filter { $0.asset == orderAsset.rawValue }
-            }
-        }
-        
-        return assetFiltered
+        filterOrders(c2cOrdersSecondType)
     }
     
     // Both types orders sorted and filtered array
@@ -152,32 +85,11 @@ struct ContentView: View {
                         orderFiat: $orderFiat,
                         orderAsset: $orderAsset,
                         fromDate: $startDate,
-                        toDate: $endDate
+                        toDate: $endDate,
+                        fromFiatValue: $fromFiatValue,
+                        toFiatValue: $toFiatValue,
+                        orderAdvertisementRole: $orderAdvertisementRole
                     )
-                    .onChange(of: orderType) { _ in
-                        getBothTypesOrders()
-                    }
-                    .onChange(of: startDate) { newValue in
-                        
-                        if let daysDif = Calendar.current.dateComponents([.day], from: newValue, to: endDate).day,
-                           daysDif > 30 {
-                            endDate = Calendar.current.date(byAdding: .day, value: 30, to: newValue)!
-                        }
-                        
-                        getBothTypesOrders()
-                    }
-                    .onChange(of: endDate) { newValue in
-                        
-                        if let daysDif = Calendar.current.dateComponents([.day], from: startDate, to: newValue).day,
-                           daysDif > 30 {
-                            startDate = Calendar.current.date(byAdding: .day, value: -30, to: newValue)!
-                        }
-                        
-                        getBothTypesOrders()
-                    }
-                    .onChange(of: orderFiat) { newValue in
-                        viewModel.setFiatFilter(for: newValue)
-                    }
                     
                     List {
                         ForEach(orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered) { order in
@@ -207,6 +119,7 @@ struct ContentView: View {
                     .refreshable {
                         getBothTypesOrders()
                     }
+                    .scrollDismissesKeyboard(.immediately)
                     .toolbar {
                         Button {
                             if orderFiat != .allFiat && orderFiat != .other {
@@ -280,6 +193,30 @@ struct ContentView: View {
                             .onTapGesture {
                                 presentCalculatorError = false
                             }
+                    }
+                    .onChange(of: orderType) { _ in
+                        getBothTypesOrders()
+                    }
+                    .onChange(of: startDate) { newValue in
+                        
+                        if let daysDif = Calendar.current.dateComponents([.day], from: newValue, to: endDate).day,
+                           daysDif > 30 {
+                            endDate = Calendar.current.date(byAdding: .day, value: 30, to: newValue)!
+                        }
+                        
+                        getBothTypesOrders()
+                    }
+                    .onChange(of: endDate) { newValue in
+                        
+                        if let daysDif = Calendar.current.dateComponents([.day], from: startDate, to: newValue).day,
+                           daysDif > 30 {
+                            startDate = Calendar.current.date(byAdding: .day, value: -30, to: newValue)!
+                        }
+                        
+                        getBothTypesOrders()
+                    }
+                    .onChange(of: orderFiat) { newValue in
+                        viewModel.setFiatFilter(for: newValue)
                     }
                 }
             }
@@ -407,6 +344,9 @@ struct ContentView: View {
         orderAsset = .allAssets
         startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!.startOfDay
         endDate = Date.now.endOfDay
+        fromFiatValue = ""
+        toFiatValue = ""
+        orderAdvertisementRole = .bothRoles
     }
     
     private func setOrderInArray(order: C2CHistoryResponse.C2COrderTransformed, count: Bool) {
@@ -419,6 +359,61 @@ struct ContentView: View {
             c2cOrdersSecondType.remove(at: orderIndex)
             c2cOrdersSecondType.insert(orderCountSet, at: orderIndex)
         }
+    }
+    
+    private func filterOrders(_ orders: [C2CHistoryResponse.C2COrderTransformed]) -> [C2CHistoryResponse.C2COrderTransformed] {
+        var statusFiltered = orders
+        if orderStatus != .all {
+            statusFiltered = statusFiltered.filter { $0.orderStatus == orderStatus }
+        }
+        
+        var fiatFiltered = statusFiltered
+        if orderFiat != .allFiat {
+            if orderFiat == .other {
+                fiatFiltered = fiatFiltered.filter { order in
+                    !C2CHistoryResponse.C2COrderFiat
+                        .mentionedFiat
+                        .contains { fiat in
+                            order.fiat == fiat.rawValue
+                        }
+                }
+            } else {
+                fiatFiltered = fiatFiltered.filter { $0.fiat == orderFiat.rawValue }
+            }
+        }
+        
+        var assetFiltered = fiatFiltered
+        if orderAsset != .allAssets {
+            if orderAsset == .other {
+                assetFiltered = assetFiltered.filter { order in
+                    !C2CHistoryResponse.C2COrderAsset
+                        .mentionedAssets
+                        .contains { asset in
+                            order.asset == asset.rawValue
+                        }
+                }
+            } else {
+                assetFiltered = assetFiltered.filter { $0.asset == orderAsset.rawValue }
+            }
+        }
+        
+        var fromToFiatValueFiltered = assetFiltered
+        if orderFiat != .allFiat {
+            if !fromFiatValue.isEmpty, let fromFiatAmount = Float(fromFiatValue) {
+                fromToFiatValueFiltered = fromToFiatValueFiltered.filter { $0.totalPrice >= fromFiatAmount }
+            }
+            
+            if !toFiatValue.isEmpty, let toFiatAmount = Float(toFiatValue) {
+                fromToFiatValueFiltered = fromToFiatValueFiltered.filter { $0.totalPrice <= toFiatAmount }
+            }
+        }
+        
+        var advRoleFiltered = fromToFiatValueFiltered
+        if orderAdvertisementRole != .bothRoles {
+            advRoleFiltered = advRoleFiltered.filter { $0.advertisementRole == orderAdvertisementRole }
+        }
+        
+        return advRoleFiltered
     }
 }
 

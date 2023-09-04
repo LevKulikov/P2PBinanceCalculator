@@ -19,10 +19,15 @@ struct FilterView: View {
     @Binding var orderAsset: C2CHistoryResponse.C2COrderAsset
     @Binding var fromDate: Date
     @Binding var toDate: Date
+    @Binding var fromFiatValue: String
+    @Binding var toFiatValue: String
+    @Binding var orderAdvertisementRole: C2CHistoryResponse.C2COrderAdvertisementRole
     @State private var rotateArrowImage = false
     @State private var detailedFilterShow = false
     @State private var oneDaySet: Date = .now
     @State private var dateSetByPicker: DatePickerType = .rangeDatePicker
+    @FocusState private var fromFiatTextField: Bool
+    @FocusState private var toFiatTextField: Bool
     
     private var startDateRange: ClosedRange<Date> {
         let min = Calendar.current.date(byAdding: .month, value: -6, to: Date.now)!.startOfDay
@@ -107,12 +112,22 @@ struct FilterView: View {
                     }
                     
                     if detailedFilterShow {
-                        HStack {
+                        VStack(alignment: .leading, spacing: 0) {
+                            // First detailed filter row
                             HStack {
+                                Picker("Order advertisement role", selection: $orderAdvertisementRole) {
+                                    ForEach(C2CHistoryResponse.C2COrderAdvertisementRole.allCases, id: \.hashValue) {
+                                        Text($0.rawValue)
+                                            .tag($0)
+                                    }
+                                }
+                                .buttonStyle(.bordered)
+                                
                                 DatePicker("From date", selection: $fromDate, in: startDateRange, displayedComponents: [.date, .hourAndMinute])
                                     .labelsHidden()
                                     .datePickerStyle(.compact)
                                     .applyTextColor(Color("binanceColor"))
+                                    .padding(.leading, 10)
                                 
                                 Image(systemName: "arrowshape.right.fill")
                                     .foregroundColor(Color("binanceColor"))
@@ -136,24 +151,62 @@ struct FilterView: View {
                                             oneDaySet = $0
                                         }
                                     }
+                                    .id(2)
                             }
-                            .padding(.trailing, 10)
+                            .padding(.top, 10)
                             
-                            Button("Default filters") {
-                                setFiltersToDefault()
-                                withAnimation {
-                                    detailedFilterShow.toggle()
-                                    proxy.scrollTo(1)
+                            // Second detailed filter row
+                            HStack {
+                                TextField(orderFiat != .allFiat ? "From \(orderFiat.rawValue) amount" : "Choose fiat", text: $fromFiatValue)
+                                    .frame(width: 150)
+                                    .textFieldStyle(.roundedBorder)
+                                    .keyboardType(.numberPad)
+                                    .focused($fromFiatTextField)
+                                    .disabled(orderFiat == .allFiat)
+                                
+                                Image(systemName: "arrowshape.right.fill")
+                                    .foregroundColor(Color("binanceColor"))
+                                    .imageScale(.large)
+                                
+                                TextField(orderFiat != .allFiat ? "To \(orderFiat.rawValue) amount" : "Choose fiat", text: $toFiatValue)
+                                    .frame(width: 150)
+                                    .textFieldStyle(.roundedBorder)
+                                    .keyboardType(.numberPad)
+                                    .focused($toFiatTextField)
+                                    .disabled(orderFiat == .allFiat)
+                                    .padding(.trailing, 10)
+                                    
+                                Button("Default filters") {
+                                    setFiltersToDefault()
+                                    withAnimation {
+                                        detailedFilterShow.toggle()
+                                        proxy.scrollTo(1)
+                                    }
+                                }
+                                .buttonStyle(.borderedProminent)
+                            }
+                            .padding(.top, 10)
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    
+                                    Button("Done") {
+                                        fromFiatTextField = false
+                                        toFiatTextField = false
+                                    }
                                 }
                             }
-                            .buttonStyle(.borderedProminent)
                         }
-                        .padding(.top, 10)
                         .padding(.horizontal, 15)
                         .transition(.move(edge: .top).combined(with: .opacity))
                     }
                 }
                 .tint(Color("binanceColor"))
+                .background(.background)
+                .onTapGesture {
+                    fromFiatTextField = false
+                    toFiatTextField = false
+                }
             }
         }
     }
@@ -167,6 +220,9 @@ struct FilterView: View {
         fromDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!.startOfDay
         toDate = Date.now.endOfDay
         oneDaySet = toDate
+        fromFiatValue = ""
+        toFiatValue = ""
+        orderAdvertisementRole = .bothRoles
     }
 }
 
@@ -178,7 +234,10 @@ struct FilterView_Previews: PreviewProvider {
             orderFiat: .constant(.allFiat),
             orderAsset: .constant(.allAssets),
             fromDate: .constant(Calendar.current.date(byAdding: .month, value: -5, to: Date.now)!),
-            toDate: .constant(.now)
+            toDate: .constant(.now),
+            fromFiatValue: .constant(""),
+            toFiatValue: .constant(""),
+            orderAdvertisementRole: .constant(.bothRoles)
         )
     }
 }

@@ -59,7 +59,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         ),
         C2CHistoryResponse.C2COrderTransformed(
             orderNumber: "3241234214234234645643",
@@ -75,7 +75,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         ),
         C2CHistoryResponse.C2COrderTransformed(
             orderNumber: "43987209347850823403",
@@ -91,7 +91,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
             
         ),
         C2CHistoryResponse.C2COrderTransformed(
@@ -108,7 +108,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         ),
         C2CHistoryResponse.C2COrderTransformed(
             orderNumber: "43987209347150823403",
@@ -124,7 +124,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         ),
         C2CHistoryResponse.C2COrderTransformed(
             orderNumber: "43987209347150823413",
@@ -140,7 +140,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         ),
         C2CHistoryResponse.C2COrderTransformed(
             orderNumber: "43987209347950823403",
@@ -156,7 +156,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         ),
         C2CHistoryResponse.C2COrderTransformed(
             orderNumber: "33987209347950823403",
@@ -172,7 +172,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         ),
         C2CHistoryResponse.C2COrderTransformed(
             orderNumber: "23987209347950823403",
@@ -188,7 +188,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         ),
         C2CHistoryResponse.C2COrderTransformed(
             orderNumber: "53987209347950823403",
@@ -204,7 +204,7 @@ struct CalculatorItem_Previews: PreviewProvider {
             createTime: 1619361369000,
             commission: "0",
             counterPartNickName: "ab***",
-            advertisementRole: "TAKER"
+            advertisementRole: .taker
         )
     ]
     

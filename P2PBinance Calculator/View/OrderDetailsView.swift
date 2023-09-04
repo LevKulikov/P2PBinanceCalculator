@@ -100,7 +100,7 @@ struct OrderDetailsView: View {
                         HStack(spacing: 0) {
                             Text("Order role: ")
                                 .bold()
-                            Text(order.advertisementRole)
+                            Text(order.advertisementRole.rawValue)
                         }
                         .font(.title3)
                         .padding(.bottom)
@@ -192,7 +192,7 @@ struct OrderDetailsView_Previews: PreviewProvider {
                     createTime: 1619361369000,
                     commission: "5",
                     counterPartNickName: "fiz***",
-                    advertisementRole: "TAKER"
+                    advertisementRole: .taker
                 )
             )
         }

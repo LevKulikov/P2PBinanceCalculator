@@ -9,12 +9,6 @@ import SwiftUI
 
 struct OrderItem: View {
     let order: C2CHistoryResponse.C2COrderTransformed
-    private var orderAmountAsset: Float {
-        Float(Int(order.amount * 100)) / 100
-    }
-    private var orderTotalPrice: Float {
-        Float(Int(order.totalPrice * 100)) / 100
-    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,7 +18,7 @@ struct OrderItem: View {
                     .font(.title2)
                     .bold()
                     .foregroundColor(order.tradeType == .buy ? Color.green : Color.red)
-                Text(" \(orderAmountAsset.currencyRU) \(order.asset)")
+                Text(" \(order.amount.currencyRU) \(order.asset)")
                     .font(.title3)
                 
                 Spacer()
@@ -36,7 +30,7 @@ struct OrderItem: View {
             
             HStack(alignment: .bottom) {
                 VStack(alignment: .leading) {
-                    ( Text("For ").bold() + Text(orderTotalPrice.currencyRU) + Text(" \(order.fiat)") )
+                    ( Text("For ").bold() + Text(order.totalPrice.currencyRU) + Text(" \(order.fiat)") )
                         .font(.title3)
                     
                     ( Text("Price: ").bold() + Text(order.unitPrice.currencyRU) )
@@ -94,7 +88,7 @@ struct OrderItem_Previews: PreviewProvider {
                 createTime: 1691334624000,
                 commission: "0",
                 counterPartNickName: "ab***",
-                advertisementRole: "TAKER"
+                advertisementRole: .taker
             )
         )
     }
