@@ -1,5 +1,5 @@
 //
-//  CalculatorView.swift
+//  StatisticsView.swift
 //  P2PBinance Calculator
 //
 //  Created by Лев Куликов on 08.08.2023.
@@ -8,9 +8,9 @@
 import SwiftUI
 import Charts
 
-struct CalculatorView: View {
+struct StatisticsView: View {
     //MARK: Properties
-    // Init
+    // Init properties
     var currentOrderFiat: C2CHistoryResponse.C2COrderFiat
     var currentOrderTypeFilter: C2CHistoryResponse.C2COrderType
     var startDate: Date
@@ -94,22 +94,155 @@ struct CalculatorView: View {
     //MARK: Body
     var body: some View {
         if #available(iOS 16.4, macOS 13.3, *) {
-            craateViewForCalculator()
-                .presentationDetents([.medium, .large])
-                .presentationBackgroundInteraction(.enabled(upThrough: .fraction(1/8)))
+            craateViewForStatistics()
+                .presentationDetents([.height(215), .large])
                 .presentationBackground(.clear)
         } else {
-            craateViewForCalculator()
+            craateViewForStatistics()
+        }
+    }
+    
+    private var tradeValueText: some View {
+        HStack(spacing: 0) {
+            Text("Value \(currentOrderFiat.rawValue): ")
+            Text((firstOrdersValue + secondOrdersValue).currencyRU).underline(color: .gray)
+                .contextMenu {
+                    Button {
+                        copyAsPlainText((firstOrdersValue + secondOrdersValue).currencyRU)
+                    } label: {
+                        Label("Copy total value", systemImage: "doc.on.doc")
+                    }
+                } preview: {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Buy ")
+                                .foregroundColor(.green)
+                            Text(currentOrderTypeFilter == .buy ? firstOrdersValue.currencyRU : secondOrdersValue.currencyRU)
+                        }
+                        HStack {
+                            Text("Sell ")
+                                .foregroundColor(.red)
+                            Text(currentOrderTypeFilter == .buy ? secondOrdersValue.currencyRU : firstOrdersValue.currencyRU)
+                        }
+                    }
+                    .font(.title2)
+                    .padding()
+                }
+        }
+    }
+    
+    private var tradeProfitText: some View {
+        HStack(spacing: 0) {
+            Text("Profit: ")
+            Text(ordersProfit.currencyRU).underline(color: .gray)
+                .contextMenu {
+                    Button {
+                        copyAsPlainText(ordersProfit.currencyRU)
+                    } label: {
+                        Label("Copy profit", systemImage: "doc.on.doc")
+                    }
+                } preview: {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Buy ")
+                                .foregroundColor(.green)
+                            Text(currentOrderTypeFilter == .buy ? firstOrdersValue.currencyRU : secondOrdersValue.currencyRU)
+                        }
+                        HStack {
+                            Text("Sell ")
+                                .foregroundColor(.red)
+                            Text(currentOrderTypeFilter == .buy ? secondOrdersValue.currencyRU : firstOrdersValue.currencyRU)
+                        }
+                        HStack {
+                            Text("Commission ")
+                                .foregroundColor(.gray)
+                            Text((firstOrdersCommissionFiat + secondOrdersCommissionFiat).currencyRU)
+                        }
+                    }
+                    .font(.title2)
+                    .padding()
+                }
+        }
+    }
+    
+    private var mediumSpreadText: some View {
+        HStack(spacing: 0) {
+            Text("Medium spread: ")
+            Text("\(ordersSpread.currencyRU)%").underline(color: .gray)
+                .contextMenu {
+                    Button {
+                        copyAsPlainText("\(ordersSpread.currencyRU)%")
+                    } label: {
+                        Label("Copy spread %", systemImage: "doc.on.doc")
+                    }
+                } preview: {
+                    VStack {
+                        HStack {
+                            Text("Sell ")
+                                .foregroundColor(.red)
+                            Text(currentOrderTypeFilter == .buy ? secondOrdersValue.currencyRU : firstOrdersValue.currencyRU)
+                                
+                        }
+                        .font(.title2)
+                        
+                        Text("/")
+                            .font(.title)
+                            .rotationEffect(.degrees(45))
+                        
+                        HStack {
+                            Text("Buy ")
+                                .foregroundColor(.green)
+                            Text(currentOrderTypeFilter == .buy ? firstOrdersValue.currencyRU : secondOrdersValue.currencyRU)
+                        }
+                        .font(.title2)
+                    }
+                    .padding()
+                }
+        }
+    }
+    
+    private var chartView: some View {
+        VStack {
+            Chart {
+                ForEach(chartOrders) { order in
+                    LineMark(
+                        x: .value("Date of a price", order.createTime, unit: .second),
+                        y: .value("Price", order.unitPrice)
+                    )
+                    .foregroundStyle(by: .value("Order type", "\(order.tradeType.rawValue) Price"))
+                    .symbol(.circle)
+                    .symbolSize(15)
+                }
+            }
+            .chartYScale(domain: priceRange)
+            .frame(height: 250)
+            .animation(.easeOut, value: pickerSelection)
+            
+            if assetsInOrders.count > 1 {
+                AssetPicker(assets: assetsInOrders, pickerSelection: $pickerSelection)
+                    .onAppear {
+                        pickerSelection = assetsInOrders.first!
+                    }
+            }
+        }
+    }
+    
+    private var disclaimerText: some View {
+        VStack(alignment: .leading) {
+            Text("Only completed orders are counted.")
+            Text("Ordes value = buy + sell orders.")
+            Text("Profit calculation takes into account commission costs.")
+            Text("Errors are possible if there were buy orders without subsequent sale and vice versa!").bold()
         }
     }
     
     //MARK: Methods
     @ViewBuilder
-    private func craateViewForCalculator() -> some View {
+    private func craateViewForStatistics() -> some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
                 HStack(alignment: .top) {
-                    Text("Calculator")
+                    Text("Statistics")
                         .font(.largeTitle)
                         .bold()
                     
@@ -125,89 +258,27 @@ struct CalculatorView: View {
                 .padding(.top)
                 .padding(.bottom)
                 
-                HStack(spacing: 0) {
-                    Text("Value \(currentOrderFiat.rawValue): ")
-                    Text((firstOrdersValue + secondOrdersValue).currencyRU).underline(color: .gray)
-                        .contextMenu {
-                            Button {
-                                copyAsPlainText((firstOrdersValue + secondOrdersValue).currencyRU)
-                            } label: {
-                                Label("Copy total value", systemImage: "doc.on.doc")
-                            }
-                        } preview: {
-                            VStack {
-                                Text("Buy: \(currentOrderTypeFilter == .buy ? firstOrdersValue.currencyRU : secondOrdersValue.currencyRU)")
-                                Text("Sell: \(currentOrderTypeFilter == .buy ? secondOrdersValue.currencyRU : firstOrdersValue.currencyRU)")
-                            }
-                            .font(.title2)
-                            .padding()
-                        }
-                }
-                .font(.title2)
-                .padding(.bottom, 1)
+                tradeValueText
+                    .font(.title2)
+                    .padding(.bottom, 1)
                 
-                HStack(spacing: 0) {
-                    Text("Profit: ")
-                    Text(ordersProfit.currencyRU).underline(color: .gray)
-                        .contextMenu {
-                            Button {
-                                copyAsPlainText(ordersProfit.currencyRU)
-                            } label: {
-                                Label("Copy profit", systemImage: "doc.on.doc")
-                            }
-                        } preview: {
-                            VStack {
-                                Text("Buy: \(currentOrderTypeFilter == .buy ? firstOrdersValue.currencyRU : secondOrdersValue.currencyRU)")
-                                Text("Sell: \(currentOrderTypeFilter == .buy ? secondOrdersValue.currencyRU : firstOrdersValue.currencyRU)")
-                                Text("Commission: \((firstOrdersCommissionFiat + secondOrdersCommissionFiat).currencyRU)")
-                            }
-                            .font(.title2)
-                            .padding()
-                        }
-                }
-                .font(.title2)
-                .padding(.bottom, 1)
+                tradeProfitText
+                    .font(.title2)
+                    .padding(.bottom, 1)
                 
                 if firstOrdersValue != 0 && secondOrdersValue != 0 {
-                    HStack(spacing: 0) {
-                        Text("Medium spread: ")
-                        Text("\(ordersSpread.currencyRU)%").underline(color: .gray)
-                            .contextMenu {
-                                Button {
-                                    copyAsPlainText("\(ordersSpread.currencyRU)%")
-                                } label: {
-                                    Label("Copy spread %", systemImage: "doc.on.doc")
-                                }
-                            } preview: {
-                                VStack {
-                                    Text("Sell: \(currentOrderTypeFilter == .buy ? secondOrdersValue.currencyRU : firstOrdersValue.currencyRU)")
-                                        .font(.title2)
-                                    Text("/")
-                                        .font(.title)
-                                        .rotationEffect(.degrees(45))
-                                    Text("Buy: \(currentOrderTypeFilter == .buy ? firstOrdersValue.currencyRU : secondOrdersValue.currencyRU)")
-                                        .font(.title2)
-                                }
-                                .padding()
-                            }
-                    }
-                    .font(.title2)
-                    .padding(.bottom)
+                    mediumSpreadText
+                        .font(.title2)
+                        .padding(.bottom)
                 }
                 
                 
-                makeChart()
+                chartView
                     .padding(.bottom)
                 
-                
-                VStack(alignment: .leading) {
-                    Text("Only completed orders are counted.")
-                    Text("Ordes value = buy + sell orders.")
-                    Text("Profit calculation takes into account commission costs.")
-                    Text("Errors are possible if there were buy orders without subsequent sale and vice versa!").bold()
-                }
-                .font(.subheadline)
-                .foregroundColor(.gray)
+                disclaimerText
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
             }
         }
         .padding()
@@ -217,38 +288,13 @@ struct CalculatorView: View {
                 .fill(.ultraThinMaterial)
                 .ignoresSafeArea(edges: .bottom)
         )
-    }
-    
-    @ViewBuilder
-    private func makeChart() -> some View {
-        VStack {
-            Chart {
-                ForEach(chartOrders) { order in
-                    LineMark(
-                        x: .value("Date of a price", order.createTime, unit: .second),
-                        y: .value("Price", order.unitPrice)
-                    )
-                    .foregroundStyle(by: .value("Order type", "\(order.tradeType.rawValue) Price"))
-                    .symbol(.circle)
-                    .symbolSize(15)
-                }
-            }
-            .chartYScale(domain: priceRange)
-            .frame(height: 250)
-            
-            if assetsInOrders.count > 1 {
-                AssetPicker(assets: assetsInOrders, pickerSelection: $pickerSelection.animation(.easeInOut))
-                    .onAppear {
-                        pickerSelection = assetsInOrders.first!
-                    }
-            }
-        }
+//        .ignoresSafeArea(edges: .bottom)
     }
 }
 
-struct CalculatorView_Previews: PreviewProvider {
+struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {
-        CalculatorView(
+        StatisticsView(
             currentOrderFiat: .rub,
             currentOrderTypeFilter: .buy,
             startDate: Date.now.dayBefore,

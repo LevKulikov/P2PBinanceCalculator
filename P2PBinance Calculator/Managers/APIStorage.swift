@@ -64,6 +64,13 @@ protocol APIStorageProtocol: AnyObject {
     /// Provides saved accounts
     /// - Returns: all saved accounts
     func getAccounts() -> [APIAccount]
+    
+    /// Changes positions of APIAccounts in the array
+    /// - Parameters:
+    ///   - fromOffsets: set of indexes from what accounts should be moved
+    ///   - toOffset: destination of movement
+    ///   - completionHandler: Completion handler, provides array of moved accounts if there is success, and nil if it is not
+    func moveAccounts(fromOffsets: IndexSet, toOffset: Int, completionHandler: (([APIAccount]?) -> Void)?)
 }
 
 /// Object that stores user API data
@@ -158,6 +165,21 @@ class APIStorage: APIStorageProtocol {
         deleteAccount(at: index, completionHandler: completionHandler)
     }
     
+    func moveAccounts(fromOffsets: IndexSet, toOffset: Int, completionHandler: (([APIAccount]?) -> Void)? = nil) {
+        var movedAccounts: [APIAccount] = []
+        for index in fromOffsets {
+            movedAccounts.append(accounts[index])
+        }
+        accounts.move(fromOffsets: fromOffsets, toOffset: toOffset)
+        
+        do {
+            UserDefaults.standard.set(try PropertyListEncoder().encode(accounts), forKey: userDefaultsAccounts)
+            completionHandler?(movedAccounts)
+        } catch {
+            completionHandler?(nil)
+        }
+    }
+    
     func getAccounts() -> [APIAccount] {
         return accounts
     }
@@ -232,6 +254,15 @@ class APIStorageMock: APIStorageProtocol {
         }
         
         deleteAccount(at: index, completionHandler: completionHandler)
+    }
+    
+    func moveAccounts(fromOffsets: IndexSet, toOffset: Int, completionHandler: (([APIAccount]?) -> Void)? = nil) {
+        var movedAccounts: [APIAccount] = []
+        for index in fromOffsets {
+            movedAccounts.append(accounts[index])
+        }
+        accounts.move(fromOffsets: fromOffsets, toOffset: toOffset)
+        completionHandler?(movedAccounts)
     }
     
     func getAccounts() -> [APIAccount] {

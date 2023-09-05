@@ -16,10 +16,9 @@ struct ContentView: View {
     @State private var loadStatus = (isLoading: false, isResponseGet: false)
     @State private var responseError: BinanceConnection.BinanceError? = nil
     @State private var errorFlag = false
-    @State private var isCalculatorButtonActive = false 
-    @State private var presentCalculatorSheet = false
+    @State private var presentStatisticsSheet = false
     @State private var presentAPISheet = false
-    @State private var presentCalculatorError = false
+    @State private var presentStatisticsError = false
     @State private var didChangeAPI = false
     @State private var c2cOrders: [C2CHistoryResponse.C2COrderTransformed] = []
     /// If c2cOrders is buy, c2cOrdersSecondType is sell, and vise versa
@@ -79,148 +78,168 @@ struct ContentView: View {
         if !loadStatus.isLoading && loadStatus.isResponseGet {
             NavigationStack {
                 VStack {
-                    FilterView(
-                        orderType: $orderType,
-                        orderStatus: $orderStatus,
-                        orderFiat: $orderFiat,
-                        orderAsset: $orderAsset,
-                        fromDate: $startDate,
-                        toDate: $endDate,
-                        fromFiatValue: $fromFiatValue,
-                        toFiatValue: $toFiatValue,
-                        orderAdvertisementRole: $orderAdvertisementRole
-                    )
+                    filterView
                     
-                    List {
-                        ForEach(orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered) { order in
-                            OrderItem(order: order)
-                                .background {
-                                    NavigationLink("", destination: OrderDetailsView(order: order)).opacity(0)
-                                }
-                                .swipeActions(edge: .leading) {
-                                    Button {
-                                        setOrderInArray(order: order, count: !order.activeForCount)
-                                    } label: {
-                                        Label(order.activeForCount ? "Do not count" : "Count", systemImage: order.activeForCount ? "multiply" : "checkmark.circle")
-                                    }
-                                    .tint(order.activeForCount ? .red : .green)
-
-                                }
-                        }
-                                                
-                        CalculatorItem(orders: orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered)
-                            .onTapGesture {
-                                presentCalculatorSheet.toggle()
-                            }
-                    }
-                    .listStyle(.inset)
-                    .navigationTitle("P2P Orders")
-                    .animation(.default, value: c2cOrdersFiltered)
-                    .refreshable {
-                        getBothTypesOrders()
-                    }
-                    .scrollDismissesKeyboard(.immediately)
-                    .toolbar {
-                        Button {
-                            if orderFiat != .allFiat && orderFiat != .other {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    presentCalculatorSheet.toggle()
-                                }
-                            } else {
-                                presentCalculatorError.toggle()
-                            }
-                        } label: {
-                            Image(systemName: "gauge.high")
-                                .font(.custom("title1.5", size: 25))
-                                .foregroundColor(Color("binanceColor"))
-                        }
-                        .disabled(c2cOrdersSecondTypeFiltered.isEmpty)
-                        .opacity(c2cOrdersSecondTypeFiltered.isEmpty ? 0.5 : 1)
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    didChangeAPI = false
-                                    presentAPISheet.toggle()
-                                }
-                            } label: {
-                                HStack {
-                                    Image(systemName: "person.circle")
-                                        .font(.custom("title1.5", size: 25))
-                                        .foregroundColor(Color("binanceColor"))
-                                    
-                                    Text(viewModel.selectedAccount?.name ?? "")
-                                        .frame(maxWidth: 200, alignment: .leading)
-                                        .font(.title2)
-                                        .bold()
-                                }
-                            }
-                            .contextMenu {
-                                ForEach(viewModel.getAccounts()) { account in
-                                    Button(account.name) {
-                                        viewModel.selectedAccount = nil
-                                        viewModel.selectedAccount = account
-                                        getBothTypesOrders()
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .sheet(isPresented: $presentCalculatorSheet) {
-                        CalculatorView(
-                            currentOrderFiat: orderFiat,
-                            currentOrderTypeFilter: orderType != .bothTypes ? orderType : .buy,
-                            startDate: startDate,
-                            endDate: endDate,
-                            c2cOrders: c2cOrdersFiltered,
-                            c2cOrdersSecondType: c2cOrdersSecondTypeFiltered)
-                    }
-                    .sheet(isPresented: $presentAPISheet) {
-                        if didChangeAPI {
-                            c2cOrders = []
-                            loadStatus = (true, false)
+                    listView
+                        .listStyle(.inset)
+                        .navigationTitle("P2P Orders")
+                        .animation(.default, value: c2cOrdersFiltered)
+                        .refreshable {
                             getBothTypesOrders()
                         }
-                    } content: {
-                        NavigationView {
-                            BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
-                                .environmentObject(viewModel)
+                        .scrollDismissesKeyboard(.immediately)
+                        .toolbar {
+                            calculatorShowButton
                         }
-                    }
-                    .alert("Choose specific fiat", isPresented: $presentCalculatorError) {
-                        Text("Ok")
-                            .onTapGesture {
-                                presentCalculatorError = false
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                accountViewShowButton
                             }
-                    }
-                    .onChange(of: orderType) { _ in
-                        getBothTypesOrders()
-                    }
-                    .onChange(of: startDate) { newValue in
-                        
-                        if let daysDif = Calendar.current.dateComponents([.day], from: newValue, to: endDate).day,
-                           daysDif > 30 {
-                            endDate = Calendar.current.date(byAdding: .day, value: 30, to: newValue)!
                         }
-                        
-                        getBothTypesOrders()
-                    }
-                    .onChange(of: endDate) { newValue in
-                        
-                        if let daysDif = Calendar.current.dateComponents([.day], from: startDate, to: newValue).day,
-                           daysDif > 30 {
-                            startDate = Calendar.current.date(byAdding: .day, value: -30, to: newValue)!
+                        .sheet(isPresented: $presentStatisticsSheet) {
+                            statisticsView
                         }
-                        
-                        getBothTypesOrders()
-                    }
-                    .onChange(of: orderFiat) { newValue in
-                        viewModel.setFiatFilter(for: newValue)
-                    }
+                        .sheet(isPresented: $presentAPISheet) {
+                            if didChangeAPI {
+                                c2cOrders = []
+                                loadStatus = (true, false)
+                                getBothTypesOrders()
+                            }
+                        } content: {
+                            NavigationView {
+                                BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
+                                    .environmentObject(viewModel)
+                            }
+                        }
+                        .alert("Choose specific fiat", isPresented: $presentStatisticsError) {
+                            Text("Ok")
+                                .onTapGesture {
+                                    presentStatisticsError = false
+                                }
+                        }
+                        .onChange(of: orderType) { _ in
+                            getBothTypesOrders()
+                        }
+                        .onChange(of: startDate) { newValue in
+                            
+                            if let daysDif = Calendar.current.dateComponents([.day], from: newValue, to: endDate).day,
+                               daysDif > 30 {
+                                endDate = Calendar.current.date(byAdding: .day, value: 30, to: newValue)!
+                            }
+                            
+                            getBothTypesOrders()
+                        }
+                        .onChange(of: endDate) { newValue in
+                            
+                            if let daysDif = Calendar.current.dateComponents([.day], from: startDate, to: newValue).day,
+                               daysDif > 30 {
+                                startDate = Calendar.current.date(byAdding: .day, value: -30, to: newValue)!
+                            }
+                            
+                            getBothTypesOrders()
+                        }
+                        .onChange(of: orderFiat) { newValue in
+                            viewModel.setFiatFilter(for: newValue)
+                        }
                 }
             }
             .tint(Color("binanceColor"))
+        }
+    }
+    
+    private var filterView: some View {
+        FilterView(
+            orderType: $orderType,
+            orderStatus: $orderStatus,
+            orderFiat: $orderFiat,
+            orderAsset: $orderAsset,
+            fromDate: $startDate,
+            toDate: $endDate,
+            fromFiatValue: $fromFiatValue,
+            toFiatValue: $toFiatValue,
+            orderAdvertisementRole: $orderAdvertisementRole
+        )
+    }
+    
+    private var statisticsView: some View {
+        StatisticsView(
+            currentOrderFiat: orderFiat,
+            currentOrderTypeFilter: orderType != .bothTypes ? orderType : .buy,
+            startDate: startDate,
+            endDate: endDate,
+            c2cOrders: c2cOrdersFiltered,
+            c2cOrdersSecondType: c2cOrdersSecondTypeFiltered)
+    }
+    
+    private var listView: some View {
+        List {
+            ForEach(orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered) { order in
+                OrderItem(order: order)
+                    .background {
+                        NavigationLink("", destination: OrderDetailsView(order: order)).opacity(0)
+                    }
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            setOrderInArray(order: order, count: !order.activeForCount)
+                        } label: {
+                            Label(order.activeForCount ? "Do not count" : "Count", systemImage: order.activeForCount ? "multiply" : "checkmark.circle")
+                        }
+                        .tint(order.activeForCount ? .red : .green)
+
+                    }
+            }
+                                    
+            CalculatorItem(orders: orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered)
+                .onTapGesture {
+                    presentStatisticsSheet.toggle()
+                }
+        }
+    }
+    
+    private var calculatorShowButton: some View {
+        Button {
+            if orderFiat != .allFiat && orderFiat != .other {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    presentStatisticsSheet.toggle()
+                }
+            } else {
+                presentStatisticsError.toggle()
+            }
+        } label: {
+            Image(systemName: "gauge.high")
+                .font(.custom("title1.5", size: 25))
+                .foregroundColor(Color("binanceColor"))
+        }
+        .disabled(c2cOrdersSecondTypeFiltered.isEmpty)
+        .opacity(c2cOrdersSecondTypeFiltered.isEmpty ? 0.5 : 1)
+    }
+    
+    private var accountViewShowButton: some View {
+        Button {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                didChangeAPI = false
+                presentAPISheet.toggle()
+            }
+        } label: {
+            HStack {
+                Image(systemName: "person.circle")
+                    .font(.custom("title1.5", size: 25))
+                    .foregroundColor(Color("binanceColor"))
+                
+                Text(viewModel.selectedAccount?.name ?? "")
+                    .frame(maxWidth: 180, alignment: .leading)
+                    .font(.title2)
+                    .bold()
+            }
+        }
+        .contextMenu {
+            ForEach(viewModel.getAccounts()) { account in
+                Button(account.name) {
+                    viewModel.selectedAccount = nil
+                    viewModel.selectedAccount = account
+                    getBothTypesOrders()
+                }
+            }
         }
     }
     
@@ -330,7 +349,7 @@ struct ContentView: View {
     
     private func getBothTypesOrders() {
         withAnimation {
-            presentCalculatorSheet = false
+            presentStatisticsSheet = false
             c2cOrdersSecondType = []
         }
         getFirstTypeOrders()

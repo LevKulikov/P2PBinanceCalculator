@@ -75,6 +75,10 @@ class DataStorage: DataStorageProtocol {
         apiStorage.deleteAccount(at: index, completionHandler: completionHandler)
     }
     
+    func moveAccounts(fromOffsets: IndexSet, toOffset: Int, completionHandler: (([APIAccount]?) -> Void)? = nil) {
+        apiStorage.moveAccounts(fromOffsets: fromOffsets, toOffset: toOffset, completionHandler: completionHandler)
+    }
+    
     func getAccounts() -> [APIAccount] {
         apiStorage.getAccounts()
     }
@@ -132,6 +136,10 @@ class DataStorageMock: DataStorageProtocol {
     
     func deleteAccount(at index: Int, completionHandler: ((APIAccount?) -> Void)?) {
         apiStorage.deleteAccount(at: index, completionHandler: completionHandler)
+    }
+    
+    func moveAccounts(fromOffsets: IndexSet, toOffset: Int, completionHandler: (([APIAccount]?) -> Void)? = nil) {
+        apiStorage.moveAccounts(fromOffsets: fromOffsets, toOffset: toOffset, completionHandler: completionHandler)
     }
     
     func getAccounts() -> [APIAccount] {

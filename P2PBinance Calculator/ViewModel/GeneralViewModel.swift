@@ -112,6 +112,10 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
         dataStorage.deleteAccount(at: index, completionHandler: completionHandler)
     }
     
+    func moveAccounts(fromOffsets: IndexSet, toOffset: Int, completionHandler: (([APIAccount]?) -> Void)? = nil) {
+        dataStorage.moveAccounts(fromOffsets: fromOffsets, toOffset: toOffset, completionHandler: completionHandler)
+    }
+    
     func getAccounts() -> [APIAccount] {
         dataStorage.getAccounts()
     }

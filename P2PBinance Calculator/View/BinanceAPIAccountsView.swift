@@ -28,7 +28,7 @@ struct BinanceAPIAccountsView: View {
                         Button {
                             viewModel.selectedAccount = account
                             isPresented.toggle()
-                            didChangeAPI.toggle()
+                            didChangeAPI = true
                         } label: {
                             Label("Select", systemImage: "checkmark.circle")
                         }
@@ -39,6 +39,13 @@ struct BinanceAPIAccountsView: View {
                         accounts.remove(at: index)
                         viewModel.deleteAccount(at: index, completionHandler: nil)
                     }
+                    viewModel.selectedAccount = viewModel.getAccounts().first
+                    didChangeAPI = true
+                }
+                .onMove { fromOffsets, toOffset in
+                    accounts.move(fromOffsets: fromOffsets, toOffset: toOffset)
+                    viewModel.moveAccounts(fromOffsets: fromOffsets, toOffset: toOffset)
+                    didChangeAPI = true
                 }
                 
                 if viewModel.getAccounts().isEmpty {
