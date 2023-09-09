@@ -101,21 +101,27 @@ struct ContentView: View {
                         }
                         .sheet(isPresented: $presentAPISheet) {
                             if didChangeAPI {
-                                c2cOrders = []
                                 loadStatus = (true, false)
                                 getBothTypesOrders()
                             }
                         } content: {
-                            NavigationView {
+//                            NavigationView {
                                 BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
                                     .environmentObject(viewModel)
-                            }
+//                            }
                         }
                         .alert("Choose specific fiat", isPresented: $presentStatisticsError) {
-                            Text("Ok")
-                                .onTapGesture {
-                                    presentStatisticsError = false
+                            ForEach(C2CHistoryResponse.C2COrderFiat.mentionedFiat, id: \.self) { fiat in
+                                Button(fiat.rawValue) {
+                                    orderFiat = fiat
+                                    presentStatisticsSheet.toggle()
                                 }
+                            }
+                            
+                            Button("Cancel", role: .cancel) {
+                                presentStatisticsError = false
+                            }
+
                         }
                         .onChange(of: orderType) { _ in
                             getBothTypesOrders()
@@ -198,7 +204,7 @@ struct ContentView: View {
     
     private var calculatorShowButton: some View {
         Button {
-            if orderFiat != .allFiat && orderFiat != .other {
+            if orderFiat != .allFiat, orderFiat != .other {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     presentStatisticsSheet.toggle()
                 }
@@ -206,9 +212,14 @@ struct ContentView: View {
                 presentStatisticsError.toggle()
             }
         } label: {
-            Image(systemName: "gauge.high")
-                .font(.custom("title1.5", size: 25))
-                .foregroundColor(Color("binanceColor"))
+            if !loadStatus.isLoading {
+                Image(systemName: "gauge.high")
+                    .font(.custom("title1.5", size: 25))
+                    .foregroundColor(Color("binanceColor"))
+            } else {
+                ProgressView()
+                    .tint(Color("binanceColor"))
+            }
         }
         .disabled(c2cOrdersSecondTypeFiltered.isEmpty)
         .opacity(c2cOrdersSecondTypeFiltered.isEmpty ? 0.5 : 1)
@@ -350,6 +361,7 @@ struct ContentView: View {
     private func getBothTypesOrders() {
         withAnimation {
             presentStatisticsSheet = false
+            c2cOrders = []
             c2cOrdersSecondType = []
         }
         getFirstTypeOrders()

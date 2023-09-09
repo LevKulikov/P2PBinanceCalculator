@@ -11,28 +11,16 @@ struct BinanceAPIAccountsView: View {
     @EnvironmentObject var viewModel: GeneralViewModel
     @Binding var isPresented: Bool
     @Binding var didChangeAPI: Bool
+    @State private var editMode: EditMode = .inactive
     @State private var accounts: [APIAccount] = []
+    @State private var navigationPath = NavigationPath()
+    @State private var selectedAccount: APIAccount?
     
     var body: some View {
-        VStack {
+        NavigationStack(path: $navigationPath) {
             List {
                 ForEach(accounts) { account in
-                    NavigationLink {
-                        BinanceAccountView(action: .update(account), isPresented: $isPresented, didChangeAPI: $didChangeAPI)
-                            .environmentObject(viewModel)
-                    } label: {
-                        Text(account.name)
-                            .font(.title3)
-                    }
-                    .contextMenu {
-                        Button {
-                            viewModel.selectedAccount = account
-                            isPresented.toggle()
-                            didChangeAPI = true
-                        } label: {
-                            Label("Select", systemImage: "checkmark.circle")
-                        }
-                    }
+                    createAccountRow(for: account)
                 }
                 .onDelete { indexes in
                     for index in indexes {
@@ -59,35 +47,82 @@ struct BinanceAPIAccountsView: View {
                     }
                 }
             }
+            .listRowBackground(Color.clear)
+            .navigationTitle("Binance accounts")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                        .foregroundColor(Color("binanceColor"))
+                        .navigationDestination(for: APIAccount.self) { account in
+                            BinanceAccountView(action: .update(account), isPresented: $isPresented, didChangeAPI: $didChangeAPI)
+                                .environmentObject(viewModel)
+                        } // NavigationDestination is here because if it is located with List, EditButton stops working
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        BinanceAccountView(action: .create, isPresented: $isPresented, didChangeAPI: $didChangeAPI)
+                            .environmentObject(viewModel)
+                    } label: {
+                        Image(systemName: "plus")
+                            .foregroundColor(Color("binanceColor"))
+                    }
+                }
+            }
+            .onAppear {
+                accounts = viewModel.getAccounts()
+            }
+            .environment(\.editMode, $editMode)
         }
-        .navigationTitle("Binance accounts")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                EditButton()
-                    .foregroundColor(Color("binanceColor"))
+    }
+    
+    @ViewBuilder
+    private func createAccountRow(for account: APIAccount) -> some View {
+        HStack {
+            Text(account.name)
+                .font(.title3)
+            
+            Spacer()
+            
+            if editMode == .inactive {
+                Button {
+                    navigationPath.append(account)
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .foregroundColor(Color("binanceColor"))
+                        .font(.title3)
+                }
+                .buttonStyle(.borderless)
             }
         }
-        .toolbar {
-            NavigationLink {
-                BinanceAccountView(action: .create, isPresented: $isPresented, didChangeAPI: $didChangeAPI)
-                    .environmentObject(viewModel)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if editMode == .inactive {
+                viewModel.selectedAccount = account
+                selectedAccount = account
+                isPresented.toggle()
+                didChangeAPI = true
+            }
+        }
+        .contextMenu {
+            Button {
+                viewModel.selectedAccount = account
+                isPresented.toggle()
+                didChangeAPI = true
             } label: {
-                Image(systemName: "plus")
-                    .foregroundColor(Color("binanceColor"))
+                Label("Select", systemImage: "checkmark.circle")
             }
         }
-        .onAppear {
-            accounts = viewModel.getAccounts()
-        }
+        .listRowBackground(selectedAccount == account ? Color(uiColor: UIColor.quaternaryLabel) : nil)
     }
 }
 
 struct BinanceAPIAccountsView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
+//        NavigationView {
             BinanceAPIAccountsView(isPresented: .constant(true), didChangeAPI: .constant(true))
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
-        }
+//        }
     }
 }

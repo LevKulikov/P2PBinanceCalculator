@@ -34,7 +34,7 @@ struct C2CHistoryResponse: Codable {
         case eur = "EUR"
         case other = "Other"
         
-        static let mentionedFiat = Array(Self.allCases.drop { $0 == .other })
+        static let mentionedFiat = Array(Self.allCases.filter({![Self.allFiat, Self.other].contains($0)}))
     }
     
     enum C2COrderType: String, Codable, CaseIterable {

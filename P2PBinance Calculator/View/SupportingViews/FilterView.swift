@@ -115,7 +115,7 @@ struct FilterView: View {
                                         
                                         Text("Hide")
                                     }
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color(uiColor: .systemBackground))
                                 }
                                 .padding(.leading, 10)
                                 .animation(.easeInOut, value: detailedFilterShow)
@@ -203,6 +203,7 @@ struct FilterView: View {
                                     }
                                 }
                                 .buttonStyle(.borderedProminent)
+                                .foregroundColor(Color(uiColor: .systemBackground))
                             }
                             .padding(.top, 10)
                             .toolbar {

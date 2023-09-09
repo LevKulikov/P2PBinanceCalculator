@@ -14,6 +14,8 @@ struct BinanceAccountView: View {
     }
     
     let action: AccountAction
+    
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: GeneralViewModel
     @Binding var isPresented: Bool
     @Binding var didChangeAPI: Bool
@@ -95,23 +97,13 @@ struct BinanceAccountView: View {
             Spacer()
             
             Button() {
-                if accountName.isEmpty || apiKey.isEmpty || secretKey.isEmpty {
-                    emptyFieldErrorFlag.toggle()
-                } else {
-                    let newAccount = APIAccount(name: accountName, apiKey: apiKey, secretKey: secretKey)
-                    switch action {
-                    case .create:
-                        viewModel.addAPIAccount(newAccount, completionHandler: nil)
-                    case .update(let prevAccount):
-                        viewModel.updateAccount(prevAccount, to: newAccount, completionHandler: nil)
-                    }
-                    
-                    viewModel.selectedAccount = newAccount
+                checkFieldsAndSave { newAccount in
                     didChangeAPI = true
-                    isPresented = false
+                    dismiss()
                 }
             } label: {
-                Text("Save and select")
+                Text("Save")
+                    .foregroundColor(Color(uiColor: UIColor.systemBackground))
                     .bold()
                     .font(.title3)
                     .frame(width: 200)
@@ -119,6 +111,18 @@ struct BinanceAccountView: View {
             .alert("There is at least one empty field", isPresented: $emptyFieldErrorFlag) {
                 Text("Ok")
             }
+            .contextMenu(menuItems: {
+                Button {
+                    checkFieldsAndSave { newAccount in
+                        viewModel.selectedAccount = newAccount
+                        didChangeAPI = true
+                        isPresented = false
+                    }
+                } label: {
+                    Label("Save and select", systemImage: "checkmark.circle")
+                }
+
+            })
             .tint(Color("binanceColor"))
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
@@ -141,6 +145,22 @@ struct BinanceAccountView: View {
             nameFieldFocused = false
             apiKeyFieldFocused = false
             secretKeyFieldFocused = false
+        }
+    }
+    
+    private func checkFieldsAndSave(successHandler: (APIAccount) -> Void) {
+        if accountName.isEmpty || apiKey.isEmpty || secretKey.isEmpty {
+            emptyFieldErrorFlag.toggle()
+        } else {
+            let newAccount = APIAccount(name: accountName, apiKey: apiKey, secretKey: secretKey)
+            switch action {
+            case .create:
+                viewModel.addAPIAccount(newAccount, completionHandler: nil)
+            case .update(let prevAccount):
+                viewModel.updateAccount(prevAccount, to: newAccount, completionHandler: nil)
+            }
+            
+            successHandler(newAccount)
         }
     }
 }
