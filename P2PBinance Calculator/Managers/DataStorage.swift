@@ -16,6 +16,14 @@ protocol DataStorageProtocol: AnyObject, APIStorageProtocol {
     /// Provides previously saved fiat filter
     /// - Returns: Saved fiat filter
     func getFiatFilter() -> C2CHistoryResponse.C2COrderFiat
+    
+    /// Saves new custom fiat filter name
+    /// - Parameter newCustomFiat: New custom fiat filter name set by user
+    func setCustomFiatFilter(for newCustomFiat: String)
+    
+    /// Provides previously saved custom fiat filter name
+    /// - Returns: Saved custom fiat filter name
+    func getCustomFiatFilter() -> String
 }
 
 /// Object that stores app data
@@ -24,13 +32,16 @@ class DataStorage: DataStorageProtocol {
     private let apiStorage: APIStorageProtocol
     /// Saved fiat filter set by user previously
     private var fiatFilter: C2CHistoryResponse.C2COrderFiat
+    private var customFiatFilter: String
     private let userDefaultsFiatFilterKey = "userDefaultsFiatFilterKey"
+    private let userDefaultsCustomFiatFilterKey = "userDefaultsCustomFiatFilterKey"
     
     //MARK: Initializer
     init(apiStorage: APIStorageProtocol) {
         self.apiStorage = apiStorage
         let fiatRawValue = UserDefaults.standard.string(forKey: userDefaultsFiatFilterKey) ?? C2CHistoryResponse.C2COrderFiat.allFiat.rawValue
         fiatFilter = C2CHistoryResponse.C2COrderFiat(rawValue: fiatRawValue) ?? C2CHistoryResponse.C2COrderFiat.allFiat
+        customFiatFilter = UserDefaults.standard.string(forKey: userDefaultsCustomFiatFilterKey) ?? ""
     }
     
     //MARK: Methods
@@ -53,6 +64,15 @@ class DataStorage: DataStorageProtocol {
     
     func getFiatFilter() -> C2CHistoryResponse.C2COrderFiat {
         return fiatFilter
+    }
+    
+    func setCustomFiatFilter(for newCustomFiat: String) {
+        UserDefaults.standard.setValue(newCustomFiat, forKey: userDefaultsCustomFiatFilterKey)
+        customFiatFilter = newCustomFiat
+    }
+    
+    func getCustomFiatFilter() -> String {
+        return customFiatFilter
     }
     
     func addAPIAccount(name: String, apiKey: String, secretKey: String, completionHandler: ((APIAccount?) -> Void)?) {
@@ -88,10 +108,12 @@ class DataStorage: DataStorageProtocol {
 class DataStorageMock: DataStorageProtocol {
     private let apiStorage: APIStorageProtocol
     private var fiatFilter: C2CHistoryResponse.C2COrderFiat
+    private var customFiatFilter: String
     
     init(apiStorage: APIStorageProtocol) {
         self.apiStorage = apiStorage
         fiatFilter = .allFiat
+        customFiatFilter = ""
     }
     
     convenience init() {
@@ -116,6 +138,14 @@ class DataStorageMock: DataStorageProtocol {
     
     func getFiatFilter() -> C2CHistoryResponse.C2COrderFiat {
         return fiatFilter
+    }
+    
+    func setCustomFiatFilter(for newCustomFiat: String) {
+        customFiatFilter = newCustomFiat
+    }
+    
+    func getCustomFiatFilter() -> String {
+        return customFiatFilter
     }
     
     func addAPIAccount(name: String, apiKey: String, secretKey: String, completionHandler: ((APIAccount?) -> Void)?) {

@@ -12,6 +12,7 @@ struct StatisticsView: View {
     //MARK: Properties
     // Init properties
     var currentOrderFiat: C2CHistoryResponse.C2COrderFiat
+    var currentCustomFiat: String
     var currentOrderTypeFilter: C2CHistoryResponse.C2COrderType
     var startDate: Date
     var endDate: Date
@@ -104,7 +105,7 @@ struct StatisticsView: View {
     
     private var tradeValueText: some View {
         HStack(spacing: 0) {
-            Text("Value \(currentOrderFiat.rawValue): ")
+            Text("Value \(currentOrderFiat != .custom ? currentOrderFiat.rawValue : currentCustomFiat): ")
             Text((firstOrdersValue + secondOrdersValue).currencyRU).underline(color: .gray)
                 .contextMenu {
                     Button {
@@ -296,6 +297,7 @@ struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {
         StatisticsView(
             currentOrderFiat: .rub,
+            currentCustomFiat: "CNY",
             currentOrderTypeFilter: .buy,
             startDate: Date.now.dayBefore,
             endDate: Date.now,
@@ -336,12 +338,12 @@ struct StatisticsView_Previews: PreviewProvider {
                     orderNumber: "43987209347850823403",
                     advNo: "84792837409127439234",
                     tradeType: .buy,
-                    asset: "USDT",
+                    asset: "ADA",
                     fiat: "RUB",
                     fiatSymbol: "₽",
                     amount: "7841.0842534200",
                     totalPrice: "750000",
-                    unitPrice: "95.5",
+                    unitPrice: "900.5",
                     orderStatus: .completed,
                     createTime: 1619361369000,
                     commission: "0",

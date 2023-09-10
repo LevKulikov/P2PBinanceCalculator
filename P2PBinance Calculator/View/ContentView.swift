@@ -31,6 +31,8 @@ struct ContentView: View {
     @State private var orderStatus: C2CHistoryResponse.C2COrderStatus = .all
     @State private var orderFiat: C2CHistoryResponse.C2COrderFiat = .allFiat
     @State private var orderAsset: C2CHistoryResponse.C2COrderAsset = .allAssets
+    @State private var customFiat = ""
+    @State private var customAsset = ""
     @State private var startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!.startOfDay
     @State private var endDate = Date.now.endOfDay
     @State private var fromFiatValue = ""
@@ -89,12 +91,16 @@ struct ContentView: View {
                         }
                         .scrollDismissesKeyboard(.immediately)
                         .toolbar {
-                            calculatorShowButton
-                        }
-                        .toolbar {
                             ToolbarItem(placement: .navigationBarLeading) {
                                 accountViewShowButton
                             }
+                            
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                statisticsShowButton
+                            }
+                        }
+                        .toolbar {
+                            
                         }
                         .sheet(isPresented: $presentStatisticsSheet) {
                             statisticsView
@@ -105,10 +111,8 @@ struct ContentView: View {
                                 getBothTypesOrders()
                             }
                         } content: {
-//                            NavigationView {
                                 BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
                                     .environmentObject(viewModel)
-//                            }
                         }
                         .alert("Choose specific fiat", isPresented: $presentStatisticsError) {
                             ForEach(C2CHistoryResponse.C2COrderFiat.mentionedFiat, id: \.self) { fiat in
@@ -147,6 +151,9 @@ struct ContentView: View {
                         .onChange(of: orderFiat) { newValue in
                             viewModel.setFiatFilter(for: newValue)
                         }
+                        .onChange(of: customFiat) { newValue in
+                            viewModel.setCustomFiatFilter(for: newValue)
+                        }
                 }
             }
             .tint(Color("binanceColor"))
@@ -159,6 +166,8 @@ struct ContentView: View {
             orderStatus: $orderStatus,
             orderFiat: $orderFiat,
             orderAsset: $orderAsset,
+            customFiat: $customFiat,
+            customAsset: $customAsset,
             fromDate: $startDate,
             toDate: $endDate,
             fromFiatValue: $fromFiatValue,
@@ -170,6 +179,7 @@ struct ContentView: View {
     private var statisticsView: some View {
         StatisticsView(
             currentOrderFiat: orderFiat,
+            currentCustomFiat: customFiat,
             currentOrderTypeFilter: orderType != .bothTypes ? orderType : .buy,
             startDate: startDate,
             endDate: endDate,
@@ -202,7 +212,7 @@ struct ContentView: View {
         }
     }
     
-    private var calculatorShowButton: some View {
+    private var statisticsShowButton: some View {
         Button {
             if orderFiat != .allFiat, orderFiat != .other {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -372,6 +382,7 @@ struct ContentView: View {
         orderType = .bothTypes
         orderStatus = .all
         orderFiat = viewModel.getFiatFilter()
+        customFiat = viewModel.getCustomFiatFilter()
         orderAsset = .allAssets
         startDate = Calendar.current.date(byAdding: .day, value: -30, to: Date.now)!.startOfDay
         endDate = Date.now.endOfDay
@@ -400,7 +411,8 @@ struct ContentView: View {
         
         var fiatFiltered = statusFiltered
         if orderFiat != .allFiat {
-            if orderFiat == .other {
+            switch orderFiat {
+            case .other:
                 fiatFiltered = fiatFiltered.filter { order in
                     !C2CHistoryResponse.C2COrderFiat
                         .mentionedFiat
@@ -408,14 +420,17 @@ struct ContentView: View {
                             order.fiat == fiat.rawValue
                         }
                 }
-            } else {
+            case .custom:
+                fiatFiltered = fiatFiltered.filter { $0.fiat == customFiat }
+            default:
                 fiatFiltered = fiatFiltered.filter { $0.fiat == orderFiat.rawValue }
             }
         }
         
         var assetFiltered = fiatFiltered
         if orderAsset != .allAssets {
-            if orderAsset == .other {
+            switch orderAsset {
+            case .other:
                 assetFiltered = assetFiltered.filter { order in
                     !C2CHistoryResponse.C2COrderAsset
                         .mentionedAssets
@@ -423,7 +438,9 @@ struct ContentView: View {
                             order.asset == asset.rawValue
                         }
                 }
-            } else {
+            case .custom:
+                assetFiltered = assetFiltered.filter { $0.asset == customAsset }
+            default:
                 assetFiltered = assetFiltered.filter { $0.asset == orderAsset.rawValue }
             }
         }

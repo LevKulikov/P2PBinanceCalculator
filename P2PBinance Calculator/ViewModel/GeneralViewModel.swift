@@ -92,6 +92,14 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
         dataStorage.getFiatFilter()
     }
     
+    func setCustomFiatFilter(for newCustomFiat: String) {
+        dataStorage.setCustomFiatFilter(for: newCustomFiat)
+    }
+    
+    func getCustomFiatFilter() -> String {
+        dataStorage.getCustomFiatFilter()
+    }
+    
     func addAPIAccount(name: String, apiKey: String, secretKey: String, completionHandler: ((APIAccount?) -> Void)?) {
         dataStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, completionHandler: completionHandler)
     }
@@ -160,7 +168,7 @@ class GeneralViewModelMock: GeneralViewModel {
                 orderNumber: "43987209347850823403",
                 advNo: "84792837409127439234",
                 tradeType: type,
-                asset: "USDT",
+                asset: "C98",
                 fiat: "RUB",
                 fiatSymbol: "₽",
                 amount: "7841.0842534200",

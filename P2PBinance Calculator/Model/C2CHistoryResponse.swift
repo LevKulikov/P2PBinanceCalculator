@@ -17,13 +17,10 @@ struct C2CHistoryResponse: Codable {
         case busd = "BUSD"
         case bnb = "BNB"
         case eth = "ETH"
-        case fdusd = "FDUSD"
-        case rub = "RUB"
-        case usd = "USD"
-        case eur = "EUR"
         case other = "Other"
+        case custom = "Custom:"
         
-        static let mentionedAssets = Array(Self.allCases.drop { $0 == .other })
+        static let mentionedAssets = Array(Self.allCases.filter { ![Self.allAssets, Self.other, Self.custom].contains($0) })
     }
     
     enum C2COrderFiat: String, CaseIterable {
@@ -33,8 +30,9 @@ struct C2CHistoryResponse: Codable {
         case usd = "USD"
         case eur = "EUR"
         case other = "Other"
+        case custom = "Custom:"
         
-        static let mentionedFiat = Array(Self.allCases.filter({![Self.allFiat, Self.other].contains($0)}))
+        static let mentionedFiat = Array(Self.allCases.filter { ![Self.allFiat, Self.other, Self.custom].contains($0) })
     }
     
     enum C2COrderType: String, Codable, CaseIterable {
