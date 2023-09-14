@@ -113,6 +113,12 @@ struct BinanceAPIAccountsView: View {
             } label: {
                 Label("Select", systemImage: "checkmark.circle")
             }
+            
+            Button {
+                navigationPath.append(account)
+            } label: {
+                Label("Edit", systemImage: "square.and.pencil")
+            }
         }
         .listRowBackground(selectedAccount == account ? Color(uiColor: UIColor.quaternaryLabel) : nil)
     }

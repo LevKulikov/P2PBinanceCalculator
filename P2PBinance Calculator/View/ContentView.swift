@@ -14,6 +14,8 @@ struct ContentView: View {
     @EnvironmentObject var viewModel: GeneralViewModel
     @State private var buttonDidLoad = false
     @State private var loadStatus = (isLoading: false, isResponseGet: false)
+    /// Needed when first load is done, so large ProgressView will not appear
+    @State private var modalLaoding = false
     @State private var responseError: BinanceConnection.BinanceError? = nil
     @State private var errorFlag = false
     @State private var presentStatisticsSheet = false
@@ -70,14 +72,13 @@ struct ContentView: View {
     var body: some View {
         if !loadStatus.isLoading && !loadStatus.isResponseGet {
             showLoadButton(title: "Get Binance P2P Orders")
-        } else if loadStatus.isLoading && !loadStatus.isResponseGet {
+        } else if !modalLaoding && loadStatus.isLoading && !loadStatus.isResponseGet {
             ProgressView()
                 .tint(Color("binanceColor"))
                 .controlSize(.large)
-            
         }
         
-        if !loadStatus.isLoading && loadStatus.isResponseGet {
+        if modalLaoding || (!loadStatus.isLoading && loadStatus.isResponseGet) {
             NavigationStack {
                 VStack {
                     filterView
@@ -157,6 +158,9 @@ struct ContentView: View {
                 }
             }
             .tint(Color("binanceColor"))
+            .onAppear {
+                modalLaoding = true
+            }
         }
     }
     
@@ -229,6 +233,7 @@ struct ContentView: View {
             } else {
                 ProgressView()
                     .tint(Color("binanceColor"))
+                    .controlSize(.large)
             }
         }
         .disabled(c2cOrdersSecondTypeFiltered.isEmpty)
@@ -292,6 +297,7 @@ struct ContentView: View {
                 }
             }
             .onAppear {
+                modalLaoding = false
                 if !buttonDidLoad {
                     buttonDidLoad = true
                     loadButtonPressed()
@@ -371,6 +377,7 @@ struct ContentView: View {
     private func getBothTypesOrders() {
         withAnimation {
             presentStatisticsSheet = false
+            loadStatus = (isLoading: true, isResponseGet: false)
             c2cOrders = []
             c2cOrdersSecondType = []
         }
