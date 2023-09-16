@@ -15,6 +15,7 @@ struct BinanceAPIAccountsView: View {
     @State private var accounts: [APIAccount] = []
     @State private var navigationPath = NavigationPath()
     @State private var selectedAccount: APIAccount?
+    @State private var maxAccountLimitReached = false
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -22,51 +23,29 @@ struct BinanceAPIAccountsView: View {
                 ForEach(accounts) { account in
                     createAccountRow(for: account)
                 }
-                .onDelete { indexes in
-                    for index in indexes {
-                        accounts.remove(at: index)
-                        viewModel.deleteAccount(at: index, completionHandler: nil)
-                    }
-                    viewModel.selectedAccount = viewModel.getAccounts().first
-                    didChangeAPI = true
-                }
-                .onMove { fromOffsets, toOffset in
-                    accounts.move(fromOffsets: fromOffsets, toOffset: toOffset)
-                    viewModel.moveAccounts(fromOffsets: fromOffsets, toOffset: toOffset)
-                    didChangeAPI = true
-                }
+                .onDelete(perform: deleteAccounts)
+                .onMove(perform: reorderAccounts)
                 
                 if viewModel.getAccounts().isEmpty {
-                    NavigationLink {
-                        BinanceAccountView(action: .create, isPresented: $isPresented, didChangeAPI: $didChangeAPI)
-                            .environmentObject(viewModel)
-                    } label: {
-                        Text("No accounts added")
-                            .font(.title2)
-                            .foregroundColor(Color("binanceColor"))
-                    }
+                    noAccountsRow
                 }
             }
             .listRowBackground(Color.clear)
             .navigationTitle("Binance accounts")
             .navigationBarTitleDisplayMode(.inline)
+            .alert("Maximum accounts number is 5", isPresented: $maxAccountLimitReached) {
+                Button("Ok") {}
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
-                        .foregroundColor(Color("binanceColor"))
-                        .navigationDestination(for: APIAccount.self) { account in
-                            BinanceAccountView(action: .update(account), isPresented: $isPresented, didChangeAPI: $didChangeAPI)
-                                .environmentObject(viewModel)
-                        } // NavigationDestination is here because if it is located with List, EditButton stops working
+                    editListButton
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        BinanceAccountView(action: .create, isPresented: $isPresented, didChangeAPI: $didChangeAPI)
-                            .environmentObject(viewModel)
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(Color("binanceColor"))
+                    if viewModel.ableToAddAccount {
+                        createAccountButton
+                    } else {
+                        maxAccountLimitButton
                     }
                 }
             }
@@ -74,6 +53,45 @@ struct BinanceAPIAccountsView: View {
                 accounts = viewModel.getAccounts()
             }
             .environment(\.editMode, $editMode)
+        }
+    }
+    
+    private var noAccountsRow: some View {
+        NavigationLink {
+            BinanceAccountView(action: .create, isPresented: $isPresented, didChangeAPI: $didChangeAPI)
+                .environmentObject(viewModel)
+        } label: {
+            Text("No accounts added")
+                .font(.title2)
+                .foregroundColor(Color("binanceColor"))
+        }
+    }
+    
+    private var editListButton: some View {
+        EditButton()
+            .foregroundColor(Color("binanceColor"))
+            .navigationDestination(for: APIAccount.self) { account in
+                BinanceAccountView(action: .update(account), isPresented: $isPresented, didChangeAPI: $didChangeAPI)
+                    .environmentObject(viewModel)
+            } // NavigationDestination is here because if it is located with List, EditButton stops working
+    }
+    
+    private var createAccountButton: some View {
+        NavigationLink {
+            BinanceAccountView(action: .create, isPresented: $isPresented, didChangeAPI: $didChangeAPI)
+                .environmentObject(viewModel)
+        } label: {
+            Image(systemName: "plus")
+                .foregroundColor(Color("binanceColor"))
+        }
+    }
+    
+    private var maxAccountLimitButton: some View {
+        Button {
+            maxAccountLimitReached.toggle()
+        } label: {
+            Image(systemName: "nosign")
+                .foregroundColor(Color("binanceColor"))
         }
     }
     
@@ -122,13 +140,26 @@ struct BinanceAPIAccountsView: View {
         }
         .listRowBackground(selectedAccount == account ? Color(uiColor: UIColor.quaternaryLabel) : nil)
     }
+    
+    private func deleteAccounts(indexes: IndexSet) {
+        for index in indexes {
+            accounts.remove(at: index)
+            viewModel.deleteAccount(at: index, completionHandler: nil)
+        }
+        viewModel.selectedAccount = viewModel.getAccounts().first
+        didChangeAPI = true
+    }
+    
+    private func reorderAccounts(fromOffsets: IndexSet, toOffset: Int) {
+        accounts.move(fromOffsets: fromOffsets, toOffset: toOffset)
+        viewModel.moveAccounts(fromOffsets: fromOffsets, toOffset: toOffset)
+        didChangeAPI = true
+    }
 }
 
 struct BinanceAPIAccountsView_Previews: PreviewProvider {
     static var previews: some View {
-//        NavigationView {
             BinanceAPIAccountsView(isPresented: .constant(true), didChangeAPI: .constant(true))
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
-//        }
     }
 }

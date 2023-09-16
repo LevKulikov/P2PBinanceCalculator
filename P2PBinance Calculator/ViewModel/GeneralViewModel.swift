@@ -16,6 +16,10 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
             UserDefaults.standard.set(try? PropertyListEncoder().encode(selectedAccount), forKey: userDefaultsSelectedAccount)
         }
     }
+    let maxAccountsLimit = 5
+    var ableToAddAccount: Bool {
+        getAccounts().count < 5
+    }
     private let dataStorage: DataStorageProtocol
     private let userDefaultsSelectedAccount = "userDefaultsSelectedAccount"
     

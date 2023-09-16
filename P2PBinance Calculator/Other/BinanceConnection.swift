@@ -105,7 +105,7 @@ class BinanceConnection {
             }
             
             guard let parsedResponse = try? JSONDecoder().decode(T.self, from: data) else {
-                completionHandler(.failure(.parseError))
+                completionHandler(.failure(.apiError))
                 return
             }
 
