@@ -22,7 +22,7 @@
 		73CD6F262A7E6DD3007D4DBC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73CD6F252A7E6DD3007D4DBC /* Preview Assets.xcassets */; };
 		73CD6F282A7E6DD3007D4DBC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F272A7E6DD3007D4DBC /* Persistence.swift */; };
 		73CD6F2B2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F292A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld */; };
-		73CD6F342A7E6F5D007D4DBC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F332A7E6F5D007D4DBC /* ContentView.swift */; };
+		73CD6F342A7E6F5D007D4DBC /* P2POrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F332A7E6F5D007D4DBC /* P2POrdersView.swift */; };
 		73CD6F392A7E7018007D4DBC /* C2CHistoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F382A7E7018007D4DBC /* C2CHistoryResponse.swift */; };
 		73CD6F3D2A7E747C007D4DBC /* GeneralViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F3C2A7E747C007D4DBC /* GeneralViewModel.swift */; };
 		73CD6F432A7EA950007D4DBC /* BinanceErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F422A7EA950007D4DBC /* BinanceErrorResponse.swift */; };
@@ -50,7 +50,7 @@
 		73CD6F252A7E6DD3007D4DBC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		73CD6F272A7E6DD3007D4DBC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		73CD6F2A2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = P2PBinance_Calculator.xcdatamodel; sourceTree = "<group>"; };
-		73CD6F332A7E6F5D007D4DBC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		73CD6F332A7E6F5D007D4DBC /* P2POrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2POrdersView.swift; sourceTree = "<group>"; };
 		73CD6F382A7E7018007D4DBC /* C2CHistoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C2CHistoryResponse.swift; sourceTree = "<group>"; };
 		73CD6F3C2A7E747C007D4DBC /* GeneralViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralViewModel.swift; sourceTree = "<group>"; };
 		73CD6F422A7EA950007D4DBC /* BinanceErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceErrorResponse.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 		73CD6F352A7E6F99007D4DBC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				73CD6F332A7E6F5D007D4DBC /* ContentView.swift */,
+				73CD6F332A7E6F5D007D4DBC /* P2POrdersView.swift */,
 				73168A062A821193007F0F5C /* CalculatorView.swift */,
 				739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */,
 				73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */,
@@ -260,7 +260,7 @@
 				73D338F22A81760100F7F3E2 /* CalculatorItem.swift in Sources */,
 				73B60B922A8FB32300D930F8 /* APIAccount.swift in Sources */,
 				739BBFEB2A86CDEB007EB6F8 /* OrderDetailsView.swift in Sources */,
-				73CD6F342A7E6F5D007D4DBC /* ContentView.swift in Sources */,
+				73CD6F342A7E6F5D007D4DBC /* P2POrdersView.swift in Sources */,
 				7385B6A52A7ED85D003D474D /* OrderItem.swift in Sources */,
 				73CD6F4D2A7EB757007D4DBC /* BinanceResponse.swift in Sources */,
 				73B2A5882A929F7700E05BBA /* AssetPicker.swift in Sources */,

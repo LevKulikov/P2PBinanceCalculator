@@ -9,8 +9,8 @@ import SwiftUI
 
 @main
 struct P2PBinance_CalculatorApp: App {
-    let persistenceController = PersistenceController.shared
-    @State private var generalViewModel: GeneralViewModel
+    private let persistenceController = PersistenceController.shared
+    private let generalViewModel: GeneralViewModel
     
     init() {
         let apiStorage = APIStorage()
@@ -21,7 +21,7 @@ struct P2PBinance_CalculatorApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            P2POrdersView()
                 .environmentObject(generalViewModel)
 
         }

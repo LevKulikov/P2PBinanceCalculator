@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-struct ContentView: View {
+struct P2POrdersView: View {
     //MARK: - Properties
     //MARK: Environment and state props
     @EnvironmentObject var viewModel: GeneralViewModel
@@ -113,7 +113,6 @@ struct ContentView: View {
                             }
                         } content: {
                                 BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
-                                    .environmentObject(viewModel)
                         }
                         .alert("Choose specific fiat", isPresented: $presentStatisticsError) {
                             ForEach(C2CHistoryResponse.C2COrderFiat.mentionedFiat, id: \.self) { fiat in
@@ -196,7 +195,9 @@ struct ContentView: View {
             ForEach(orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered) { order in
                 OrderItem(order: order)
                     .background {
-                        NavigationLink("", destination: OrderDetailsView(order: order)).opacity(0)
+                        NavigationLink(value: order) {
+                            Text("")
+                        }.opacity(0)
                     }
                     .swipeActions(edge: .leading) {
                         Button {
@@ -214,17 +215,14 @@ struct ContentView: View {
                     presentStatisticsSheet.toggle()
                 }
         }
+        .navigationDestination(for: C2CHistoryResponse.C2COrderTransformed.self) { order in
+            OrderDetailsView(order: order)
+        }
     }
     
     private var statisticsShowButton: some View {
         Button {
-            if orderFiat != .allFiat, orderFiat != .other {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    presentStatisticsSheet.toggle()
-                }
-            } else {
-                presentStatisticsError.toggle()
-            }
+            statisticsShowButtonPressed()
         } label: {
             if !loadStatus.isLoading {
                 Image(systemName: "gauge.high")
@@ -238,13 +236,33 @@ struct ContentView: View {
         }
         .disabled(c2cOrdersSecondTypeFiltered.isEmpty)
         .opacity(c2cOrdersSecondTypeFiltered.isEmpty ? 0.5 : 1)
+        .contextMenu {
+            Button {
+                statisticsShowButtonPressed()
+            } label: {
+                Label("Show statistics", systemImage: "gauge.high")
+            }
+        } preview: {
+            if orderFiat != .allFiat, orderFiat != .other {
+                statisticsView
+            } else {
+                Text("Please, select certain Fiat in filter before open Statistics")
+                    .font(.title2)
+                    .frame(width: 250)
+                    .padding()
+            }
+        }
+
     }
     
     private var accountViewShowButton: some View {
-        Button {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                didChangeAPI = false
-                presentAPISheet.toggle()
+        Menu {
+            ForEach(viewModel.getAccounts()) { account in
+                Button(account.name) {
+                    viewModel.selectedAccount = nil
+                    viewModel.selectedAccount = account
+                    getBothTypesOrders()
+                }
             }
         } label: {
             HStack {
@@ -257,14 +275,10 @@ struct ContentView: View {
                     .font(.title2)
                     .bold()
             }
-        }
-        .contextMenu {
-            ForEach(viewModel.getAccounts()) { account in
-                Button(account.name) {
-                    viewModel.selectedAccount = nil
-                    viewModel.selectedAccount = account
-                    getBothTypesOrders()
-                }
+        } primaryAction: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                didChangeAPI = false
+                presentAPISheet.toggle()
             }
         }
     }
@@ -398,6 +412,16 @@ struct ContentView: View {
         orderAdvertisementRole = .bothRoles
     }
     
+    private func statisticsShowButtonPressed() {
+        if orderFiat != .allFiat, orderFiat != .other {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                presentStatisticsSheet.toggle()
+            }
+        } else {
+            presentStatisticsError.toggle()
+        }
+    }
+    
     private func setOrderInArray(order: C2CHistoryResponse.C2COrderTransformed, count: Bool) {
         var orderCountSet = order
         orderCountSet.activeForCount = count
@@ -473,18 +497,18 @@ struct ContentView: View {
 }
 
 //MARK: - Preview Struct
-struct ContentView_Previews: PreviewProvider {
+struct P2POrdersView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView()
+            P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
                 .previewDevice("iPhone 14 Pro")
             
-            ContentView()
+            P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
                 .previewDevice("iPhone SE (3rd generation)")
             
-            ContentView()
+            P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
                 .previewDevice("iPad Pro (12.9-inch) (6th generation)")
         }

@@ -44,6 +44,7 @@ struct OrderDetailsView: View {
                         Text("Price: ")
                             .bold()
                         Text(order.unitPrice.currencyRU)
+                            .textSelection(.enabled)
                             
                     }
                     .font(.title3)
@@ -53,6 +54,7 @@ struct OrderDetailsView: View {
                         Text("Amount \(order.asset): ")
                             .bold()
                         Text(order.amount.currencyRU)
+                            .textSelection(.enabled)
                     }
                     .font(.title3)
                     .padding(.bottom)
@@ -61,6 +63,7 @@ struct OrderDetailsView: View {
                         Text("For \(order.fiat): ")
                             .bold()
                         Text("\(order.totalPrice.currencyRU) \(order.fiatSymbol)")
+                            .textSelection(.enabled)
                     }
                     .font(.title3)
                     
