@@ -26,8 +26,6 @@ struct P2POrdersView: View {
     /// If c2cOrders is buy, c2cOrdersSecondType is sell, and vise versa
     @State private var c2cOrdersSecondType: [C2CHistoryResponse.C2COrderTransformed] = []
     
-    //    @State private var selectedC2COrders: [C2CHistoryResponse.C2COrderTransformed] = []
-    
     //MARK: Filtering props
     @State private var orderType: C2CHistoryResponse.C2COrderType = .bothTypes
     @State private var orderStatus: C2CHistoryResponse.C2COrderStatus = .all
@@ -112,7 +110,7 @@ struct P2POrdersView: View {
                                 getBothTypesOrders()
                             }
                         } content: {
-                                BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
+                            BinanceAPIAccountsView(isPresented: $presentAPISheet, didChangeAPI: $didChangeAPI)
                         }
                         .alert("Choose specific fiat", isPresented: $presentStatisticsError) {
                             ForEach(C2CHistoryResponse.C2COrderFiat.mentionedFiat, id: \.self) { fiat in
@@ -193,27 +191,10 @@ struct P2POrdersView: View {
     private var listView: some View {
         List {
             ForEach(orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered) { order in
-                OrderItem(order: order)
-                    .background {
-                        NavigationLink(value: order) {
-                            Text("")
-                        }.opacity(0)
-                    }
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            setOrderInArray(order: order, count: !order.activeForCount)
-                        } label: {
-                            Label(order.activeForCount ? "Do not count" : "Count", systemImage: order.activeForCount ? "multiply" : "checkmark.circle")
-                        }
-                        .tint(order.activeForCount ? .red : .green)
-
-                    }
+                getOrderRow(for: order)
             }
                                     
             CalculatorItem(orders: orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered)
-                .onTapGesture {
-                    presentStatisticsSheet.toggle()
-                }
         }
         .navigationDestination(for: C2CHistoryResponse.C2COrderTransformed.self) { order in
             OrderDetailsView(order: order)
@@ -328,6 +309,24 @@ struct P2POrdersView: View {
         }
     }
     
+    @ViewBuilder
+    private func getOrderRow(for order: C2CHistoryResponse.C2COrderTransformed) -> some View {
+        OrderItem(order: order)
+            .background {
+                NavigationLink(value: order) {
+                    Text("")
+                }.opacity(0)
+            }
+            .swipeActions(edge: .leading) {
+                Button {
+                    setOrderInArray(order: order, count: !order.activeForCount)
+                } label: {
+                    Label(order.activeForCount ? "Do not count" : "Count", systemImage: order.activeForCount ? "multiply" : "checkmark.circle")
+                }
+                .tint(order.activeForCount ? .red : .green)
+            }
+    }
+    
     //MARK: - Task Methods
     private func loadButtonPressed() {
         if !viewModel.getAccounts().isEmpty {
@@ -418,7 +417,9 @@ struct P2POrdersView: View {
                 presentStatisticsSheet.toggle()
             }
         } else {
-            presentStatisticsError.toggle()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                presentStatisticsError.toggle()
+            }
         }
     }
     

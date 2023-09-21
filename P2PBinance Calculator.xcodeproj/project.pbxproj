@@ -110,6 +110,7 @@
 		73CD6F1D2A7E6DD2007D4DBC /* P2PBinance Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				73CD6F242A7E6DD3007D4DBC /* Preview Content */,
 				733D7B3A2A92BBC6001FCEE9 /* P2PBinance-Calculator-Info.plist */,
 				73CD6F222A7E6DD3007D4DBC /* Assets.xcassets */,
 				73CD6F292A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld */,
@@ -119,7 +120,6 @@
 				73CD6F372A7E6FBD007D4DBC /* ViewModel */,
 				73CD6F362A7E6FA1007D4DBC /* Model */,
 				73CD6F352A7E6F99007D4DBC /* View */,
-				73CD6F242A7E6DD3007D4DBC /* Preview Content */,
 				73CD6F462A7EAF0B007D4DBC /* Other */,
 			);
 			path = "P2PBinance Calculator";

@@ -26,7 +26,6 @@ struct CalculatorItem: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Total orders: ").bold() + Text("\(ordersFiltered.count)")
-            //TODO: Continue here
             if !ordersContainsDefferentFiat {
                 if !orders.isEmpty {
                     Text("Total sum \(orders.first!.fiat): ").bold() + Text("\(orderFiatSum.currencyRU)")
