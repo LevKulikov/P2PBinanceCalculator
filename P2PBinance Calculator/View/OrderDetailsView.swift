@@ -131,8 +131,8 @@ struct OrderDetailsView: View {
                     
                     Spacer()
                 }
-                .navigationTitle("Order details")
                 .navigationBarTitleDisplayMode(.inline)
+//                .navigationTitle("Order details")
                 .toolbar {
                     Menu {
                         Button {

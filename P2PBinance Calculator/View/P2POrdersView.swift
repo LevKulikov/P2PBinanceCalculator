@@ -25,6 +25,7 @@ struct P2POrdersView: View {
     @State private var c2cOrders: [C2CHistoryResponse.C2COrderTransformed] = []
     /// If c2cOrders is buy, c2cOrdersSecondType is sell, and vise versa
     @State private var c2cOrdersSecondType: [C2CHistoryResponse.C2COrderTransformed] = []
+    @State private var selectedOrder: C2CHistoryResponse.C2COrderTransformed?
     
     //MARK: Filtering props
     @State private var orderType: C2CHistoryResponse.C2COrderType = .bothTypes
@@ -58,10 +59,14 @@ struct P2POrdersView: View {
         }
     }
     
+    /// Shortcut to get current user device, it is just for convenience
+    private var currentDeviceType: UIUserInterfaceIdiom {
+        UIDevice.current.userInterfaceIdiom
+    }
+    
     //MARK: - Initializer
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(named: "binanceColor")!]
-        //Use this if NavigationBarTitle is with displayMode = .inline
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(named: "binanceColor")!]
         UIRefreshControl.appearance().tintColor = UIColor(named: "binanceColor")
     }
@@ -77,36 +82,30 @@ struct P2POrdersView: View {
         }
         
         if modalLaoding || (!loadStatus.isLoading && loadStatus.isResponseGet) {
-            NavigationStack {
+            NavigationSplitView() {
                 VStack {
+                    // Because of error of iOS 16+, toolbar for pads is not set, buttons are moved to VStack above filterView
+                    if currentDeviceType == .pad {
+                        ipadAccountAndStatisticsButtonsView
+                    }
+                    
                     filterView
                     
                     listView
                         .listStyle(.inset)
-                        .navigationTitle("P2P Orders")
                         .animation(.default, value: c2cOrdersFiltered)
                         .refreshable {
                             getBothTypesOrders()
                         }
                         .scrollDismissesKeyboard(.immediately)
                         .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                accountViewShowButton
+                            // Because of error of iOS 16+, toolbar for pads is not set, buttons are moved to VStack above filterView
+                            if [UIUserInterfaceIdiom.mac, UIUserInterfaceIdiom.phone].contains(currentDeviceType) {
+                                navigationBar
                             }
-                            
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                statisticsShowButton
-                            }
-                        }
-                        .toolbar {
-                            
-                        }
-                        .sheet(isPresented: $presentStatisticsSheet) {
-                            statisticsView
                         }
                         .sheet(isPresented: $presentAPISheet) {
                             if didChangeAPI {
-                                loadStatus = (true, false)
                                 getBothTypesOrders()
                             }
                         } content: {
@@ -153,10 +152,21 @@ struct P2POrdersView: View {
                             viewModel.setCustomFiatFilter(for: newValue)
                         }
                 }
+                .frame(minWidth: 300)
+                .navigationBarTitleDisplayMode(.large)
+                .navigationTitle("P2P Orders")
+                .navigationSplitViewColumnWidth(min: 300, ideal: 600, max: 1000)
+            } detail: {
+                if let selectedOrder {
+                    OrderDetailsView(order: selectedOrder)
+                } else {
+                    NoSelectedOrderView()
+                }
             }
+            .navigationSplitViewStyle(.balanced)
             .tint(Color("binanceColor"))
             .onAppear {
-                modalLaoding = true
+                listOnAppearTask()
             }
         }
     }
@@ -189,7 +199,7 @@ struct P2POrdersView: View {
     }
     
     private var listView: some View {
-        List {
+        List(selection: $selectedOrder) {
             ForEach(orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered) { order in
                 getOrderRow(for: order)
             }
@@ -198,6 +208,30 @@ struct P2POrdersView: View {
         }
         .navigationDestination(for: C2CHistoryResponse.C2COrderTransformed.self) { order in
             OrderDetailsView(order: order)
+        }
+    }
+    
+    /// Because of iOS16+ error of displaying sidebar toolbar content, if is needed to use this view in navigation content view to display buttons
+    private var ipadAccountAndStatisticsButtonsView: some View {
+        HStack {
+            accountViewShowButton
+                .scaleEffect(1.2, anchor: .leading)
+            Spacer()
+            statisticsShowButton
+                .scaleEffect(1.2, anchor: .trailing)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 1.5)
+    }
+    
+    @ToolbarContentBuilder
+    private var navigationBar: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarLeading) {
+            accountViewShowButton
+        }
+        
+        ToolbarItem(placement: .navigationBarTrailing) {
+            statisticsShowButton
         }
     }
     
@@ -227,13 +261,25 @@ struct P2POrdersView: View {
             if orderFiat != .allFiat, orderFiat != .other {
                 statisticsView
             } else {
-                Text("Please, select certain Fiat in filter before open Statistics")
-                    .font(.title2)
-                    .frame(width: 250)
-                    .padding()
+                HStack {
+                    Image(systemName: "exclamationmark.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 75, height: 75)
+                        .foregroundStyle(.secondary)
+                    
+                    Text("Please, select certain __Fiat__ in filter before open Statistics")
+                        .font(.title2)
+                        .frame(width: 250)
+                        .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                }
+                .frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                .padding()
             }
         }
-
+        .sheet(isPresented: $presentStatisticsSheet) {
+            statisticsView
+        }
     }
     
     private var accountViewShowButton: some View {
@@ -251,10 +297,10 @@ struct P2POrdersView: View {
                     .font(.custom("title1.5", size: 25))
                     .foregroundColor(Color("binanceColor"))
                 
-                Text(viewModel.selectedAccount?.name ?? "")
-                    .frame(maxWidth: 180, alignment: .leading)
-                    .font(.title2)
-                    .bold()
+                    Text(viewModel.selectedAccount?.name ?? "")
+                    .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .phone ? 180 : 120, alignment: .leading)
+                        .font(.title2)
+                        .bold()
             }
         } primaryAction: {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -292,11 +338,7 @@ struct P2POrdersView: View {
                 }
             }
             .onAppear {
-                modalLaoding = false
-                if !buttonDidLoad {
-                    buttonDidLoad = true
-                    loadButtonPressed()
-                }
+                loadButtonOnAppearTask()
             }
             
             Button("Set Binance P2P API Key") {
@@ -328,6 +370,18 @@ struct P2POrdersView: View {
     }
     
     //MARK: - Task Methods
+    private func loadButtonOnAppearTask() {
+        modalLaoding = false
+        if !buttonDidLoad {
+            buttonDidLoad = true
+            loadButtonPressed()
+        }
+    }
+    
+    private func listOnAppearTask() {
+        modalLaoding = true
+    }
+    
     private func loadButtonPressed() {
         if !viewModel.getAccounts().isEmpty {
             loadStatus = (isLoading: true, isResponseGet: false)
@@ -390,6 +444,7 @@ struct P2POrdersView: View {
     private func getBothTypesOrders() {
         withAnimation {
             presentStatisticsSheet = false
+            selectedOrder = nil
             loadStatus = (isLoading: true, isResponseGet: false)
             c2cOrders = []
             c2cOrdersSecondType = []
@@ -503,7 +558,7 @@ struct P2POrdersView_Previews: PreviewProvider {
         Group {
             P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
-                .previewDevice("iPhone 14 Pro")
+                .previewDevice("iPhone 15 Pro")
             
             P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
