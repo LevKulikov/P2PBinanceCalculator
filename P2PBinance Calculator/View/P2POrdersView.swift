@@ -322,10 +322,9 @@ struct P2POrdersView: View {
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .alert("Error", isPresented: $errorFlag) {
-                Text("Ok")
-                    .onTapGesture {
-                        errorFlag = false
-                    }
+                Button("Ok") {
+                    errorFlag = false
+                }
             } message: {
                 Text(responseError?.rawValue ?? "Uknown error")
             }
