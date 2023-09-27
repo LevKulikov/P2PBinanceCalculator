@@ -64,13 +64,6 @@ struct P2POrdersView: View {
         UIDevice.current.userInterfaceIdiom
     }
     
-    //MARK: - Initializer
-    init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(named: "binanceColor")!]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(named: "binanceColor")!]
-        UIRefreshControl.appearance().tintColor = UIColor(named: "binanceColor")
-    }
-    
     //MARK: - Body
     var body: some View {
         if !loadStatus.isLoading && !loadStatus.isResponseGet {
@@ -247,6 +240,7 @@ struct P2POrdersView: View {
                 ProgressView()
                     .tint(Color("binanceColor"))
                     .controlSize(.large)
+                    .scaleEffect(currentDeviceType == .pad ? 0.65 : 1)
             }
         }
         .disabled(c2cOrdersSecondTypeFiltered.isEmpty)

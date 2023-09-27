@@ -25,6 +25,7 @@ struct FilterView: View {
     @Binding var toFiatValue: String
     @Binding var orderAdvertisementRole: C2CHistoryResponse.C2COrderAdvertisementRole
     
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     @State private var rotateArrowImage = false
     @State private var detailedFilterShow = false
     @State private var oneDaySet: Date = .now
@@ -33,6 +34,22 @@ struct FilterView: View {
     @FocusState private var customAssetTextField: Bool
     @FocusState private var fromFiatTextField: Bool
     @FocusState private var toFiatTextField: Bool
+    
+    private var showSecondRow: Bool {
+        return settingsViewModel.publishedRoleFilterShow || settingsViewModel.publishedDateRangeFilterShow
+    }
+    
+    private var showThirdRow: Bool {
+        if settingsViewModel.publishedDateRangeFilterShow && settingsViewModel.publishedAmountFilterShow {
+            return true
+        } else if settingsViewModel.publishedDateRangeFilterShow && settingsViewModel.publishedRoleFilterShow {
+            return true
+        } else if !settingsViewModel.publishedDateRangeFilterShow && !settingsViewModel.publishedRoleFilterShow && settingsViewModel.publishedAmountFilterShow {
+            return true
+        } else {
+            return false
+        }
+    }
     
     private let fiatExampleArray = ["GBP", "CNY", "JPY", "KZT", "NGN", "AZN"]
     private let assetExampleArray = ["C98", "DOT", "ADA", "XRP", "SOL", "DAI"]
@@ -52,15 +69,19 @@ struct FilterView: View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
-                    firstFilterRow
+                    getScrollableFirstFilterRow(proxy: proxy)
                     
                     if detailedFilterShow {
                         VStack(alignment: .leading, spacing: 0) {
-                            secondFilterRow
-                                .padding(.top, 10)
+                            if showSecondRow {
+                                getScrollableSecondFilterRow(proxy: proxy)
+                                    .padding(.top, 10)
+                            }
                             
-                            getScrollableThirdFilterRow(proxy: proxy)
-                                .padding(.top, 10)
+                            if showThirdRow {
+                                getScrollableThirdFilterRow(proxy: proxy)
+                                    .padding(.top, 10)
+                            }
                         }
                         .padding(.horizontal, 15)
                         .transition(.push(from: .top))
@@ -83,7 +104,40 @@ struct FilterView: View {
         }
     }
     
-    private var firstFilterRow: some View {
+    private var showHideDetailedFiltersButton: some View {
+        Button {
+            withAnimation {
+                detailedFilterShow.toggle()
+            }
+        } label: {
+            if detailedFilterShow {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 6.5)
+                        .fill(Color("binanceColor"))
+                        .frame(width: 155, height: 34)
+                    HStack {
+                        Image(systemName: "chevron.up")
+                            .font(.title)
+                        
+                        Text("Hide")
+                    }
+                    .foregroundColor(Color(uiColor: .systemBackground))
+                }
+                .padding(.leading, 10)
+                .animation(.easeInOut, value: detailedFilterShow)
+            } else {
+                Image(systemName: "chevron.down.circle.fill")
+                    .font(.title)
+                    .foregroundColor(Color("binanceColor"))
+                    .rotationEffect(detailedFilterShow ? .degrees(-180) : .degrees(0))
+                    .animation(.easeInOut, value: detailedFilterShow)
+            }
+        }
+        .accessibilityLabel("Button to open detailed filters")
+    }
+    
+    @ViewBuilder
+    private func getScrollableFirstFilterRow(proxy: ScrollViewProxy) -> some View {
         HStack {
             Picker("Order type", selection: $orderType) {
                 ForEach(C2CHistoryResponse.C2COrderType.allCases, id: \.hashValue) {
@@ -163,112 +217,108 @@ struct FilterView: View {
                     .transition(.offset(x: -50, y: 46).combined(with: .opacity))
             }
             
-            Button {
-                withAnimation {
-                    detailedFilterShow.toggle()
-                }
-            } label: {
-                if detailedFilterShow {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 6.5)
-                            .fill(Color("binanceColor"))
-                            .frame(width: 155, height: 34)
-                        HStack {
-                            Image(systemName: "chevron.up")
-                                .font(.title)
-                            
-                            Text("Hide")
-                        }
-                        .foregroundColor(Color(uiColor: .systemBackground))
-                    }
-                    .padding(.leading, 10)
-                    .animation(.easeInOut, value: detailedFilterShow)
-                } else {
-                    Image(systemName: "chevron.down.circle.fill")
-                        .font(.title)
-                        .foregroundColor(Color("binanceColor"))
-                        .rotationEffect(detailedFilterShow ? .degrees(-180) : .degrees(0))
-                        .animation(.easeInOut, value: detailedFilterShow)
-                }
+            if showSecondRow || showThirdRow {
+                showHideDetailedFiltersButton
+                    .padding(.trailing, 15)
+            } else {
+                scrollableDefualtFiltersButton(proxy: proxy)
+                    .padding(.trailing, 15)
             }
-            .padding(.trailing, 15)
-            .accessibilityLabel("Button to open detailed filters")
         }
     }
     
-    private var secondFilterRow: some View {
+    @ViewBuilder
+    private func getScrollableSecondFilterRow(proxy: ScrollViewProxy) -> some View {
         HStack {
-            Picker("Order advertisement role", selection: $orderAdvertisementRole) {
-                ForEach(C2CHistoryResponse.C2COrderAdvertisementRole.allCases, id: \.hashValue) {
-                    Text($0.rawValue)
-                        .tag($0)
+            if settingsViewModel.publishedRoleFilterShow {
+                Picker("Order advertisement role", selection: $orderAdvertisementRole) {
+                    ForEach(C2CHistoryResponse.C2COrderAdvertisementRole.allCases, id: \.hashValue) {
+                        Text($0.rawValue)
+                            .tag($0)
+                    }
                 }
+                .buttonStyle(.bordered)
             }
-            .buttonStyle(.bordered)
             
-            DatePicker("From date", selection: $fromDate, in: startDateRange, displayedComponents: [.date, .hourAndMinute])
-                .labelsHidden()
-                .datePickerStyle(.compact)
-                .applyTextColor(Color("binanceColor"))
-                .padding(.leading, 10)
-            
-            Image(systemName: "arrowshape.right.fill")
-                .foregroundColor(Color("binanceColor"))
-                .imageScale(.large)
-                .rotationEffect(.degrees(rotateArrowImage ? 360 : 0))
-                .onTapGesture {
-                    withAnimation {
-                        rotateArrowImage.toggle()
+            if settingsViewModel.publishedDateRangeFilterShow {
+                DatePicker("From date", selection: $fromDate, in: startDateRange, displayedComponents: [.date, .hourAndMinute])
+                    .labelsHidden()
+                    .datePickerStyle(.compact)
+                    .applyTextColor(Color("binanceColor"))
+                    .padding(.leading, settingsViewModel.publishedRoleFilterShow ? 10 : 0)
+                
+                Image(systemName: "arrowshape.right.fill")
+                    .foregroundColor(Color("binanceColor"))
+                    .imageScale(.large)
+                    .rotationEffect(.degrees(rotateArrowImage ? 360 : 0))
+                    .onTapGesture {
+                        withAnimation {
+                            rotateArrowImage.toggle()
+                        }
                     }
-                }
-            
-            DatePicker("To date", selection: $toDate, in: endDateRange, displayedComponents: [.date, .hourAndMinute])
-                .labelsHidden()
-                .datePickerStyle(.compact)
-                .applyTextColor(Color("binanceColor"))
-                .onTapGesture {
-                    dateSetByPicker = .rangeDatePicker
-                }
-                .onChange(of: toDate) {
-                    if dateSetByPicker == .rangeDatePicker {
-                        oneDaySet = $0
+                
+                DatePicker("To date", selection: $toDate, in: endDateRange, displayedComponents: [.date, .hourAndMinute])
+                    .labelsHidden()
+                    .datePickerStyle(.compact)
+                    .applyTextColor(Color("binanceColor"))
+                    .onTapGesture {
+                        dateSetByPicker = .rangeDatePicker
                     }
-                }
+                    .onChange(of: toDate) {
+                        if dateSetByPicker == .rangeDatePicker {
+                            oneDaySet = $0
+                        }
+                    }
+            } else if settingsViewModel.publishedRoleFilterShow {
+                getScrollableThirdFilterRow(proxy: proxy)
+            }
+            
+            if !settingsViewModel.publishedRoleFilterShow && settingsViewModel.publishedDateRangeFilterShow && !settingsViewModel.publishedAmountFilterShow {
+                scrollableDefualtFiltersButton(proxy: proxy)
+            }
         }
     }
     
     @ViewBuilder
     private func getScrollableThirdFilterRow(proxy: ScrollViewProxy) -> some View {
         HStack {
-            TextField(orderFiat != .allFiat ? "From \(orderFiat != .custom ? orderFiat.rawValue : customFiat) amount" : "Choose fiat", text: $fromFiatValue)
-                .frame(width: 150)
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
-                .focused($fromFiatTextField)
-                .disabled(orderFiat == .allFiat)
-            
-            Image(systemName: "arrowshape.right.fill")
-                .foregroundColor(Color("binanceColor"))
-                .imageScale(.large)
-            
-            TextField(orderFiat != .allFiat ? "To \(orderFiat != .custom ? orderFiat.rawValue : customFiat) amount" : "Choose fiat", text: $toFiatValue)
-                .frame(width: 150)
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
-                .focused($toFiatTextField)
-                .disabled(orderFiat == .allFiat)
-                .padding(.trailing, 10)
+            if settingsViewModel.publishedAmountFilterShow {
+                TextField(orderFiat != .allFiat ? "From \(orderFiat != .custom ? orderFiat.rawValue : customFiat) amount" : "Choose fiat", text: $fromFiatValue)
+                    .frame(width: 150)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.numberPad)
+                    .focused($fromFiatTextField)
+                    .disabled(orderFiat == .allFiat)
                 
-            Button("Default filters") {
-                setFiltersToDefault()
-                withAnimation {
-                    detailedFilterShow.toggle()
-                    proxy.scrollTo(1)
-                }
+                Image(systemName: "arrowshape.right.fill")
+                    .foregroundColor(Color("binanceColor"))
+                    .imageScale(.large)
+                
+                TextField(orderFiat != .allFiat ? "To \(orderFiat != .custom ? orderFiat.rawValue : customFiat) amount" : "Choose fiat", text: $toFiatValue)
+                    .frame(width: 150)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.numberPad)
+                    .focused($toFiatTextField)
+                    .disabled(orderFiat == .allFiat)
+                    .padding(.trailing, 10)
             }
-            .buttonStyle(.borderedProminent)
-            .foregroundColor(Color(uiColor: .systemBackground))
+            
+            scrollableDefualtFiltersButton(proxy: proxy)
         }
+    }
+    
+    @ViewBuilder
+    private func scrollableDefualtFiltersButton(proxy: ScrollViewProxy) -> some View {
+        Button("Default filters") {
+            setFiltersToDefault()
+            withAnimation {
+                detailedFilterShow.toggle()
+                proxy.scrollTo(1)
+            }
+        }
+        .buttonStyle(.borderedProminent)
+        .foregroundColor(Color(uiColor: .systemBackground))
+        .fixedSize()
     }
     
     private func setFiltersToDefault() {

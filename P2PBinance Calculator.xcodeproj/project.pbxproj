@@ -17,6 +17,9 @@
 		73B2A5882A929F7700E05BBA /* AssetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2A5872A929F7700E05BBA /* AssetPicker.swift */; };
 		73B60B922A8FB32300D930F8 /* APIAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B60B912A8FB32300D930F8 /* APIAccount.swift */; };
 		73B60B942A8FBF1700D930F8 /* BinanceAPIAccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */; };
+		73BC316A2AC49D3F00FDF244 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BC31692AC49D3F00FDF244 /* SettingsViewModel.swift */; };
+		73BC316C2AC49D8C00FDF244 /* SettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BC316B2AC49D8C00FDF244 /* SettingsStorage.swift */; };
+		73BC31702AC4AA3E00FDF244 /* AppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BC316F2AC4AA3E00FDF244 /* AppSettingsView.swift */; };
 		73CB013C2ABCDBBF00731409 /* NoSelectedOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CB013B2ABCDBBF00731409 /* NoSelectedOrderView.swift */; };
 		73CD6F1F2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F1E2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift */; };
 		73CD6F232A7E6DD3007D4DBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73CD6F222A7E6DD3007D4DBC /* Assets.xcassets */; };
@@ -45,6 +48,9 @@
 		73B2A5872A929F7700E05BBA /* AssetPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPicker.swift; sourceTree = "<group>"; };
 		73B60B912A8FB32300D930F8 /* APIAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAccount.swift; sourceTree = "<group>"; };
 		73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceAPIAccountsView.swift; sourceTree = "<group>"; };
+		73BC31692AC49D3F00FDF244 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		73BC316B2AC49D8C00FDF244 /* SettingsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStorage.swift; sourceTree = "<group>"; };
+		73BC316F2AC4AA3E00FDF244 /* AppSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsView.swift; sourceTree = "<group>"; };
 		73CB013B2ABCDBBF00731409 /* NoSelectedOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoSelectedOrderView.swift; sourceTree = "<group>"; };
 		73CD6F1B2A7E6DD2007D4DBC /* P2PBinance Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "P2PBinance Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		73CD6F1E2A7E6DD2007D4DBC /* P2PBinance_CalculatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PBinance_CalculatorApp.swift; sourceTree = "<group>"; };
@@ -78,6 +84,7 @@
 			children = (
 				73168A0D2A85F4DA007F0F5C /* DataStorage.swift */,
 				73168A0B2A85F138007F0F5C /* APIStorage.swift */,
+				73BC316B2AC49D8C00FDF244 /* SettingsStorage.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -92,6 +99,27 @@
 				73CB013B2ABCDBBF00731409 /* NoSelectedOrderView.swift */,
 			);
 			path = SupportingViews;
+			sourceTree = "<group>";
+		};
+		73BC316D2AC4A9C100FDF244 /* MainOrdersHistoryViews */ = {
+			isa = PBXGroup;
+			children = (
+				73CD6F332A7E6F5D007D4DBC /* P2POrdersView.swift */,
+				73168A062A821193007F0F5C /* CalculatorView.swift */,
+				739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */,
+				73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */,
+				730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */,
+				736050D92A9D11DE0032BBE7 /* SupportingViews */,
+			);
+			path = MainOrdersHistoryViews;
+			sourceTree = "<group>";
+		};
+		73BC316E2AC4A9DD00FDF244 /* AppSettingsViews */ = {
+			isa = PBXGroup;
+			children = (
+				73BC316F2AC4AA3E00FDF244 /* AppSettingsView.swift */,
+			);
+			path = AppSettingsViews;
 			sourceTree = "<group>";
 		};
 		73CD6F122A7E6DD2007D4DBC = {
@@ -139,12 +167,8 @@
 		73CD6F352A7E6F99007D4DBC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				73CD6F332A7E6F5D007D4DBC /* P2POrdersView.swift */,
-				73168A062A821193007F0F5C /* CalculatorView.swift */,
-				739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */,
-				73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */,
-				730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */,
-				736050D92A9D11DE0032BBE7 /* SupportingViews */,
+				73BC316E2AC4A9DD00FDF244 /* AppSettingsViews */,
+				73BC316D2AC4A9C100FDF244 /* MainOrdersHistoryViews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				73CD6F3C2A7E747C007D4DBC /* GeneralViewModel.swift */,
+				73BC31692AC49D3F00FDF244 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -252,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73B60B942A8FBF1700D930F8 /* BinanceAPIAccountsView.swift in Sources */,
+				73BC316A2AC49D3F00FDF244 /* SettingsViewModel.swift in Sources */,
 				7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */,
 				73168A072A821193007F0F5C /* CalculatorView.swift in Sources */,
 				73CD6F282A7E6DD3007D4DBC /* Persistence.swift in Sources */,
@@ -263,7 +289,9 @@
 				73D338F22A81760100F7F3E2 /* CalculatorItem.swift in Sources */,
 				73B60B922A8FB32300D930F8 /* APIAccount.swift in Sources */,
 				739BBFEB2A86CDEB007EB6F8 /* OrderDetailsView.swift in Sources */,
+				73BC31702AC4AA3E00FDF244 /* AppSettingsView.swift in Sources */,
 				73CD6F342A7E6F5D007D4DBC /* P2POrdersView.swift in Sources */,
+				73BC316C2AC49D8C00FDF244 /* SettingsStorage.swift in Sources */,
 				7385B6A52A7ED85D003D474D /* OrderItem.swift in Sources */,
 				73CD6F4D2A7EB757007D4DBC /* BinanceResponse.swift in Sources */,
 				73CB013C2ABCDBBF00731409 /* NoSelectedOrderView.swift in Sources */,
@@ -417,7 +445,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "financeApp.P2PBinance-Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -450,7 +478,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "financeApp.P2PBinance-Calculator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

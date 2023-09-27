@@ -315,6 +315,11 @@ class GeneralViewModelMock: GeneralViewModel {
             ),
         ]
         
-        completionHandler(.success(orders))
+        let timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
+            completionHandler(.success(orders))
+            timer.invalidate()
+        }
+        
+        RunLoop.current.add(timer, forMode: .common)
     }
 }
