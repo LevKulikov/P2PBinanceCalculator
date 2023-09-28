@@ -37,8 +37,6 @@ struct CalculatorItem: View {
             }
         }
         .font(.title2)
-        .listRowSeparatorTint(Color("binanceColor"), edges: .top)
-        .listRowBackground(Color("binanceColor").opacity(0.1))
     }
 }
 

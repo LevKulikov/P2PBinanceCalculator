@@ -253,7 +253,7 @@ struct StatisticsView: View {
                         Image(systemName: "square.and.arrow.up.circle")
                             .resizable()
                             .frame(width: 30, height: 30, alignment: .bottomTrailing)
-                            .foregroundColor(Color("binanceColor"))
+                            .foregroundColor(SettingsStorage.pickedAppColor)
                     }
                 }
                 .padding(.top)

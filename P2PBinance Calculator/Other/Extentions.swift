@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
+import UIKit
 
 extension Float {
     var clean: String {
@@ -84,6 +85,16 @@ extension View {
                     }
                 }
         }
+    }
+}
+
+extension UIColor {
+    class func color(data: Data) -> UIColor? {
+        try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data)
+    }
+
+    func encode() -> Data? {
+        try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
     }
 }
 

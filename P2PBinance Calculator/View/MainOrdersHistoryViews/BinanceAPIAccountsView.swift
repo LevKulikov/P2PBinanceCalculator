@@ -63,13 +63,13 @@ struct BinanceAPIAccountsView: View {
         } label: {
             Text("No accounts added")
                 .font(.title2)
-                .foregroundColor(Color("binanceColor"))
+                .foregroundColor(SettingsStorage.pickedAppColor)
         }
     }
     
     private var editListButton: some View {
         EditButton()
-            .foregroundColor(Color("binanceColor"))
+            .foregroundColor(SettingsStorage.pickedAppColor)
             .navigationDestination(for: APIAccount.self) { account in
                 BinanceAccountView(action: .update(account), isPresented: $isPresented, didChangeAPI: $didChangeAPI)
                     .environmentObject(viewModel)
@@ -82,7 +82,7 @@ struct BinanceAPIAccountsView: View {
                 .environmentObject(viewModel)
         } label: {
             Image(systemName: "plus")
-                .foregroundColor(Color("binanceColor"))
+                .foregroundColor(SettingsStorage.pickedAppColor)
         }
     }
     
@@ -91,7 +91,7 @@ struct BinanceAPIAccountsView: View {
             maxAccountLimitReached.toggle()
         } label: {
             Image(systemName: "nosign")
-                .foregroundColor(Color("binanceColor"))
+                .foregroundColor(SettingsStorage.pickedAppColor)
         }
     }
     
@@ -108,7 +108,7 @@ struct BinanceAPIAccountsView: View {
                     navigationPath.append(account)
                 } label: {
                     Image(systemName: "square.and.pencil")
-                        .foregroundColor(Color("binanceColor"))
+                        .foregroundColor(SettingsStorage.pickedAppColor)
                         .font(.title3)
                 }
                 .buttonStyle(.borderless)

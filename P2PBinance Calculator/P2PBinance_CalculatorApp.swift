@@ -10,17 +10,10 @@ import SwiftUI
 @main
 struct P2PBinance_CalculatorApp: App {
     private let persistenceController = PersistenceController.shared
-    private let generalViewModel: GeneralViewModel
-    private let settingsViewModel: SettingsViewModel
+    @ObservedObject private var generalViewModel: GeneralViewModel
+    @ObservedObject private var settingsViewModel: SettingsViewModel
     
     init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(named: "binanceColor")!]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(named: "binanceColor")!]
-        UIRefreshControl.appearance().tintColor = UIColor(named: "binanceColor")
-        let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.configureWithOpaqueBackground()
-        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
-        
         let apiStorage = APIStorage()
         let dataStorage = DataStorage(apiStorage: apiStorage)
         let viewModel = GeneralViewModel(dataStorage: dataStorage)
@@ -29,6 +22,14 @@ struct P2PBinance_CalculatorApp: App {
         let settingsStorage = SettingsStorage()
         let viewModelSettings = SettingsViewModel(settingsStorage: settingsStorage)
         settingsViewModel = viewModelSettings
+        
+        Self.changeColorOfUIElements(UIColor(SettingsStorage.pickedAppColor))
+//        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(SettingsStorage.pickedAppColor)]
+//        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(SettingsStorage.pickedAppColor)]
+//        UIRefreshControl.appearance().tintColor = UIColor(SettingsStorage.pickedAppColor)
+//        let tabBarAppearance = UITabBarAppearance()
+//        tabBarAppearance.configureWithOpaqueBackground()
+//        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 
     var body: some Scene {
@@ -49,7 +50,17 @@ struct P2PBinance_CalculatorApp: App {
                         Label("Settings", systemImage: "gear")
                     }
             }
-            .tint(Color("binanceColor"))
+            // Need to set settingsViewModel.publishedAppColor to dynamicly change color
+            .tint(settingsViewModel.publishedAppColor)
         }
+    }
+    
+    static func changeColorOfUIElements(_ uiColor: UIColor) {
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: uiColor]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: uiColor]
+        UIRefreshControl.appearance().tintColor = uiColor
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 }

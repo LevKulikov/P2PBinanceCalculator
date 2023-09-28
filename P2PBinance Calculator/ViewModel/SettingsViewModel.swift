@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Combine
 
 
@@ -17,6 +18,7 @@ class SettingsViewModel: ObservableObject {
     @Published var publishedRoleFilterShow: Bool
     @Published var publishedDateRangeFilterShow: Bool
     @Published var publishedAmountFilterShow: Bool
+    @Published var publishedAppColor: Color
     
     //MARK: - Initializer
     init(settingsStorage: SettingsStorageProtocol) {
@@ -24,6 +26,7 @@ class SettingsViewModel: ObservableObject {
         publishedRoleFilterShow = settingsStorage.savedRoleFilterShow
         publishedDateRangeFilterShow = settingsStorage.savedDateRangeFilterShow
         publishedAmountFilterShow = settingsStorage.savedAmountFilterShow
+        publishedAppColor = SettingsStorage.pickedAppColor
     }
     
     //MARK: - Methods
@@ -46,5 +49,13 @@ class SettingsViewModel: ObservableObject {
     func saveAmounteFilter(show: Bool) {
         settingsStorage.setAmountFilter(show: show)
         publishedAmountFilterShow = show
+    }
+    
+    /// Saves app color to display
+    /// - Parameter color: color to save
+    func setAppColor(_ color: Color) {
+        settingsStorage.setAppColor(color)
+        publishedAppColor = color
+        P2PBinance_CalculatorApp.changeColorOfUIElements(UIColor(color))
     }
 }

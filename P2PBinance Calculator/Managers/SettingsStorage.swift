@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol SettingsStorageProtocol: AnyObject {
-    /// Provides previously saved if role filter should be shown 
+    /// Provides previously saved if role filter should be shown
     var savedRoleFilterShow: Bool { get }
     
     /// Provides previously saved if date range filter should be shown
@@ -17,24 +18,36 @@ protocol SettingsStorageProtocol: AnyObject {
     /// Provides previously saved if amount filter should be shown
     var savedAmountFilterShow: Bool { get }
     
-    /// Safes if role filter should be shown or not
+    /// Saves if role filter should be shown or not
     /// - Parameter show:role filter should be shown or not
     func setRoleFilter(show: Bool)
     
-    /// Safes if date range filter should be shown or not
+    /// Saves if date range filter should be shown or not
     /// - Parameter show: date range filter should be shown or not
     func setDateRangeFilter(show: Bool)
     
-    /// Safes if amount filter should be shown or not
+    /// Saves if amount filter should be shown or not
     /// - Parameter show: amount filter should be shown or not
     func setAmountFilter(show: Bool)
+    
+    /// Saves app color to display
+    /// - Parameter color: color to save
+    func setAppColor(_ color: Color)
 }
 
 class SettingsStorage: SettingsStorageProtocol {
     //MARK: - Properties
+    /// Static property to provide which color should be for entire app
+    static var pickedAppColor: Color {
+        return Self.appColor
+    }
+    /// Private static property to change color
+    private static var appColor: Color = AppAppearanceVariables.defaultColor
+    
     private let roleFilterShowUserDefaultsKey = "roleFilterShowUserDefaultsKey"
     private let dateRangeFilterShowUserDefaultsKey = "dateRangeFilterShowUserDefaultsKey"
     private let amountFilterShowUserDefaultsKey = "amountFilterShowUserDefaultsKey"
+    private let appColorUserDefaultsKey = "appColorUserDefaultsKey"
     
     private var roleFilterShow: Bool
     private var dateRangeFilterShow: Bool
@@ -69,6 +82,12 @@ class SettingsStorage: SettingsStorageProtocol {
         } else {
             amountFilterShow = true
         }
+        
+        if let savedColorData = UserDefaults.standard.data(forKey: appColorUserDefaultsKey), let uiColor = UIColor.color(data: savedColorData) {
+            Self.appColor = Color(uiColor: uiColor)
+        } else {
+            Self.appColor = AppAppearanceVariables.defaultColor
+        }
     }
     
     //MARK: - Methods
@@ -86,6 +105,16 @@ class SettingsStorage: SettingsStorageProtocol {
         UserDefaults.standard.setValue(show, forKey: amountFilterShowUserDefaultsKey)
         amountFilterShow = show
     }
+    
+    func setAppColor(_ color: Color) {
+        guard let colorData = UIColor(color).encode() else {
+            print("Error: SettingsStorage, setAppColor(_ color:), Unable to encode color to save")
+            return
+        }
+        
+        UserDefaults.standard.setValue(colorData, forKey: appColorUserDefaultsKey)
+        Self.appColor = color
+    }
 }
 
 //MARK: - Mock object for SettingsStorage
@@ -93,6 +122,7 @@ class SettingsStorageMock: SettingsStorageProtocol {
     private var roleFilterShow: Bool
     private var dateRangeFilterShow: Bool
     private var amountFilterShow: Bool
+    static var appColor = AppAppearanceVariables.defaultColor
     
     var savedRoleFilterShow: Bool {
         roleFilterShow
@@ -120,5 +150,9 @@ class SettingsStorageMock: SettingsStorageProtocol {
     
     func setAmountFilter(show: Bool) {
         amountFilterShow = show
+    }
+    
+    func setAppColor(_ color: Color) {
+        Self.appColor = color
     }
 }

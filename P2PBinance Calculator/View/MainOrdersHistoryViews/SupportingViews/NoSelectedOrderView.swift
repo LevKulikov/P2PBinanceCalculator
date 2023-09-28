@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoSelectedOrderView: View {
     @Environment(\.dismiss) var dismiss
+    /// Do not touch it
     
     var body: some View {
         VStack {
@@ -16,7 +17,7 @@ struct NoSelectedOrderView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 75, height: 75)
-                .foregroundStyle(Color("binanceColor"))
+                .foregroundStyle(SettingsStorage.pickedAppColor)
             Text("Order is not selected")
                 .font(.largeTitle)
             Text("Please, select any order in left-hand menu")

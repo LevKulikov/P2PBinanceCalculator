@@ -12,6 +12,7 @@ struct P2POrdersView: View {
     //MARK: - Properties
     //MARK: Environment and state props
     @EnvironmentObject var viewModel: GeneralViewModel
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     @State private var buttonDidLoad = false
     @State private var loadStatus = (isLoading: false, isResponseGet: false)
     /// Needed when first load is done, so large ProgressView will not appear
@@ -70,7 +71,7 @@ struct P2POrdersView: View {
             showLoadButton(title: "Get Binance P2P Orders")
         } else if !modalLaoding && loadStatus.isLoading && !loadStatus.isResponseGet {
             ProgressView()
-                .tint(Color("binanceColor"))
+                .tint(SettingsStorage.pickedAppColor)
                 .controlSize(.large)
         }
         
@@ -157,7 +158,8 @@ struct P2POrdersView: View {
                 }
             }
             .navigationSplitViewStyle(.balanced)
-            .tint(Color("binanceColor"))
+            .navigationSplitViewColumnWidth(800)
+            .tint(SettingsStorage.pickedAppColor)
             .onAppear {
                 listOnAppearTask()
             }
@@ -198,6 +200,8 @@ struct P2POrdersView: View {
             }
                                     
             CalculatorItem(orders: orderType != .bothTypes ? c2cOrdersFiltered : c2cOrdersBothTypesFiltered)
+                .listRowSeparatorTint(SettingsStorage.pickedAppColor, edges: .top)
+                .listRowBackground(SettingsStorage.pickedAppColor.opacity(0.1))
         }
         .navigationDestination(for: C2CHistoryResponse.C2COrderTransformed.self) { order in
             OrderDetailsView(order: order)
@@ -235,10 +239,10 @@ struct P2POrdersView: View {
             if !loadStatus.isLoading {
                 Image(systemName: "gauge.high")
                     .font(.custom("title1.5", size: 25))
-                    .foregroundColor(Color("binanceColor"))
+                    .foregroundColor(SettingsStorage.pickedAppColor)
             } else {
                 ProgressView()
-                    .tint(Color("binanceColor"))
+                    .tint(SettingsStorage.pickedAppColor)
                     .controlSize(.large)
                     .scaleEffect(currentDeviceType == .pad ? 0.65 : 1)
             }
@@ -289,7 +293,7 @@ struct P2POrdersView: View {
             HStack {
                 Image(systemName: "person.circle")
                     .font(.custom("title1.5", size: 25))
-                    .foregroundColor(Color("binanceColor"))
+                    .foregroundColor(SettingsStorage.pickedAppColor)
                 
                     Text(viewModel.selectedAccount?.name ?? "")
                     .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .phone ? 180 : 120, alignment: .leading)
@@ -311,7 +315,7 @@ struct P2POrdersView: View {
             Button(title) {
                 loadButtonPressed()
             }
-            .tint(Color("binanceColor"))
+            .tint(SettingsStorage.pickedAppColor)
             .fontWeight(.bold)
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
@@ -337,7 +341,7 @@ struct P2POrdersView: View {
             Button("Set Binance P2P API Key") {
                 presentAPISheet.toggle()
             }
-            .tint(Color("binanceColor"))
+            .tint(SettingsStorage.pickedAppColor)
             .fontWeight(.bold)
             .buttonStyle(.bordered)
             .controlSize(.large)
@@ -551,15 +555,18 @@ struct P2POrdersView_Previews: PreviewProvider {
         Group {
             P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
+                .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
                 .previewDevice("iPhone 15 Pro")
             
             P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
                 .previewDevice("iPhone SE (3rd generation)")
+                .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
             
             P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
                 .previewDevice("iPad Pro (12.9-inch) (6th generation)")
+                .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
         }
     }
 }

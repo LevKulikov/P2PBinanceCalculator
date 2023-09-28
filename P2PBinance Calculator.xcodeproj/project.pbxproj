@@ -34,6 +34,7 @@
 		73CD6F4B2A7EB73D007D4DBC /* BinanceConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F4A2A7EB73D007D4DBC /* BinanceConnection.swift */; };
 		73CD6F4D2A7EB757007D4DBC /* BinanceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F4C2A7EB757007D4DBC /* BinanceResponse.swift */; };
 		73D338F22A81760100F7F3E2 /* CalculatorItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D338F12A81760100F7F3E2 /* CalculatorItem.swift */; };
+		73EABBD52AC5E9E200A5DED9 /* AppAppearanceVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABBD42AC5E9E200A5DED9 /* AppAppearanceVariables.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		73CD6F4A2A7EB73D007D4DBC /* BinanceConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceConnection.swift; sourceTree = "<group>"; };
 		73CD6F4C2A7EB757007D4DBC /* BinanceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceResponse.swift; sourceTree = "<group>"; };
 		73D338F12A81760100F7F3E2 /* CalculatorItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorItem.swift; sourceTree = "<group>"; };
+		73EABBD42AC5E9E200A5DED9 /* AppAppearanceVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearanceVariables.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		73CD6F362A7E6FA1007D4DBC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				73EABBD42AC5E9E200A5DED9 /* AppAppearanceVariables.swift */,
 				73CD6F382A7E7018007D4DBC /* C2CHistoryResponse.swift */,
 				73CD6F422A7EA950007D4DBC /* BinanceErrorResponse.swift */,
 				73B60B912A8FB32300D930F8 /* APIAccount.swift */,
@@ -287,6 +290,7 @@
 				73CD6F4B2A7EB73D007D4DBC /* BinanceConnection.swift in Sources */,
 				73CD6F392A7E7018007D4DBC /* C2CHistoryResponse.swift in Sources */,
 				73D338F22A81760100F7F3E2 /* CalculatorItem.swift in Sources */,
+				73EABBD52AC5E9E200A5DED9 /* AppAppearanceVariables.swift in Sources */,
 				73B60B922A8FB32300D930F8 /* APIAccount.swift in Sources */,
 				739BBFEB2A86CDEB007EB6F8 /* OrderDetailsView.swift in Sources */,
 				73BC31702AC4AA3E00FDF244 /* AppSettingsView.swift in Sources */,

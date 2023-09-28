@@ -123,7 +123,7 @@ struct BinanceAccountView: View {
                 }
 
             })
-            .tint(Color("binanceColor"))
+            .tint(SettingsStorage.pickedAppColor)
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .padding(.top, -100)

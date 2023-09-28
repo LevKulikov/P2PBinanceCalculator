@@ -144,7 +144,7 @@ struct OrderDetailsView: View {
                         Image(systemName: "globe")
                             .font(.custom("title1.5", size: 25))
                             .cornerRadius(15)
-                            .foregroundColor(Color("binanceColor"))
+                            .foregroundColor(SettingsStorage.pickedAppColor)
                     } primaryAction: {
                         openUrl(URL(string: "https://p2p.binance.com/ru/fiatOrderDetail?orderNo=\(order.orderNumber)") ?? URL(string: "https://www.binance.com/")!)
                     }

@@ -87,7 +87,7 @@ struct FilterView: View {
                         .transition(.push(from: .top))
                     }
                 }
-                .tint(Color("binanceColor"))
+                .tint(SettingsStorage.pickedAppColor)
                 .onTapGesture {
                     unfocuseTextFields()
                 }
@@ -113,7 +113,7 @@ struct FilterView: View {
             if detailedFilterShow {
                 ZStack {
                     RoundedRectangle(cornerRadius: 6.5)
-                        .fill(Color("binanceColor"))
+                        .fill(SettingsStorage.pickedAppColor)
                         .frame(width: 155, height: 34)
                     HStack {
                         Image(systemName: "chevron.up")
@@ -128,7 +128,7 @@ struct FilterView: View {
             } else {
                 Image(systemName: "chevron.down.circle.fill")
                     .font(.title)
-                    .foregroundColor(Color("binanceColor"))
+                    .foregroundColor(SettingsStorage.pickedAppColor)
                     .rotationEffect(detailedFilterShow ? .degrees(-180) : .degrees(0))
                     .animation(.easeInOut, value: detailedFilterShow)
             }
@@ -201,7 +201,7 @@ struct FilterView: View {
                     .labelsHidden()
                     .datePickerStyle(.compact)
                     .padding(.leading, 10)
-                    .applyTextColor(Color("binanceColor"))
+                    .applyTextColor(SettingsStorage.pickedAppColor)
                     .onTapGesture {
                         dateSetByPicker = .oneDayPicker
                     }
@@ -244,11 +244,11 @@ struct FilterView: View {
                 DatePicker("From date", selection: $fromDate, in: startDateRange, displayedComponents: [.date, .hourAndMinute])
                     .labelsHidden()
                     .datePickerStyle(.compact)
-                    .applyTextColor(Color("binanceColor"))
+                    .applyTextColor(SettingsStorage.pickedAppColor)
                     .padding(.leading, settingsViewModel.publishedRoleFilterShow ? 10 : 0)
                 
                 Image(systemName: "arrowshape.right.fill")
-                    .foregroundColor(Color("binanceColor"))
+                    .foregroundColor(SettingsStorage.pickedAppColor)
                     .imageScale(.large)
                     .rotationEffect(.degrees(rotateArrowImage ? 360 : 0))
                     .onTapGesture {
@@ -260,7 +260,7 @@ struct FilterView: View {
                 DatePicker("To date", selection: $toDate, in: endDateRange, displayedComponents: [.date, .hourAndMinute])
                     .labelsHidden()
                     .datePickerStyle(.compact)
-                    .applyTextColor(Color("binanceColor"))
+                    .applyTextColor(SettingsStorage.pickedAppColor)
                     .onTapGesture {
                         dateSetByPicker = .rangeDatePicker
                     }
@@ -291,7 +291,7 @@ struct FilterView: View {
                     .disabled(orderFiat == .allFiat)
                 
                 Image(systemName: "arrowshape.right.fill")
-                    .foregroundColor(Color("binanceColor"))
+                    .foregroundColor(SettingsStorage.pickedAppColor)
                     .imageScale(.large)
                 
                 TextField(orderFiat != .allFiat ? "To \(orderFiat != .custom ? orderFiat.rawValue : customFiat) amount" : "Choose fiat", text: $toFiatValue)
@@ -358,5 +358,6 @@ struct FilterView_Previews: PreviewProvider {
             toFiatValue: .constant(""),
             orderAdvertisementRole: .constant(.bothRoles)
         )
+        .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
     }
 }
