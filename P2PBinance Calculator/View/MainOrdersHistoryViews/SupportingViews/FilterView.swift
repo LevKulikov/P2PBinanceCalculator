@@ -358,6 +358,9 @@ struct FilterView_Previews: PreviewProvider {
             toFiatValue: .constant(""),
             orderAdvertisementRole: .constant(.bothRoles)
         )
-        .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
+        .environmentObject(SettingsViewModel(
+            settingsStorage: SettingsStorageMock(),
+            dataStorage: DataStorageMock()
+        ))
     }
 }

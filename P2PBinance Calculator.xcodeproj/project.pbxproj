@@ -35,6 +35,8 @@
 		73CD6F4D2A7EB757007D4DBC /* BinanceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CD6F4C2A7EB757007D4DBC /* BinanceResponse.swift */; };
 		73D338F22A81760100F7F3E2 /* CalculatorItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D338F12A81760100F7F3E2 /* CalculatorItem.swift */; };
 		73EABBD52AC5E9E200A5DED9 /* AppAppearanceVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABBD42AC5E9E200A5DED9 /* AppAppearanceVariables.swift */; };
+		73EABBD72AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABBD62AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift */; };
+		73EABBD92AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,8 @@
 		73CD6F4C2A7EB757007D4DBC /* BinanceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceResponse.swift; sourceTree = "<group>"; };
 		73D338F12A81760100F7F3E2 /* CalculatorItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorItem.swift; sourceTree = "<group>"; };
 		73EABBD42AC5E9E200A5DED9 /* AppAppearanceVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearanceVariables.swift; sourceTree = "<group>"; };
+		73EABBD62AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAPIAccountsListView.swift; sourceTree = "<group>"; };
+		73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSingleAPIAccountView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				73BC316F2AC4AA3E00FDF244 /* AppSettingsView.swift */,
+				73EABBD62AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift */,
+				73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */,
 			);
 			path = AppSettingsViews;
 			sourceTree = "<group>";
@@ -285,6 +291,8 @@
 				73168A072A821193007F0F5C /* CalculatorView.swift in Sources */,
 				73CD6F282A7E6DD3007D4DBC /* Persistence.swift in Sources */,
 				73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */,
+				73EABBD92AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift in Sources */,
+				73EABBD72AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift in Sources */,
 				73CD6F2B2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld in Sources */,
 				730B55DB2A8FC9EC00B6E7E9 /* BinanceAccountView.swift in Sources */,
 				73CD6F4B2A7EB73D007D4DBC /* BinanceConnection.swift in Sources */,
@@ -315,6 +323,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -375,6 +384,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

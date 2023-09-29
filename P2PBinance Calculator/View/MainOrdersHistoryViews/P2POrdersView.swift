@@ -555,18 +555,27 @@ struct P2POrdersView_Previews: PreviewProvider {
         Group {
             P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
-                .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
+                .environmentObject(SettingsViewModel(
+                    settingsStorage: SettingsStorageMock(),
+                    dataStorage: DataStorageMock()
+                ))
                 .previewDevice("iPhone 15 Pro")
             
             P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
                 .previewDevice("iPhone SE (3rd generation)")
-                .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
+                .environmentObject(SettingsViewModel(
+                    settingsStorage: SettingsStorageMock(),
+                    dataStorage: DataStorageMock()
+                ))
             
             P2POrdersView()
                 .environmentObject(GeneralViewModelMock(dataStorage: DataStorageMock()) as GeneralViewModel)
                 .previewDevice("iPad Pro (12.9-inch) (6th generation)")
-                .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
+                .environmentObject(SettingsViewModel(
+                    settingsStorage: SettingsStorageMock(),
+                    dataStorage: DataStorageMock()
+                ))
         }
     }
 }

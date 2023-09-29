@@ -20,16 +20,10 @@ struct P2PBinance_CalculatorApp: App {
         generalViewModel = viewModel
         
         let settingsStorage = SettingsStorage()
-        let viewModelSettings = SettingsViewModel(settingsStorage: settingsStorage)
+        let viewModelSettings = SettingsViewModel(settingsStorage: settingsStorage, dataStorage: dataStorage)
         settingsViewModel = viewModelSettings
         
         Self.changeColorOfUIElements(UIColor(SettingsStorage.pickedAppColor))
-//        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(SettingsStorage.pickedAppColor)]
-//        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(SettingsStorage.pickedAppColor)]
-//        UIRefreshControl.appearance().tintColor = UIColor(SettingsStorage.pickedAppColor)
-//        let tabBarAppearance = UITabBarAppearance()
-//        tabBarAppearance.configureWithOpaqueBackground()
-//        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 
     var body: some Scene {

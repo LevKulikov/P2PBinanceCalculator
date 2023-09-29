@@ -46,8 +46,10 @@ struct AppSettingsView: View {
         if let selectedSettingsId {
             
             switch selectedSettingsId {
+            case 0:
+                SettingsAPIAccountsListView()
             default:
-                Text("Details of Settings #\(selectedSettingsId)")
+                Text("Some error happened, please move back and try again, or reopen app. View ID: \(selectedSettingsId)")
                     .font(.largeTitle)
             }
             
@@ -114,5 +116,8 @@ struct AppSettingsView: View {
 
 #Preview {
     AppSettingsView()
-        .environmentObject(SettingsViewModel(settingsStorage: SettingsStorageMock()))
+        .environmentObject(SettingsViewModel(
+            settingsStorage: SettingsStorageMock(),
+            dataStorage: DataStorageMock()
+        ))
 }

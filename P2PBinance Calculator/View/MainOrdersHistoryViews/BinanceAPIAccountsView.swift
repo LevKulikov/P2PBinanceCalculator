@@ -69,7 +69,7 @@ struct BinanceAPIAccountsView: View {
     
     private var editListButton: some View {
         EditButton()
-            .foregroundColor(SettingsStorage.pickedAppColor)
+            .foregroundStyle(SettingsStorage.pickedAppColor)
             .navigationDestination(for: APIAccount.self) { account in
                 BinanceAccountView(action: .update(account), isPresented: $isPresented, didChangeAPI: $didChangeAPI)
                     .environmentObject(viewModel)
