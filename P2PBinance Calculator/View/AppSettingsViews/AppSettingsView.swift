@@ -48,6 +48,8 @@ struct AppSettingsView: View {
             switch selectedSettingsId {
             case 0:
                 SettingsAPIAccountsListView()
+            case 1:
+                FilterSettingsView()
             default:
                 Text("Some error happened, please move back and try again, or reopen app. View ID: \(selectedSettingsId)")
                     .font(.largeTitle)
@@ -64,6 +66,7 @@ struct AppSettingsView: View {
             
             appearanceSection
         }
+        .tint(Color(uiColor: .secondarySystemFill))
     }
     
     private var p2pOrderListSection: some View {
@@ -71,6 +74,7 @@ struct AppSettingsView: View {
             NavigationLink(value: 0) {
                 Label() {
                     Text("Accounts")
+                        .foregroundStyle(Color.primary)
                 } icon: {
                     Image(systemName: "person.circle")
                         .foregroundStyle(SettingsStorage.pickedAppColor)
@@ -80,6 +84,7 @@ struct AppSettingsView: View {
             NavigationLink(value: 1) {
                 Label() {
                     Text("Filter settings")
+                        .foregroundStyle(Color.primary)
                 } icon: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                         .foregroundStyle(SettingsStorage.pickedAppColor)
@@ -93,6 +98,7 @@ struct AppSettingsView: View {
             NavigationLink(value: 2) {
                 Label() {
                     Text("Dark and Light modes")
+                        .foregroundStyle(Color.primary)
                 } icon: {
                     Image(systemName: "circle.righthalf.filled")
                         .foregroundStyle(SettingsStorage.pickedAppColor)
@@ -102,6 +108,7 @@ struct AppSettingsView: View {
             NavigationLink(value: 3) {
                 Label() {
                     Text("App appearance")
+                        .foregroundStyle(Color.primary)
                 } icon: {
                     Image(systemName: "pencil.and.outline")
                         .foregroundStyle(SettingsStorage.pickedAppColor)

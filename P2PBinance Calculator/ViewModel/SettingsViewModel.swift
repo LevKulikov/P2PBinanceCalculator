@@ -20,6 +20,7 @@ class SettingsViewModel: ObservableObject {
     @Published var publishedDateRangeFilterShow: Bool
     @Published var publishedAmountFilterShow: Bool
     @Published var publishedAppColor: Color
+    @Published var publishedAppColorScheme: ColorScheme?
     // Computed properties
     var ableToAddAccount: Bool {
         getAccounts().count < 5
@@ -33,6 +34,7 @@ class SettingsViewModel: ObservableObject {
         publishedDateRangeFilterShow = settingsStorage.savedDateRangeFilterShow
         publishedAmountFilterShow = settingsStorage.savedAmountFilterShow
         publishedAppColor = SettingsStorage.pickedAppColor
+        publishedAppColorScheme = settingsStorage.savedAppColorScheme
     }
     
     //MARK: - Methods
@@ -63,6 +65,13 @@ class SettingsViewModel: ObservableObject {
         settingsStorage.setAppColor(color)
         publishedAppColor = color
         P2PBinance_CalculatorApp.changeColorOfUIElements(UIColor(color))
+    }
+    
+    /// Saves app color scheme
+    /// - Parameter colorScheme: Color Scheme to save, nil if system
+    func setAppColorScheme(_ colorScheme: ColorScheme?) {
+        settingsStorage.setAppColorScheme(colorScheme)
+        publishedAppColorScheme = colorScheme
     }
     
     /// Adds new API Account and saves it

@@ -18,6 +18,9 @@ protocol SettingsStorageProtocol: AnyObject {
     /// Provides previously saved if amount filter should be shown
     var savedAmountFilterShow: Bool { get }
     
+    /// Provides previously saved app's prefered color scheme
+    var savedAppColorScheme: ColorScheme? { get }
+    
     /// Saves if role filter should be shown or not
     /// - Parameter show:role filter should be shown or not
     func setRoleFilter(show: Bool)
@@ -33,6 +36,10 @@ protocol SettingsStorageProtocol: AnyObject {
     /// Saves app color to display
     /// - Parameter color: color to save
     func setAppColor(_ color: Color)
+    
+    /// Saves app color scheme
+    /// - Parameter colorScheme: Color Scheme to save, nil if system
+    func setAppColorScheme(_ colorScheme: ColorScheme?)
 }
 
 class SettingsStorage: SettingsStorageProtocol {
@@ -48,10 +55,12 @@ class SettingsStorage: SettingsStorageProtocol {
     private let dateRangeFilterShowUserDefaultsKey = "dateRangeFilterShowUserDefaultsKey"
     private let amountFilterShowUserDefaultsKey = "amountFilterShowUserDefaultsKey"
     private let appColorUserDefaultsKey = "appColorUserDefaultsKey"
+    private let appColorSchemeUserDefaultsKey = "appColorSchemeUserDefaultsKey"
     
     private var roleFilterShow: Bool
     private var dateRangeFilterShow: Bool
     private var amountFilterShow: Bool
+    private var appColorScheme: ColorScheme?
     
     var savedRoleFilterShow: Bool {
         roleFilterShow
@@ -61,6 +70,9 @@ class SettingsStorage: SettingsStorageProtocol {
     }
     var savedAmountFilterShow: Bool {
         amountFilterShow
+    }
+    var savedAppColorScheme: ColorScheme? {
+        appColorScheme
     }
     
     //MARK: - Initializer
@@ -87,6 +99,22 @@ class SettingsStorage: SettingsStorageProtocol {
             Self.appColor = Color(uiColor: uiColor)
         } else {
             Self.appColor = AppAppearanceVariables.defaultColor
+        }
+        
+        /*
+         0 = light
+         1 = dark
+         nil = system color scheme
+         */
+        if let savedColorSchemeIndex = UserDefaults.standard.value(forKey: appColorSchemeUserDefaultsKey) as? Int {
+            switch savedColorSchemeIndex {
+            case 0:
+                appColorScheme = .light
+            case 1:
+                appColorScheme = .dark
+            default:
+                appColorScheme = nil
+            }
         }
     }
     
@@ -115,6 +143,27 @@ class SettingsStorage: SettingsStorageProtocol {
         UserDefaults.standard.setValue(colorData, forKey: appColorUserDefaultsKey)
         Self.appColor = color
     }
+    
+    func setAppColorScheme(_ colorScheme: ColorScheme?) {
+        /*
+         0 = light
+         1 = dark
+         nil = system color scheme
+         */
+        var colorSchemeIndex: Int?
+        switch colorScheme {
+        case .light:
+            colorSchemeIndex = 0
+        case .dark:
+            colorSchemeIndex = 1
+        case nil:
+            colorSchemeIndex = nil
+        case .some(_):
+            colorSchemeIndex = nil
+        }
+        UserDefaults.standard.setValue(colorSchemeIndex, forKey: appColorSchemeUserDefaultsKey)
+        appColorScheme = colorScheme
+    }
 }
 
 //MARK: - Mock object for SettingsStorage
@@ -122,6 +171,7 @@ class SettingsStorageMock: SettingsStorageProtocol {
     private var roleFilterShow: Bool
     private var dateRangeFilterShow: Bool
     private var amountFilterShow: Bool
+    private var appColorScheme: ColorScheme?
     static var appColor = AppAppearanceVariables.defaultColor
     
     var savedRoleFilterShow: Bool {
@@ -133,11 +183,15 @@ class SettingsStorageMock: SettingsStorageProtocol {
     var savedAmountFilterShow: Bool {
         amountFilterShow
     }
+    var savedAppColorScheme: ColorScheme? {
+        appColorScheme
+    }
     
     init() {
         roleFilterShow = true
         dateRangeFilterShow = true
         amountFilterShow = true
+        appColorScheme = .light
     }
     
     func setRoleFilter(show: Bool) {
@@ -154,5 +208,9 @@ class SettingsStorageMock: SettingsStorageProtocol {
     
     func setAppColor(_ color: Color) {
         Self.appColor = color
+    }
+    
+    func setAppColorScheme(_ colorScheme: ColorScheme?) {
+        appColorScheme = colorScheme
     }
 }

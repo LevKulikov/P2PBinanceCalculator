@@ -203,6 +203,7 @@ struct P2POrdersView: View {
                 .listRowSeparatorTint(SettingsStorage.pickedAppColor, edges: .top)
                 .listRowBackground(SettingsStorage.pickedAppColor.opacity(0.1))
         }
+        .tint(Color(uiColor: .secondarySystemFill))
         .navigationDestination(for: C2CHistoryResponse.C2COrderTransformed.self) { order in
             OrderDetailsView(order: order)
         }

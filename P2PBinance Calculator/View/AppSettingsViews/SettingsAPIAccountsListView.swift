@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsAPIAccountsListView: View {
     //MARK: - Properties
     @EnvironmentObject var settingsViewModel: SettingsViewModel
+    @Environment(\.colorScheme) var colorScheme
     @State private var accounts: [APIAccount] = []
     @State private var maxAccountLimitReached = false
     @State private var accountAction: SettingsSingleAPIAccountView.AccountAction = .create
@@ -21,29 +22,44 @@ struct SettingsAPIAccountsListView: View {
     
     //MARK: - Body
     var body: some View {
-        List {
-            ForEach(accounts) { account in
-                getAccountRowFor(account)
+        ZStack {
+            if colorScheme == .light {
+                Color(uiColor: .systemGray6)
+                    .ignoresSafeArea()
             }
-            .onDelete(perform: deleteAccounts)
-            .onMove(perform: reorderAccounts)
             
-            if settingsViewModel.getAccounts().isEmpty {
-                noAccountsRow
+            List {
+                ForEach(accounts) { account in
+                    getAccountRowFor(account)
+                }
+                .onDelete(perform: deleteAccounts)
+                .onMove(perform: reorderAccounts)
+                
+                if settingsViewModel.getAccounts().isEmpty {
+                    noAccountsRow
+                }
             }
-        }
-        .onAppear {
-            onAppearMethod()
-        }
-        .sheet(isPresented: $presentAccountSheet) {
-            didChangeApi = false
-            accounts = settingsViewModel.getAccounts()
-        } content: {
-            NavigationStack {
-                SettingsSingleAPIAccountView(action: $accountAction, didChangeApi: $didChangeApi)
+            .frame(maxWidth: 900)
+            .scrollContentBackground(.hidden)
+            .onAppear {
+                onAppearMethod()
+            }
+            .sheet(isPresented: $presentAccountSheet) {
+                withAnimation {
+                    didChangeApi = false
+                    accounts = settingsViewModel.getAccounts()
+                }
+            } content: {
+                NavigationStack {
+                    SettingsSingleAPIAccountView(action: $accountAction, didChangeApi: $didChangeApi)
+                }
+            }
+            .alert("Maximum accounts number is 5", isPresented: $maxAccountLimitReached) {
+                Button("Ok") {}
             }
         }
         .navigationTitle("Binance accounts")
+        .navigationBarTitleDisplayMode(.automatic)
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
                 EditButton()

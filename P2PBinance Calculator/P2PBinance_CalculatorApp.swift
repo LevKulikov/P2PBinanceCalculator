@@ -24,6 +24,10 @@ struct P2PBinance_CalculatorApp: App {
         settingsViewModel = viewModelSettings
         
         Self.changeColorOfUIElements(UIColor(SettingsStorage.pickedAppColor))
+        
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithDefaultBackground()
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 
     var body: some Scene {
@@ -46,6 +50,7 @@ struct P2PBinance_CalculatorApp: App {
             }
             // Need to set settingsViewModel.publishedAppColor to dynamicly change color
             .tint(settingsViewModel.publishedAppColor)
+            .preferredColorScheme(settingsViewModel.publishedAppColorScheme)
         }
     }
     
@@ -53,8 +58,5 @@ struct P2PBinance_CalculatorApp: App {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: uiColor]
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: uiColor]
         UIRefreshControl.appearance().tintColor = uiColor
-        let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.configureWithOpaqueBackground()
-        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 }

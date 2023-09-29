@@ -12,6 +12,7 @@
 		73168A0C2A85F138007F0F5C /* APIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0B2A85F138007F0F5C /* APIStorage.swift */; };
 		73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0D2A85F4DA007F0F5C /* DataStorage.swift */; };
 		7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330C2B32A7FB9B10054E43F /* FilterView.swift */; };
+		737622112AC7504F00C81203 /* FilterSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737622102AC7504F00C81203 /* FilterSettingsView.swift */; };
 		7385B6A52A7ED85D003D474D /* OrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7385B6A42A7ED85D003D474D /* OrderItem.swift */; };
 		739BBFEB2A86CDEB007EB6F8 /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */; };
 		73B2A5882A929F7700E05BBA /* AssetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B2A5872A929F7700E05BBA /* AssetPicker.swift */; };
@@ -46,6 +47,7 @@
 		73168A0D2A85F4DA007F0F5C /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		7330C2B32A7FB9B10054E43F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		733D7B3A2A92BBC6001FCEE9 /* P2PBinance-Calculator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "P2PBinance-Calculator-Info.plist"; sourceTree = SOURCE_ROOT; };
+		737622102AC7504F00C81203 /* FilterSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSettingsView.swift; sourceTree = "<group>"; };
 		7385B6A42A7ED85D003D474D /* OrderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItem.swift; sourceTree = "<group>"; };
 		739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
 		73B2A5872A929F7700E05BBA /* AssetPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPicker.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			children = (
 				73BC316F2AC4AA3E00FDF244 /* AppSettingsView.swift */,
 				73EABBD62AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift */,
+				737622102AC7504F00C81203 /* FilterSettingsView.swift */,
 				73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */,
 			);
 			path = AppSettingsViews;
@@ -241,7 +244,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					73CD6F1A2A7E6DD2007D4DBC = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -307,6 +310,7 @@
 				7385B6A52A7ED85D003D474D /* OrderItem.swift in Sources */,
 				73CD6F4D2A7EB757007D4DBC /* BinanceResponse.swift in Sources */,
 				73CB013C2ABCDBBF00731409 /* NoSelectedOrderView.swift in Sources */,
+				737622112AC7504F00C81203 /* FilterSettingsView.swift in Sources */,
 				73B2A5882A929F7700E05BBA /* AssetPicker.swift in Sources */,
 				73168A0C2A85F138007F0F5C /* APIStorage.swift in Sources */,
 				73CD6F3D2A7E747C007D4DBC /* GeneralViewModel.swift in Sources */,
@@ -356,6 +360,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -417,6 +422,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
