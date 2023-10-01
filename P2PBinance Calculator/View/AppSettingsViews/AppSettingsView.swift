@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct AppSettingsView: View {
+    enum SettingsSection {
+        case accountsSettings
+        case filterSettings
+        case colorSchemeSettings
+        case appearanceSettings
+    }
     //MARK: - Properties
-    /// ID of selected settings:
-    /// * 0 - Accounts settings
-    /// * 1 - Filter Settings
-    /// * 2 - Dark and Light mode settings
-    /// * 3 - Color settings
-    @State private var selectedSettingsId: Int?
+    @State private var selectedSettings: SettingsSection?
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     
     //MARK: - Body
@@ -43,16 +44,17 @@ struct AppSettingsView: View {
     
     @ViewBuilder
     private var selectedSettingsView: some View {
-        if let selectedSettingsId {
+        if let selectedSettings {
             
-            switch selectedSettingsId {
-            case 0:
+            switch selectedSettings {
+            case .accountsSettings:
                 SettingsAPIAccountsListView()
-            case 1:
+            case .filterSettings:
                 FilterSettingsView()
-            default:
-                Text("Some error happened, please move back and try again, or reopen app. View ID: \(selectedSettingsId)")
-                    .font(.largeTitle)
+            case .colorSchemeSettings:
+                ColorModeView()
+            case .appearanceSettings:
+                AppAppearanceView()
             }
             
         } else {
@@ -61,7 +63,7 @@ struct AppSettingsView: View {
     }
     
     private var settingsList: some View {
-        List(selection: $selectedSettingsId) {
+        List(selection: $selectedSettings) {
             p2pOrderListSection
             
             appearanceSection
@@ -71,7 +73,7 @@ struct AppSettingsView: View {
     
     private var p2pOrderListSection: some View {
         Section("P2P Order list settings") {
-            NavigationLink(value: 0) {
+            NavigationLink(value: SettingsSection.accountsSettings) {
                 Label() {
                     Text("Accounts")
                         .foregroundStyle(Color.primary)
@@ -81,7 +83,7 @@ struct AppSettingsView: View {
                 }
             }
             
-            NavigationLink(value: 1) {
+            NavigationLink(value: SettingsSection.filterSettings) {
                 Label() {
                     Text("Filter settings")
                         .foregroundStyle(Color.primary)
@@ -95,7 +97,7 @@ struct AppSettingsView: View {
     
     private var appearanceSection: some View {
         Section("App appearance settings") {
-            NavigationLink(value: 2) {
+            NavigationLink(value: SettingsSection.colorSchemeSettings) {
                 Label() {
                     Text("Dark and Light modes")
                         .foregroundStyle(Color.primary)
@@ -105,7 +107,7 @@ struct AppSettingsView: View {
                 }
             }
             
-            NavigationLink(value: 3) {
+            NavigationLink(value: SettingsSection.appearanceSettings) {
                 Label() {
                     Text("App appearance")
                         .foregroundStyle(Color.primary)

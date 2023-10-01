@@ -39,13 +39,23 @@ extension Date {
 }
 
 extension View {
-    @ViewBuilder func applyTextColor(_ color: Color) -> some View {
-        if UITraitCollection.current.userInterfaceStyle == .light {
-            self.colorInvert().colorMultiply(color)
+    @ViewBuilder
+    func applyTextColor(_ color: Color) -> some View {
+        if let pickedColorScheme = SettingsStorage.pickedAppColorScheme {
+            if pickedColorScheme == .light {
+                self.colorInvert().colorMultiply(color)
+            } else {
+                self.colorMultiply(color)
+            }
         } else {
-            self.colorMultiply(color)
+            if UITraitCollection.current.userInterfaceStyle == .light {
+                self.colorInvert().colorMultiply(color)
+            } else {
+                self.colorMultiply(color)
+            }
         }
     }
+    
     @ViewBuilder
     func bottomSheet<Content: View>(
         presentationDetents: Set<PresentationDetent>,

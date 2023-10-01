@@ -48,8 +48,12 @@ class SettingsStorage: SettingsStorageProtocol {
     static var pickedAppColor: Color {
         return Self.appColor
     }
+    static var pickedAppColorScheme: ColorScheme? {
+        return Self.appColorScheme
+    }
     /// Private static property to change color
     private static var appColor: Color = AppAppearanceVariables.defaultColor
+    private static var appColorScheme: ColorScheme?
     
     private let roleFilterShowUserDefaultsKey = "roleFilterShowUserDefaultsKey"
     private let dateRangeFilterShowUserDefaultsKey = "dateRangeFilterShowUserDefaultsKey"
@@ -110,10 +114,13 @@ class SettingsStorage: SettingsStorageProtocol {
             switch savedColorSchemeIndex {
             case 0:
                 appColorScheme = .light
+                Self.appColorScheme = .light
             case 1:
                 appColorScheme = .dark
+                Self.appColorScheme = .dark
             default:
                 appColorScheme = nil
+                Self.appColorScheme = nil
             }
         }
     }
@@ -163,6 +170,7 @@ class SettingsStorage: SettingsStorageProtocol {
         }
         UserDefaults.standard.setValue(colorSchemeIndex, forKey: appColorSchemeUserDefaultsKey)
         appColorScheme = colorScheme
+        Self.appColorScheme = colorScheme
     }
 }
 

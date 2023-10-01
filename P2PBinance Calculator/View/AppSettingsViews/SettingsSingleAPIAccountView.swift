@@ -14,7 +14,7 @@ struct SettingsSingleAPIAccountView: View {
     }
     
     //MARK: - Properties
-    @Binding var action: AccountAction
+    let action: AccountAction
     @Binding var didChangeApi: Bool
     
     @Environment(\.dismiss) var dismiss
@@ -185,7 +185,7 @@ struct SettingsSingleAPIAccountView: View {
 #Preview {
     let accountToUpdate = APIAccount(name: "Fizz", apiKey: "testAPIKey", secretKey: "testSecretKey")
     
-    return SettingsSingleAPIAccountView(action: .constant(.update(accountToUpdate)), didChangeApi: .constant(false))
+    return SettingsSingleAPIAccountView(action: .update(accountToUpdate), didChangeApi: .constant(false))
         .environmentObject(SettingsViewModel(
             settingsStorage: SettingsStorageMock(),
             dataStorage: DataStorageMock()

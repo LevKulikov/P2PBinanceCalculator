@@ -20,7 +20,7 @@ struct OrderItem: View {
                     .foregroundColor(order.tradeType == .buy ? Color.green : Color.red)
                 Text(" \(order.amount.currencyRU) \(order.asset)")
                     .font(.title3)
-                    .applyTextColor(Color.primary)
+                    .foregroundStyle(Color.primary)
                 
                 Spacer()
                 
@@ -33,11 +33,11 @@ struct OrderItem: View {
                 VStack(alignment: .leading) {
                     ( Text("For ").bold() + Text(order.totalPrice.currencyRU) + Text(" \(order.fiat)") )
                         .font(.title3)
-                        .applyTextColor(Color.primary)
+                        .foregroundStyle(Color.primary)
                     
                     ( Text("Price: ").bold() + Text(order.unitPrice.currencyRU) )
                         .font(.title3)
-                        .applyTextColor(Color.primary)
+                        .foregroundStyle(Color.primary)
                 }
                 
                 Spacer()

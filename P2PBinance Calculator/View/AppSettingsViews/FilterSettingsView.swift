@@ -25,26 +25,28 @@ struct FilterSettingsView: View {
     
     //MARK: - Body
     var body: some View {
-        ZStack {
-            if colorScheme == .light {
-                Color(uiColor: .systemGray6)
-                    .ignoresSafeArea()
+        NavigationStack {
+            ZStack {
+                if colorScheme == .light {
+                    Color(uiColor: .systemGray6)
+                        .ignoresSafeArea()
+                }
+                
+                List {
+                    roleSection
+                    dateRangeSection
+                    amountSection
+                }
+                .frame(maxWidth: 900)
+                .scrollContentBackground(.hidden)
+                .onAppear {
+                    onAppearMethod()
+                }
             }
-            
-            List {
-                roleSection
-                dateRangeSection
-                amountSection
-            }
-            .frame(maxWidth: 900)
-            .scrollContentBackground(.hidden)
-            .onAppear {
-                onAppearMethod()
-            }
+            .navigationTitle("Filter settings")
+            .navigationBarTitleDisplayMode(.automatic)
+            .toolbar(currentDevice == .phone ? .hidden : .automatic, for: .tabBar)
         }
-        .navigationTitle("Filter settings")
-        .navigationBarTitleDisplayMode(.automatic)
-        .toolbar(currentDevice == .phone ? .hidden : .automatic, for: .tabBar)
     }
     
     //MARK: - View Properties
@@ -161,11 +163,11 @@ struct FilterSettingsView: View {
 }
 
 #Preview {
-    NavigationStack {
+//    NavigationStack {
         FilterSettingsView()
             .environmentObject(SettingsViewModel(
                 settingsStorage: SettingsStorageMock(),
                 dataStorage: DataStorageMock()
             ))
-    }
+//    }
 }

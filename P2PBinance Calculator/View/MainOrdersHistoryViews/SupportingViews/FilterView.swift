@@ -110,7 +110,7 @@ struct FilterView: View {
                 detailedFilterShow.toggle()
             }
         } label: {
-            if detailedFilterShow {
+            if detailedFilterShow, settingsViewModel.publishedDateRangeFilterShow {
                 ZStack {
                     RoundedRectangle(cornerRadius: 6.5)
                         .fill(SettingsStorage.pickedAppColor)
@@ -196,7 +196,7 @@ struct FilterView: View {
                     .transition(.move(edge: .leading).combined(with: .opacity))
             }
             
-            if !detailedFilterShow {
+            if !detailedFilterShow || !settingsViewModel.publishedDateRangeFilterShow {
                 DatePicker("Date to pick", selection: $oneDaySet, in: startDateRange.lowerBound...endDateRange.upperBound, displayedComponents: .date)
                     .labelsHidden()
                     .datePickerStyle(.compact)
@@ -312,7 +312,7 @@ struct FilterView: View {
         Button("Default filters") {
             setFiltersToDefault()
             withAnimation {
-                detailedFilterShow.toggle()
+                detailedFilterShow = false
                 proxy.scrollTo(1)
             }
         }
