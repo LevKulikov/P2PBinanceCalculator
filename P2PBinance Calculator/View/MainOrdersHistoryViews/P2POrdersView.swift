@@ -116,7 +116,6 @@ struct P2POrdersView: View {
                             Button("Cancel", role: .cancel) {
                                 presentStatisticsError = false
                             }
-
                         }
                         .onChange(of: orderType) { _ in
                             getBothTypesOrders()
@@ -145,7 +144,7 @@ struct P2POrdersView: View {
                         .onChange(of: customFiat) { newValue in
                             viewModel.setCustomFiatFilter(for: newValue)
                         }
-                }
+                } //: VStack end
                 .frame(minWidth: 300)
                 .navigationBarTitleDisplayMode(.large)
                 .navigationTitle("P2P Orders")
@@ -156,7 +155,7 @@ struct P2POrdersView: View {
                 } else {
                     NoSelectedOrderView()
                 }
-            }
+            } //: NavigationStack end
             .navigationSplitViewStyle(.balanced)
             .navigationSplitViewColumnWidth(800)
             .tint(SettingsStorage.pickedAppColor)

@@ -136,22 +136,24 @@ struct FilterSettingsView: View {
     }
     
     private var amounFilterExample: some View {
-        HStack {
-            TextField("From USD amount", text: .constant(""))
-                .frame(minWidth: 80, maxWidth: 150)
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
-            
-            Image(systemName: "arrowshape.right.fill")
-                .foregroundColor(SettingsStorage.pickedAppColor)
-                .imageScale(.large)
-            
-            TextField("To USD amount", text: .constant(""))
-                .frame(minWidth: 80, maxWidth: 150)
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                TextField("From USD amount", text: .constant(""))
+                    .frame(minWidth: 80, maxWidth: 150)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.numberPad)
+                
+                Image(systemName: "arrowshape.right.fill")
+                    .foregroundColor(SettingsStorage.pickedAppColor)
+                    .imageScale(.large)
+                
+                TextField("To USD amount", text: .constant(""))
+                    .frame(minWidth: 80, maxWidth: 150)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.numberPad)
+            }
+            .allowsHitTesting(false)
         }
-        .allowsHitTesting(false)
     }
     
     //MARK: - Mthods

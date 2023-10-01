@@ -26,13 +26,13 @@ struct AppAppearanceView: View {
                         .padding(.bottom)
                     
                     LazyVGrid(
-                        columns: [GridItem(.adaptive(minimum: 100, maximum: 200))],
+                        columns: [GridItem(.adaptive(minimum: 110, maximum: 200))],
                         spacing: 14
                     ) {
                         createColorCellButton(title: "Default", color: AppAppearanceVariables.defaultColor)
                         createColorCellButton(title: "Red", color: AppAppearanceVariables.redColor)
                         createColorCellButton(title: "Blue", color: AppAppearanceVariables.blueColor)
-                        createColorCellButton(title: "White and black", color: AppAppearanceVariables.blackAndWhiteColor)
+                        createColorCellButton(title: "Black/White", color: AppAppearanceVariables.blackAndWhiteColor)
                         colorPickerCellButton
                     }
                     
@@ -56,7 +56,7 @@ struct AppAppearanceView: View {
                 .overlay(RoundedRectangle(cornerRadius: 18.0).stroke(Color.white, style: StrokeStyle(lineWidth: 4)))
                 .padding(9)
                 .background(AngularGradient(gradient: Gradient(colors: [.red,.yellow,.green,.blue,.purple,.pink]), center:.center).cornerRadius(18))
-                .overlay(ColorPicker("", selection: $personalColor).labelsHidden().opacity(0.015))
+                .overlay(ColorPicker("", selection: $personalColor).labelsHidden().opacity(0.015).scaleEffect(3.5))
                 .shadow(color: pickedColor == personalColor ? personalColor : Color(.sRGBLinear, white: 0, opacity: 0.33), radius: pickedColor == personalColor ? 10 : 5)
                 .scaleEffect(pickedColor == personalColor ? 1.02 : 1)
             
@@ -65,6 +65,7 @@ struct AppAppearanceView: View {
                 .foregroundStyle(pickedColor == personalColor ? .primary : .secondary)
                 .scaleEffect(pickedColor == personalColor ? 1.05 : 1)
                 .frame(maxWidth: 110)
+                .multilineTextAlignment(.center)
         }
         .onChange(of: personalColor) { value in
             withAnimation {
@@ -105,6 +106,9 @@ struct AppAppearanceView: View {
     //MARK: - Methods
     private func onAppearTask() {
         pickedColor = settingsViewModel.publishedAppColor
+        if !AppAppearanceVariables.availableDefaultColors.contains(pickedColor) {
+            personalColor = pickedColor
+        }
     }
 }
 
