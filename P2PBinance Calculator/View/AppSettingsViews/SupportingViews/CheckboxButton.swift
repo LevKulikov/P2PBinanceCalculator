@@ -29,6 +29,8 @@ struct CheckboxButton: View {
         }
         .controlSize(.large)
         .scaleEffect(didTap ? 0.8 : 1)
+        .hoverEffect(.highlight)
+        .contentShape(.hoverEffect, Circle())
     }
 }
 

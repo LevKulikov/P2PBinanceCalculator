@@ -50,6 +50,8 @@ struct AppAppearanceView: View {
     //MARK: - View properties
     private var colorPickerCellButton: some View {
         VStack {
+            let isPickedColor = pickedColor.accessibilityName == personalColor.accessibilityName
+            
             personalColor
                 .frame(width: 90, height: 90)
                 .cornerRadius(18.0)
@@ -57,16 +59,17 @@ struct AppAppearanceView: View {
                 .padding(9)
                 .background(AngularGradient(gradient: Gradient(colors: [.red,.yellow,.green,.blue,.purple,.pink]), center:.center).cornerRadius(18))
                 .overlay(ColorPicker("", selection: $personalColor).labelsHidden().opacity(0.015).scaleEffect(3.5))
-                .shadow(color: pickedColor == personalColor ? personalColor : Color(.sRGBLinear, white: 0, opacity: 0.33), radius: pickedColor == personalColor ? 10 : 5)
-                .scaleEffect(pickedColor == personalColor ? 1.02 : 1)
+                .shadow(color: isPickedColor ? personalColor : Color(.sRGBLinear, white: 0, opacity: 0.33), radius: isPickedColor ? 10 : 5)
+                .scaleEffect(isPickedColor ? 1.02 : 1)
             
             Text("Personal")
                 .font(.subheadline)
-                .foregroundStyle(pickedColor == personalColor ? .primary : .secondary)
-                .scaleEffect(pickedColor == personalColor ? 1.05 : 1)
+                .foregroundStyle(isPickedColor ? .primary : .secondary)
+                .scaleEffect(isPickedColor ? 1.05 : 1)
                 .frame(maxWidth: 110)
                 .multilineTextAlignment(.center)
         }
+        .hoverEffect(.lift)
         .onChange(of: personalColor) { value in
             withAnimation {
                 settingsViewModel.setAppColor(personalColor)
@@ -83,18 +86,21 @@ struct AppAppearanceView: View {
     /// - Returns: Color cell button with color and title
     @ViewBuilder
     private func createColorCellButton(title: String, color: Color) -> some View {
+        let isPickedColor = pickedColor.accessibilityName == color.accessibilityName
+        
         VStack {
             RoundedRectangle(cornerRadius: 18)
                 .fill(color)
                 .frame(width: 110, height: 110)
-                .shadow(color: pickedColor == color ? color : Color(.sRGBLinear, white: 0, opacity: 0.33), radius: pickedColor == color ? 10 : 5)
-                .scaleEffect(pickedColor == color ? 1.02 : 1)
+                .shadow(color: isPickedColor ? color : Color(.sRGBLinear, white: 0, opacity: 0.33), radius: isPickedColor ? 10 : 5)
+                .scaleEffect(isPickedColor ? 1.02 : 1)
             Text(title)
                 .font(.subheadline)
-                .foregroundStyle(pickedColor == color ? .primary : .secondary)
-                .scaleEffect(pickedColor == color ? 1.05 : 1)
+                .foregroundStyle(isPickedColor ? .primary : .secondary)
+                .scaleEffect(isPickedColor ? 1.05 : 1)
                 .frame(maxWidth: 110)
         }
+        .hoverEffect(.lift)
         .onTapGesture {
             withAnimation {
                 settingsViewModel.setAppColor(color)
@@ -106,7 +112,10 @@ struct AppAppearanceView: View {
     //MARK: - Methods
     private func onAppearTask() {
         pickedColor = settingsViewModel.publishedAppColor
-        if !AppAppearanceVariables.availableDefaultColors.contains(pickedColor) {
+        if !AppAppearanceVariables
+            .availableDefaultColors
+            .map({$0.accessibilityName})
+            .contains(pickedColor.accessibilityName) {
             personalColor = pickedColor
         }
     }

@@ -15,5 +15,5 @@ struct AppAppearanceVariables {
     static let redColor = Color.red
     static let blackAndWhiteColor = Color.primary
     
-    static let availableDefaultColors = [Self.blackAndWhiteColor, Self.defaultColor, Self.redColor, Self.blueColor]
+    static let availableDefaultColors = [Self.defaultColor, Self.blueColor, Self.redColor, Self.blackAndWhiteColor]
 }

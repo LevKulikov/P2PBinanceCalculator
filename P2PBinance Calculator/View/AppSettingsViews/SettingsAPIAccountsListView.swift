@@ -74,15 +74,13 @@ struct SettingsAPIAccountsListView: View {
     
     //MARK: - View properties
     private var noAccountsRow: some View {
-        Text("Tap to create")
-            .font(.title3)
-            .foregroundColor(SettingsStorage.pickedAppColor)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                accountAction = .create
-                presentAccountSheet.toggle()
-            }
+        NavigationLink(value: SettingsSingleAPIAccountView.AccountAction.create) {
+            Text("Tap to create")
+                .font(.title3)
+                .foregroundColor(SettingsStorage.pickedAppColor)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+        }
     }
     
     private var createAccountButton: some View {

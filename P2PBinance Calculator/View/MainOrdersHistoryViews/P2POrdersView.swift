@@ -247,8 +247,10 @@ struct P2POrdersView: View {
                     .scaleEffect(currentDeviceType == .pad ? 0.65 : 1)
             }
         }
-        .disabled(c2cOrdersSecondTypeFiltered.isEmpty)
         .opacity(c2cOrdersSecondTypeFiltered.isEmpty ? 0.5 : 1)
+        .contentShape([.hoverEffect, .contextMenuPreview], Circle())
+        .hoverEffect(.highlight)
+        .disabled(c2cOrdersSecondTypeFiltered.isEmpty)
         .contextMenu {
             Button {
                 statisticsShowButtonPressed()
@@ -269,7 +271,7 @@ struct P2POrdersView: View {
                     Text("Please, select certain __Fiat__ in filter before open Statistics")
                         .font(.title2)
                         .frame(width: 250)
-                        .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                        .multilineTextAlignment(.leading)
                 }
                 .frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
                 .padding()
@@ -295,10 +297,11 @@ struct P2POrdersView: View {
                     .font(.custom("title1.5", size: 25))
                     .foregroundColor(SettingsStorage.pickedAppColor)
                 
-                    Text(viewModel.selectedAccount?.name ?? "")
+                Text(viewModel.selectedAccount?.name ?? "")
                     .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .phone ? 180 : 120, alignment: .leading)
-                        .font(.title2)
-                        .bold()
+                    .font(.title2)
+                    .bold()
+                    .lineLimit(1)
             }
         } primaryAction: {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -306,6 +309,7 @@ struct P2POrdersView: View {
                 presentAPISheet.toggle()
             }
         }
+        .hoverEffect(.highlight)
     }
     
     //MARK: - View Methods

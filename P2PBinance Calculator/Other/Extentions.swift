@@ -108,6 +108,12 @@ extension UIColor {
     }
 }
 
+extension Color {
+    var accessibilityName: String {
+        return UIColor(self).accessibilityName
+    }
+}
+
 func copyAsPlainText(_ value: String) {
     let clipboard = UIPasteboard.general
     clipboard.setValue(value, forPasteboardType: UTType.plainText.identifier)

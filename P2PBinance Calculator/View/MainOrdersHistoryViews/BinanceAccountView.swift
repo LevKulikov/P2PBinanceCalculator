@@ -32,32 +32,36 @@ struct BinanceAccountView: View {
     
     //MARK: - Body
     var body: some View {
-        VStack {
-            nameTextField
-                .padding()
-            
-            apiKeyTextField
-                .padding(.horizontal)
-                .padding(.bottom)
-            
-            secretKeyTextField
-                .padding(.horizontal)
-                .padding(.bottom)
-            
-            exchangePicker
-                .disabled(true)
-                .padding(.horizontal)
-                .padding(.bottom, 40)
-            
-            if action == .create {
-                instructionLink
+        ZStack(alignment: .bottom) {
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    nameTextField
+                        .padding()
+                    
+                    apiKeyTextField
+                        .padding(.horizontal)
+                        .padding(.bottom)
+                    
+                    secretKeyTextField
+                        .padding(.horizontal)
+                        .padding(.bottom)
+                    
+                    exchangePicker
+                        .disabled(true)
+                        .padding(.horizontal)
+                        .padding(.bottom, 40)
+                    
+                    if action == .create {
+                        instructionLink
+                    }
+                }
             }
-            
-            Spacer()
+            .scrollDismissesKeyboard(.interactively)
             
             saveButton
                 .padding(.top, -100)
         }
+        .ignoresSafeArea(.keyboard)
         .navigationTitle("Account API")
         .onAppear {
             onAppearTask()
