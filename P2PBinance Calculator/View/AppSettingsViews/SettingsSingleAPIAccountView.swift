@@ -23,6 +23,7 @@ struct SettingsSingleAPIAccountView: View {
     @State private var accountName = ""
     @State private var apiKey = ""
     @State private var secretKey = ""
+    @State private var exchange: BinanceConnection.Exchange = .binance
     @State private var instructionAlert = false
     @FocusState private var nameFieldFocused: Bool
     @FocusState private var apiKeyFieldFocused: Bool
@@ -43,6 +44,11 @@ struct SettingsSingleAPIAccountView: View {
             
             secretKeyTextField
                 .padding(.horizontal)
+                .padding(.bottom)
+            
+            exchangePicker
+                .disabled(true)
+                .padding(.horizontal)
                 .padding(.bottom, 40)
             
             if action == .create {
@@ -54,7 +60,7 @@ struct SettingsSingleAPIAccountView: View {
             saveButton
                 .padding(.top, -100)
         }
-        .navigationTitle("Binance API")
+        .navigationTitle("Account API")
         .onAppear {
             onAppearMethod()
         }
@@ -121,6 +127,22 @@ struct SettingsSingleAPIAccountView: View {
         }
     }
     
+    private var exchangePicker: some View {
+        LabeledContent {
+            Picker("Exchange", selection: $exchange) {
+                ForEach(BinanceConnection.Exchange.allCases, id: \.self) { exch in
+                    Text(exch.rawValue)
+                        .tag(exch)
+                }
+            }
+            .pickerStyle(.menu)
+        } label: {
+            Text("Exchange")
+                .font(.title3)
+                .bold()
+        }
+    }
+    
     private var instructioneLink: some View {
         Text("How to create Binance API")
             .foregroundColor(.blue)
@@ -162,6 +184,7 @@ struct SettingsSingleAPIAccountView: View {
             accountName = account.name
             apiKey = account.apiKey
             secretKey = account.secretKey
+            exchange = account.exchange
         }
     }
     
@@ -169,7 +192,12 @@ struct SettingsSingleAPIAccountView: View {
         if accountName.isEmpty || apiKey.isEmpty || secretKey.isEmpty {
             emptyFieldErrorFlag.toggle()
         } else {
-            let newAccount = APIAccount(name: accountName, apiKey: apiKey, secretKey: secretKey)
+            let newAccount = APIAccount(
+                name: accountName,
+                apiKey: apiKey,
+                secretKey: secretKey,
+                exchange: exchange
+            )
             switch action {
             case .create:
                 settingsViewModel.addAPIAccount(newAccount, completionHandler: nil)

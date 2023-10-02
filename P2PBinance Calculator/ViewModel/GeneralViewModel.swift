@@ -55,7 +55,11 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
             return
         }
         
-        let connection = BinanceConnection(apiKey: selectedAccount.apiKey, secretKey: selectedAccount.secretKey)
+        let connection = BinanceConnection(
+            apiKey: selectedAccount.apiKey,
+            secretKey: selectedAccount.secretKey,
+            exchange: selectedAccount.exchange
+        )
         connection.getC2COrderHistory(
             type: type,
             startTimestamp: startTimestamp, //!= nil ? startTimestamp!.startOfDay : nil,
@@ -104,8 +108,8 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
         dataStorage.getCustomFiatFilter()
     }
     
-    func addAPIAccount(name: String, apiKey: String, secretKey: String, completionHandler: ((APIAccount?) -> Void)?) {
-        dataStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, completionHandler: completionHandler)
+    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: BinanceConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
+        dataStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, exchange: exchange, completionHandler: completionHandler)
     }
     
     func addAPIAccount(_ newAccount: APIAccount, completionHandler: ((APIAccount?) -> Void)?) {

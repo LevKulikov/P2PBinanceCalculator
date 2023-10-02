@@ -68,7 +68,7 @@ struct P2POrdersView: View {
     //MARK: - Body
     var body: some View {
         if !loadStatus.isLoading && !loadStatus.isResponseGet {
-            showLoadButton(title: "Get Binance P2P Orders")
+            showLoadButton(title: "Get P2P Orders")
         } else if !modalLaoding && loadStatus.isLoading && !loadStatus.isResponseGet {
             ProgressView()
                 .tint(SettingsStorage.pickedAppColor)
@@ -338,7 +338,7 @@ struct P2POrdersView: View {
                 loadButtonOnAppearTask()
             }
             
-            Button("Set Binance P2P API Key") {
+            Button("Set P2P API Key") {
                 presentAPISheet.toggle()
             }
             .tint(SettingsStorage.pickedAppColor)

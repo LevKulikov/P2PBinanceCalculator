@@ -49,7 +49,7 @@ struct SettingsAPIAccountsListView: View {
                     Button("Ok") {}
                 }
             }
-            .navigationTitle("Binance accounts")
+            .navigationTitle("Accounts")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationDestination(for: SettingsSingleAPIAccountView.AccountAction.self) { action in
                 SettingsSingleAPIAccountView(action: action, didChangeApi: $didChangeApi)

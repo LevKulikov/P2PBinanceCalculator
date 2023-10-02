@@ -52,6 +52,11 @@ class BinanceConnection {
         }
     }
     
+    enum Exchange: String, Codable, CaseIterable {
+        case binance = "Binance"
+        case commex = "CommEX"
+    }
+    
     enum BinanceError: String, Error {
         case invalidResponse = "Got invalid response"
         case connectionError = "Connection issues"
@@ -65,20 +70,31 @@ class BinanceConnection {
     typealias SymbolPriceTicker = BinanceResponse.SymbolPriceTicker
     typealias Worker = BinanceResponse.MinerListResponse.Data.Worker
     
-    static private let Endpoint = "https://api.binance.com"
+    static private let BinanceEndpoint = "https://api.binance.com"
+    static private let CommExEndpoit = "https://api.commex.com"
     
     let apiKey: String
     let secretKey: String
+    let exchange: Exchange
     
-    init(apiKey: String, secretKey: String) {
+    init(apiKey: String, secretKey: String, exchange: Exchange) {
         self.apiKey = apiKey
         self.secretKey = secretKey
+        self.exchange = exchange
     }
     
     private func performCall<T: Decodable>(withPath path: String, queryString: String, timestamp: Bool, securityType: PayloadBuilder.SecurityType, completionHandler: @escaping (Result<T, BinanceConnection.BinanceError>) -> ()) {
         let payload = PayloadBuilder(payload: queryString, timestamp: timestamp, security: securityType).build()
         
-        let url = URL(string: "\(BinanceConnection.Endpoint)\(path)?\(payload)")!
+        let endpoint: String
+        switch exchange {
+        case .binance:
+            endpoint = BinanceConnection.BinanceEndpoint
+        case .commex:
+            endpoint = BinanceConnection.CommExEndpoit
+        }
+        
+        let url = URL(string: "\(endpoint)\(path)?\(payload)")!
         
         var urlRequest = URLRequest(url: url)
         

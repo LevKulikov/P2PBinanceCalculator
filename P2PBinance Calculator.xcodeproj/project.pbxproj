@@ -144,8 +144,8 @@
 				737622102AC7504F00C81203 /* FilterSettingsView.swift */,
 				73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */,
 				737414092AC9CD0B00FCF4E1 /* ColorModeView.swift */,
-				7374140B2AC9D19800FCF4E1 /* SupportingViews */,
 				7374140E2AC9D79500FCF4E1 /* AppAppearanceView.swift */,
+				7374140B2AC9D19800FCF4E1 /* SupportingViews */,
 			);
 			path = AppSettingsViews;
 			sourceTree = "<group>";

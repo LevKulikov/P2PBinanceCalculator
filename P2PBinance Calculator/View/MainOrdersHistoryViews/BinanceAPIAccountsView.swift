@@ -31,7 +31,7 @@ struct BinanceAPIAccountsView: View {
                 }
             }
             .listRowBackground(Color.clear)
-            .navigationTitle("Binance accounts")
+            .navigationTitle("Accounts")
             .navigationBarTitleDisplayMode(.inline)
             .alert("Maximum accounts number is 5", isPresented: $maxAccountLimitReached) {
                 Button("Ok") {}

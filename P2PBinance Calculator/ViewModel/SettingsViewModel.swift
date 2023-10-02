@@ -84,9 +84,10 @@ class SettingsViewModel: ObservableObject {
         name: String,
         apiKey: String,
         secretKey: String,
+        exchange: BinanceConnection.Exchange,
         completionHandler: ((APIAccount?) -> Void)?
     ) {
-        dataStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, completionHandler: completionHandler)
+        dataStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, exchange: exchange, completionHandler: completionHandler)
     }
     
     /// Adds new API Account and saves it
