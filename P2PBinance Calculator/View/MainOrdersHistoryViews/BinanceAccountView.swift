@@ -57,6 +57,11 @@ struct BinanceAccountView: View {
                 }
             }
             .scrollDismissesKeyboard(.interactively)
+            .toolbar {
+                if !nameFieldFocused {
+                    keyboardToolbarPasteButton
+                }
+            }
             
             saveButton
                 .padding(.top, -100)
@@ -184,6 +189,22 @@ struct BinanceAccountView: View {
         .tint(SettingsStorage.pickedAppColor)
         .buttonStyle(.borderedProminent)
         .controlSize(.large)
+    }
+    
+    private var keyboardToolbarPasteButton: some ToolbarContent {
+        ToolbarItemGroup(placement: .keyboard) {
+            Spacer()
+            
+            PasteButton(payloadType: String.self) { strings in
+                guard let string = strings.first else { return }
+                if apiKeyFieldFocused {
+                    apiKey = string
+                } else if secretKeyFieldFocused {
+                    secretKey = string
+                }
+            }
+            .tint(SettingsStorage.pickedAppColor)
+        }
     }
     
     //MARK: - Methods

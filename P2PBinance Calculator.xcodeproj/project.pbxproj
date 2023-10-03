@@ -12,6 +12,7 @@
 		73168A0C2A85F138007F0F5C /* APIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0B2A85F138007F0F5C /* APIStorage.swift */; };
 		73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0D2A85F4DA007F0F5C /* DataStorage.swift */; };
 		7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330C2B32A7FB9B10054E43F /* FilterView.swift */; };
+		7335B0412ACC71B80013701C /* ManualAndFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B0402ACC71B80013701C /* ManualAndFeaturesView.swift */; };
 		7374140A2AC9CD0B00FCF4E1 /* ColorModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737414092AC9CD0B00FCF4E1 /* ColorModeView.swift */; };
 		7374140D2AC9D1C700FCF4E1 /* CheckboxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374140C2AC9D1C700FCF4E1 /* CheckboxButton.swift */; };
 		7374140F2AC9D79500FCF4E1 /* AppAppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374140E2AC9D79500FCF4E1 /* AppAppearanceView.swift */; };
@@ -49,6 +50,7 @@
 		73168A0B2A85F138007F0F5C /* APIStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStorage.swift; sourceTree = "<group>"; };
 		73168A0D2A85F4DA007F0F5C /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		7330C2B32A7FB9B10054E43F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		7335B0402ACC71B80013701C /* ManualAndFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualAndFeaturesView.swift; sourceTree = "<group>"; };
 		733D7B3A2A92BBC6001FCEE9 /* P2PBinance-Calculator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "P2PBinance-Calculator-Info.plist"; sourceTree = SOURCE_ROOT; };
 		737414092AC9CD0B00FCF4E1 /* ColorModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorModeView.swift; sourceTree = "<group>"; };
 		7374140C2AC9D1C700FCF4E1 /* CheckboxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxButton.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */,
 				737414092AC9CD0B00FCF4E1 /* ColorModeView.swift */,
 				7374140E2AC9D79500FCF4E1 /* AppAppearanceView.swift */,
+				7335B0402ACC71B80013701C /* ManualAndFeaturesView.swift */,
 				7374140B2AC9D19800FCF4E1 /* SupportingViews */,
 			);
 			path = AppSettingsViews;
@@ -305,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7335B0412ACC71B80013701C /* ManualAndFeaturesView.swift in Sources */,
 				73B60B942A8FBF1700D930F8 /* BinanceAPIAccountsView.swift in Sources */,
 				73BC316A2AC49D3F00FDF244 /* SettingsViewModel.swift in Sources */,
 				7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */,

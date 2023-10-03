@@ -13,7 +13,9 @@ struct AppSettingsView: View {
         case filterSettings
         case colorSchemeSettings
         case appearanceSettings
+        case manualAndFeatures
     }
+    
     //MARK: - Properties
     @State private var selectedSettings: SettingsSection?
     @EnvironmentObject var settingsViewModel: SettingsViewModel
@@ -55,6 +57,8 @@ struct AppSettingsView: View {
                 ColorModeView()
             case .appearanceSettings:
                 AppAppearanceView()
+            case .manualAndFeatures:
+                ManualAndFeaturesView()
             }
             
         } else {
@@ -67,6 +71,8 @@ struct AppSettingsView: View {
             p2pOrderListSection
             
             appearanceSection
+            
+            usefulSection
         }
         .tint(Color(uiColor: .secondarySystemFill))
     }
@@ -113,6 +119,20 @@ struct AppSettingsView: View {
                         .foregroundStyle(Color.primary)
                 } icon: {
                     Image(systemName: "pencil.and.outline")
+                        .foregroundStyle(SettingsStorage.pickedAppColor)
+                }
+            }
+        }
+    }
+    
+    private var usefulSection: some View {
+        Section("Useful") {
+            NavigationLink(value: SettingsSection.manualAndFeatures) {
+                Label() {
+                    Text("App manual and features")
+                        .foregroundStyle(Color.primary)
+                } icon: {
+                    Image(systemName: "lightbulb.min.fill")
                         .foregroundStyle(SettingsStorage.pickedAppColor)
                 }
             }

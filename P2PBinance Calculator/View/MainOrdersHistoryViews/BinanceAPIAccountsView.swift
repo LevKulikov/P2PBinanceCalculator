@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BinanceAPIAccountsView: View {
+    //MARK: - Properties
     @EnvironmentObject var viewModel: GeneralViewModel
     @Binding var isPresented: Bool
     @Binding var didChangeAPI: Bool
@@ -17,6 +18,7 @@ struct BinanceAPIAccountsView: View {
     @State private var selectedAccount: APIAccount?
     @State private var maxAccountLimitReached = false
     
+    //MARK: - Body
     var body: some View {
         NavigationStack(path: $navigationPath) {
             List {
@@ -56,6 +58,7 @@ struct BinanceAPIAccountsView: View {
         }
     }
     
+    //MARK: - View properties
     private var noAccountsRow: some View {
         NavigationLink {
             BinanceAccountView(action: .create, isPresented: $isPresented, didChangeAPI: $didChangeAPI)
@@ -95,6 +98,7 @@ struct BinanceAPIAccountsView: View {
         }
     }
     
+    //MARK: - ViewBuilder methods
     @ViewBuilder
     private func createAccountRow(for account: APIAccount) -> some View {
         HStack {
@@ -112,6 +116,7 @@ struct BinanceAPIAccountsView: View {
                         .font(.title3)
                 }
                 .buttonStyle(.borderless)
+                .hoverEffect()
             }
         }
         .contentShape(Rectangle())
@@ -141,6 +146,7 @@ struct BinanceAPIAccountsView: View {
         .listRowBackground(selectedAccount == account ? Color(uiColor: UIColor.quaternaryLabel) : nil)
     }
     
+    //MARK: - Methods
     private func deleteAccounts(indexes: IndexSet) {
         for index in indexes {
             accounts.remove(at: index)
