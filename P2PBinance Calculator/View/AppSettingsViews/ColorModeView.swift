@@ -10,21 +10,32 @@ import SwiftUI
 struct ColorModeView: View {
     //MARK: - Properties
     @EnvironmentObject var settingsViewModel: SettingsViewModel
+    @Environment(\.colorScheme) var colorScheme
     @State private var systemScheme = false
     @State private var lightScheme = false
     @State private var darkScheme = false
     
+    
     //MARK: - Body
     var body: some View {
         NavigationStack {
-            List {
-                systemSchemeRow
-                ligthSchemeRow
-                darkSchemeRow
-            }
-            .navigationTitle("Display mode")
-            .onAppear {
-                onAppearTask()
+            ZStack {
+                if colorScheme == .light {
+                    Color(uiColor: .systemGray6)
+                        .ignoresSafeArea()
+                }
+                
+                List {
+                    systemSchemeRow
+                    ligthSchemeRow
+                    darkSchemeRow
+                }
+                .frame(maxWidth: 900)
+                .scrollContentBackground(.hidden)
+                .navigationTitle("Display mode")
+                .onAppear {
+                    onAppearTask()
+                }
             }
         }
     }

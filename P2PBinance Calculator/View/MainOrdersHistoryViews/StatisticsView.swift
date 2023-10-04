@@ -218,6 +218,10 @@ struct StatisticsView: View {
             .chartYScale(domain: priceRange)
             .frame(height: 250)
             .animation(.easeOut, value: pickerSelection)
+            .chartForegroundStyleScale([
+                "BUY Price" : Color.green,
+                "SELL Price" : Color.red
+            ])
             
             if assetsInOrders.count > 1 {
                 AssetPicker(assets: assetsInOrders, pickerSelection: $pickerSelection)

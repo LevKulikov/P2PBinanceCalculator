@@ -12,6 +12,8 @@ import Combine
 
 class SettingsViewModel: ObservableObject {
     //MARK: - Properties
+    /// Manual storage to stores manuals 
+    let manualStorage: ManualStorageProtocol = ManualStorage()
     /// Storage for settings to store it in memory
     private let settingsStorage: SettingsStorageProtocol
     private let dataStorage: DataStorageProtocol

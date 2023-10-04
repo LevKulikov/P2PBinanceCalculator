@@ -28,6 +28,8 @@ struct P2PBinance_CalculatorApp: App {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithDefaultBackground()
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+//        UIPageControl.appearance().currentPageIndicatorTintColor = .black
+//        UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
 
     var body: some Scene {

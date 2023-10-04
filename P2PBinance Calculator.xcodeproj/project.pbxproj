@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		730B55DB2A8FC9EC00B6E7E9 /* BinanceAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */; };
-		73168A072A821193007F0F5C /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A062A821193007F0F5C /* CalculatorView.swift */; };
+		73168A072A821193007F0F5C /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A062A821193007F0F5C /* StatisticsView.swift */; };
 		73168A0C2A85F138007F0F5C /* APIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0B2A85F138007F0F5C /* APIStorage.swift */; };
 		73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73168A0D2A85F4DA007F0F5C /* DataStorage.swift */; };
 		7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330C2B32A7FB9B10054E43F /* FilterView.swift */; };
@@ -42,11 +42,16 @@
 		73EABBD52AC5E9E200A5DED9 /* AppAppearanceVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABBD42AC5E9E200A5DED9 /* AppAppearanceVariables.swift */; };
 		73EABBD72AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABBD62AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift */; };
 		73EABBD92AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */; };
+		73EE68932ACD80C100A7E00F /* InDevelopmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EE68922ACD80C100A7E00F /* InDevelopmentView.swift */; };
+		73EE68952ACD89DB00A7E00F /* ManualModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EE68942ACD89DB00A7E00F /* ManualModel.swift */; };
+		73EE68972ACD8AB000A7E00F /* ManualStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EE68962ACD8AB000A7E00F /* ManualStorage.swift */; };
+		73EE68992ACD962F00A7E00F /* SingleManualView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EE68982ACD962F00A7E00F /* SingleManualView.swift */; };
+		73EE689B2ACD994C00A7E00F /* ManualsPagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EE689A2ACD994C00A7E00F /* ManualsPagingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceAccountView.swift; sourceTree = "<group>"; };
-		73168A062A821193007F0F5C /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
+		73168A062A821193007F0F5C /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		73168A0B2A85F138007F0F5C /* APIStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStorage.swift; sourceTree = "<group>"; };
 		73168A0D2A85F4DA007F0F5C /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		7330C2B32A7FB9B10054E43F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
@@ -82,6 +87,11 @@
 		73EABBD42AC5E9E200A5DED9 /* AppAppearanceVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearanceVariables.swift; sourceTree = "<group>"; };
 		73EABBD62AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAPIAccountsListView.swift; sourceTree = "<group>"; };
 		73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSingleAPIAccountView.swift; sourceTree = "<group>"; };
+		73EE68922ACD80C100A7E00F /* InDevelopmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InDevelopmentView.swift; sourceTree = "<group>"; };
+		73EE68942ACD89DB00A7E00F /* ManualModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualModel.swift; sourceTree = "<group>"; };
+		73EE68962ACD8AB000A7E00F /* ManualStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualStorage.swift; sourceTree = "<group>"; };
+		73EE68982ACD962F00A7E00F /* SingleManualView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleManualView.swift; sourceTree = "<group>"; };
+		73EE689A2ACD994C00A7E00F /* ManualsPagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualsPagingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +111,7 @@
 				73168A0D2A85F4DA007F0F5C /* DataStorage.swift */,
 				73168A0B2A85F138007F0F5C /* APIStorage.swift */,
 				73BC316B2AC49D8C00FDF244 /* SettingsStorage.swift */,
+				73EE68962ACD8AB000A7E00F /* ManualStorage.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -121,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				7374140C2AC9D1C700FCF4E1 /* CheckboxButton.swift */,
+				73EE68922ACD80C100A7E00F /* InDevelopmentView.swift */,
 			);
 			path = SupportingViews;
 			sourceTree = "<group>";
@@ -129,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				73CD6F332A7E6F5D007D4DBC /* P2POrdersView.swift */,
-				73168A062A821193007F0F5C /* CalculatorView.swift */,
+				73168A062A821193007F0F5C /* StatisticsView.swift */,
 				739BBFEA2A86CDEB007EB6F8 /* OrderDetailsView.swift */,
 				73B60B932A8FBF1700D930F8 /* BinanceAPIAccountsView.swift */,
 				730B55DA2A8FC9EC00B6E7E9 /* BinanceAccountView.swift */,
@@ -142,12 +154,11 @@
 			isa = PBXGroup;
 			children = (
 				73BC316F2AC4AA3E00FDF244 /* AppSettingsView.swift */,
-				73EABBD62AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift */,
 				737622102AC7504F00C81203 /* FilterSettingsView.swift */,
-				73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */,
 				737414092AC9CD0B00FCF4E1 /* ColorModeView.swift */,
 				7374140E2AC9D79500FCF4E1 /* AppAppearanceView.swift */,
-				7335B0402ACC71B80013701C /* ManualAndFeaturesView.swift */,
+				73EE689D2ACDBE9700A7E00F /* AccountsSettingsViews */,
+				73EE689C2ACD9A5700A7E00F /* ManualsViews */,
 				7374140B2AC9D19800FCF4E1 /* SupportingViews */,
 			);
 			path = AppSettingsViews;
@@ -211,6 +222,7 @@
 				73CD6F382A7E7018007D4DBC /* C2CHistoryResponse.swift */,
 				73CD6F422A7EA950007D4DBC /* BinanceErrorResponse.swift */,
 				73B60B912A8FB32300D930F8 /* APIAccount.swift */,
+				73EE68942ACD89DB00A7E00F /* ManualModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -232,6 +244,25 @@
 				73CD6F4C2A7EB757007D4DBC /* BinanceResponse.swift */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		73EE689C2ACD9A5700A7E00F /* ManualsViews */ = {
+			isa = PBXGroup;
+			children = (
+				7335B0402ACC71B80013701C /* ManualAndFeaturesView.swift */,
+				73EE689A2ACD994C00A7E00F /* ManualsPagingView.swift */,
+				73EE68982ACD962F00A7E00F /* SingleManualView.swift */,
+			);
+			path = ManualsViews;
+			sourceTree = "<group>";
+		};
+		73EE689D2ACDBE9700A7E00F /* AccountsSettingsViews */ = {
+			isa = PBXGroup;
+			children = (
+				73EABBD62AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift */,
+				73EABBD82AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift */,
+			);
+			path = AccountsSettingsViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,21 +342,26 @@
 				7335B0412ACC71B80013701C /* ManualAndFeaturesView.swift in Sources */,
 				73B60B942A8FBF1700D930F8 /* BinanceAPIAccountsView.swift in Sources */,
 				73BC316A2AC49D3F00FDF244 /* SettingsViewModel.swift in Sources */,
+				73EE68932ACD80C100A7E00F /* InDevelopmentView.swift in Sources */,
 				7330C2B42A7FB9B10054E43F /* FilterView.swift in Sources */,
-				73168A072A821193007F0F5C /* CalculatorView.swift in Sources */,
+				73EE68952ACD89DB00A7E00F /* ManualModel.swift in Sources */,
+				73168A072A821193007F0F5C /* StatisticsView.swift in Sources */,
 				73CD6F282A7E6DD3007D4DBC /* Persistence.swift in Sources */,
 				73168A0E2A85F4DA007F0F5C /* DataStorage.swift in Sources */,
 				73EABBD92AC72CF000A5DED9 /* SettingsSingleAPIAccountView.swift in Sources */,
 				73EABBD72AC7225A00A5DED9 /* SettingsAPIAccountsListView.swift in Sources */,
+				73EE68992ACD962F00A7E00F /* SingleManualView.swift in Sources */,
 				73CD6F2B2A7E6DD3007D4DBC /* P2PBinance_Calculator.xcdatamodeld in Sources */,
 				730B55DB2A8FC9EC00B6E7E9 /* BinanceAccountView.swift in Sources */,
 				73CD6F4B2A7EB73D007D4DBC /* BinanceConnection.swift in Sources */,
 				73CD6F392A7E7018007D4DBC /* C2CHistoryResponse.swift in Sources */,
 				73D338F22A81760100F7F3E2 /* CalculatorItem.swift in Sources */,
 				73EABBD52AC5E9E200A5DED9 /* AppAppearanceVariables.swift in Sources */,
+				73EE68972ACD8AB000A7E00F /* ManualStorage.swift in Sources */,
 				73B60B922A8FB32300D930F8 /* APIAccount.swift in Sources */,
 				7374140A2AC9CD0B00FCF4E1 /* ColorModeView.swift in Sources */,
 				739BBFEB2A86CDEB007EB6F8 /* OrderDetailsView.swift in Sources */,
+				73EE689B2ACD994C00A7E00F /* ManualsPagingView.swift in Sources */,
 				73BC31702AC4AA3E00FDF244 /* AppSettingsView.swift in Sources */,
 				73CD6F342A7E6F5D007D4DBC /* P2POrdersView.swift in Sources */,
 				7374140D2AC9D1C700FCF4E1 /* CheckboxButton.swift in Sources */,

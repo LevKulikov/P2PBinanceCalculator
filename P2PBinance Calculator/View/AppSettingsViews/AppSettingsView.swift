@@ -58,7 +58,7 @@ struct AppSettingsView: View {
             case .appearanceSettings:
                 AppAppearanceView()
             case .manualAndFeatures:
-                ManualAndFeaturesView()
+                ManualAndFeaturesListView()
             }
             
         } else {
