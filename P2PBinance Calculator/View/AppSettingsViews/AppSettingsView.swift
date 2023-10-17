@@ -19,6 +19,7 @@ struct AppSettingsView: View {
     //MARK: - Properties
     @State private var selectedSettings: SettingsSection?
     @EnvironmentObject var settingsViewModel: SettingsViewModel
+    @Environment(\.openURL) var openURL
     
     //MARK: - Body
     var body: some View {
@@ -47,7 +48,6 @@ struct AppSettingsView: View {
     @ViewBuilder
     private var selectedSettingsView: some View {
         if let selectedSettings {
-            
             switch selectedSettings {
             case .accountsSettings:
                 SettingsAPIAccountsListView()
@@ -60,7 +60,6 @@ struct AppSettingsView: View {
             case .manualAndFeatures:
                 ManualAndFeaturesListView()
             }
-            
         } else {
             noSettingsSelectedView
         }
@@ -73,6 +72,8 @@ struct AppSettingsView: View {
             appearanceSection
             
             usefulSection
+            
+            contactsSections
         }
         .tint(Color(uiColor: .secondarySystemFill))
     }
@@ -139,8 +140,34 @@ struct AppSettingsView: View {
         }
     }
     
-    //MARK: - Task methods
+    private var contactsSections: some View {
+        Section("Contacts") {
+            Link(destination: URL(string: "https://t.me/k_lev_s")!) {
+                Label() {
+                    Text("Developer's Telegram")
+                } icon: {
+                    Image(systemName: "paperplane.fill")
+                        .foregroundStyle(Color("telegramColor"))
+                }
+            }
+            
+            Button(action: sendMailToDeveloper) {
+                Label() {
+                    Text("Developer's Email")
+                } icon: {
+                    Image(systemName: "envelope.fill")
+                        .foregroundStyle(Color("telegramColor"))
+                }
+            }
+        }
+    }
     
+    //MARK: - Task methods
+    private func sendMailToDeveloper() {
+        let mail = "mailto:levkulikov.appdev@gmail.com"
+        guard let mailURL = URL(string: mail) else { return }
+        openURL(mailURL)
+    }
 }
 
 #Preview {

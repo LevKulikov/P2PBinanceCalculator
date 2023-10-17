@@ -27,7 +27,7 @@ protocol DataStorageProtocol: AnyObject, APIStorageProtocol {
 }
 
 /// Object that stores app data
-class DataStorage: DataStorageProtocol {
+final class DataStorage: DataStorageProtocol {
     //MARK: Properties
     private let apiStorage: APIStorageProtocol
     /// Saved fiat filter set by user previously
@@ -105,7 +105,7 @@ class DataStorage: DataStorageProtocol {
 }
 
 //MARK: Mock object
-class DataStorageMock: DataStorageProtocol {
+final class DataStorageMock: DataStorageProtocol {
     private let apiStorage: APIStorageProtocol
     private var fiatFilter: C2CHistoryResponse.C2COrderFiat
     private var customFiatFilter: String

@@ -75,7 +75,7 @@ protocol APIStorageProtocol: AnyObject {
 }
 
 /// Object that stores user API data
-class APIStorage: APIStorageProtocol {
+final class APIStorage: APIStorageProtocol {
     //MARK: Properties
     private var apiKey: String?
     private var secretKey: String?
@@ -196,7 +196,7 @@ class APIStorage: APIStorageProtocol {
 }
 
 //MARK: Mock object
-class APIStorageMock: APIStorageProtocol {
+final class APIStorageMock: APIStorageProtocol {
     private var apiKey: String? = "fasfdskhfjfkjsjhrk92834234jkhkjfhkdaf"
     private var secretKey: String? = "fasfdskhfjfkjsjhrk92834234jkhkjfhkdaf"
     private var accounts: [APIAccount] = [

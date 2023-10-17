@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 
-class SettingsViewModel: ObservableObject {
+final class SettingsViewModel: ObservableObject {
     //MARK: - Properties
     /// Manual storage to stores manuals 
     let manualStorage: ManualStorageProtocol = ManualStorage()

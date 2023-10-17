@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SingleManualView: View {
     //MARK: - Properties
+    @Environment(\.colorScheme) var colorScheme
     let manual: ManualModel
     private var currentDevice: UIUserInterfaceIdiom {
         UIDevice.current.userInterfaceIdiom
@@ -27,6 +28,7 @@ struct SingleManualView: View {
                     Text(manual.textTitle)
                         .font(.title)
                         .bold()
+                        .foregroundStyle(colorScheme == .light ? Color.primary : Color.blue)
                     Text(manual.mainDescriptionText)
                         .padding(.bottom, 30)
                 }

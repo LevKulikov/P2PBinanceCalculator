@@ -42,7 +42,7 @@ protocol SettingsStorageProtocol: AnyObject {
     func setAppColorScheme(_ colorScheme: ColorScheme?)
 }
 
-class SettingsStorage: SettingsStorageProtocol {
+final class SettingsStorage: SettingsStorageProtocol {
     //MARK: - Properties
     /// Static property to provide which color should be for entire app
     static var pickedAppColor: Color {
@@ -175,7 +175,7 @@ class SettingsStorage: SettingsStorageProtocol {
 }
 
 //MARK: - Mock object for SettingsStorage
-class SettingsStorageMock: SettingsStorageProtocol {
+final class SettingsStorageMock: SettingsStorageProtocol {
     private var roleFilterShow: Bool
     private var dateRangeFilterShow: Bool
     private var amountFilterShow: Bool
