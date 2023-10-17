@@ -17,9 +17,13 @@ struct AppSettingsView: View {
     }
     
     //MARK: - Properties
-    @State private var selectedSettings: SettingsSection?
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @Environment(\.openURL) var openURL
+    @State private var selectedSettings: SettingsSection?
+    @State private var telegramConfirmationFlag = false
+    @State private var emailConfirmationFlag = false
+    private let developerTelegramUsername = "k_lev_s"
+    private let developerEmail = "levkulikov.appdev@gmail.com"
     
     //MARK: - Body
     var body: some View {
@@ -71,7 +75,7 @@ struct AppSettingsView: View {
             
             appearanceSection
             
-            usefulSection
+            //usefulSection
             
             contactsSections
         }
@@ -142,29 +146,49 @@ struct AppSettingsView: View {
     
     private var contactsSections: some View {
         Section("Contacts") {
-            Link(destination: URL(string: "https://t.me/k_lev_s")!) {
-                Label() {
-                    Text("Developer's Telegram")
-                } icon: {
-                    Image(systemName: "paperplane.fill")
-                        .foregroundStyle(Color("telegramColor"))
+            Label() {
+                Text("Developer's Telegram")
+            } icon: {
+                Image(systemName: "paperplane.fill")
+                    .foregroundStyle(Color("telegramColor"))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                telegramConfirmationFlag.toggle()
+            }
+            .confirmationDialog("@" + developerTelegramUsername, isPresented: $telegramConfirmationFlag, titleVisibility: .visible) {
+                Button("Copy username") {
+                    copyAsPlainText("@" + developerTelegramUsername)
                 }
+                
+                Link("Send message", destination: URL(string: "https://t.me/" + developerTelegramUsername)!)
             }
             
-            Button(action: sendMailToDeveloper) {
-                Label() {
-                    Text("Developer's Email")
-                } icon: {
-                    Image(systemName: "envelope.fill")
-                        .foregroundStyle(Color("telegramColor"))
+            Label() {
+                Text("Developer's Email")
+            } icon: {
+                Image(systemName: "envelope.fill")
+                    .foregroundStyle(Color("telegramColor"))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                emailConfirmationFlag.toggle()
+            }
+            .confirmationDialog(developerEmail, isPresented: $emailConfirmationFlag, titleVisibility: .visible) {
+                Button("Copy email") {
+                    copyAsPlainText(developerEmail)
                 }
+                
+                Button("Send mail", action: sendMailToDeveloper)
             }
         }
     }
     
     //MARK: - Task methods
     private func sendMailToDeveloper() {
-        let mail = "mailto:levkulikov.appdev@gmail.com"
+        let mail = "mailto:" + developerEmail
         guard let mailURL = URL(string: mail) else { return }
         openURL(mailURL)
     }
