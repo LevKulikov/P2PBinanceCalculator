@@ -16,12 +16,19 @@ struct AppSettingsView: View {
         case manualAndFeatures
     }
     
+    enum CopiedObject {
+        case telegram
+        case email
+    }
+    
     //MARK: - Properties
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @Environment(\.openURL) var openURL
     @State private var selectedSettings: SettingsSection?
     @State private var telegramConfirmationFlag = false
     @State private var emailConfirmationFlag = false
+    @State private var telegramSuccessCopied = false
+    @State private var emailSuccessCopied = false
     private let developerTelegramUsername = "k_lev_s"
     private let developerEmail = "levkulikov.appdev@gmail.com"
     
@@ -154,12 +161,18 @@ struct AppSettingsView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
+            .overlay(alignment: .trailing) {
+                if telegramSuccessCopied {
+                    successCopiedFlagView
+                }
+            }
             .onTapGesture {
                 telegramConfirmationFlag.toggle()
             }
             .confirmationDialog("@" + developerTelegramUsername, isPresented: $telegramConfirmationFlag, titleVisibility: .visible) {
                 Button("Copy username") {
                     copyAsPlainText("@" + developerTelegramUsername)
+                    showSuccessCopiedFlag(for: .telegram)
                 }
                 
                 Link("Send message", destination: URL(string: "https://t.me/" + developerTelegramUsername)!)
@@ -173,12 +186,18 @@ struct AppSettingsView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
+            .overlay(alignment: .trailing) {
+                if emailSuccessCopied {
+                    successCopiedFlagView
+                }
+            }
             .onTapGesture {
                 emailConfirmationFlag.toggle()
             }
             .confirmationDialog(developerEmail, isPresented: $emailConfirmationFlag, titleVisibility: .visible) {
                 Button("Copy email") {
                     copyAsPlainText(developerEmail)
+                    showSuccessCopiedFlag(for: .email)
                 }
                 
                 Button("Send mail", action: sendMailToDeveloper)
@@ -186,11 +205,45 @@ struct AppSettingsView: View {
         }
     }
     
+    private var successCopiedFlagView: some View {
+        Image(systemName: "doc.on.doc.fill")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 20, height: 20)
+            .foregroundStyle(Color.white)
+            .padding(4)
+            .background(
+                Circle()
+                    .fill(Color.green)
+            )
+            .shadow(radius: 3)
+            .transition(AnyTransition.opacity.animation(.easeOut(duration: 0.3)))
+    }
+    
     //MARK: - Task methods
     private func sendMailToDeveloper() {
         let mail = "mailto:" + developerEmail
         guard let mailURL = URL(string: mail) else { return }
         openURL(mailURL)
+    }
+    
+    private func showSuccessCopiedFlag(for copiedObject: CopiedObject) {
+        switch copiedObject {
+        case .telegram:
+            withAnimation {
+                telegramSuccessCopied = true
+                DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1.5) {
+                    telegramSuccessCopied = false
+                }
+            }
+        case .email:
+            withAnimation {
+                emailSuccessCopied = true
+                DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1.5) {
+                    emailSuccessCopied = false
+                }
+            }
+        }
     }
 }
 
