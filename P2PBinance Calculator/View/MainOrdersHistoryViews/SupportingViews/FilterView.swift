@@ -197,24 +197,30 @@ struct FilterView: View {
             }
             
             if !detailedFilterShow || !settingsViewModel.publishedDateRangeFilterShow {
-                DatePicker("Date to pick", selection: $oneDaySet, in: startDateRange.lowerBound...endDateRange.upperBound, displayedComponents: .date)
-                    .labelsHidden()
-                    .datePickerStyle(.compact)
-                    .padding(.leading, 10)
-                    .applyTextColor(SettingsStorage.pickedAppColor)
-                    .onTapGesture {
-                        dateSetByPicker = .oneDayPicker
-                    }
-                    .onChange(of: oneDaySet) {
-                        if dateSetByPicker == .oneDayPicker {
-                            fromDate = $0.startOfDay
-                            toDate = $0.endOfDay
+                // This Vstack is made to override TapGesture of DatePicker to prevent iOS 17.1 bug
+                VStack(spacing: 0) {
+                    DatePicker("Date to pick", selection: $oneDaySet, in: startDateRange.lowerBound...endDateRange.upperBound, displayedComponents: .date)
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
+                        .padding(.leading, 10)
+                        .applyTextColor(SettingsStorage.pickedAppColor)
+                        .onTapGesture(count: 99, perform: {
+                            // TapGesture with big count of taps prevents triggering iOS 17.1 bug as long as taps count is not fulfilled
+                        })
+                        .onChange(of: oneDaySet) {
+                            if dateSetByPicker == .oneDayPicker {
+                                fromDate = $0.startOfDay
+                                toDate = $0.endOfDay
+                            }
                         }
-                    }
-                    .onAppear {
-                        oneDaySet = toDate.endOfDay
-                    }
-                    .transition(.offset(x: -50, y: 46).combined(with: .opacity))
+                        .onAppear {
+                            oneDaySet = toDate.endOfDay
+                        }
+                }
+                .onTapGesture {
+                    dateSetByPicker = .oneDayPicker
+                }
+                .transition(.offset(x: -50, y: 46).combined(with: .opacity))
             }
             
             if showSecondRow || showThirdRow {
@@ -245,6 +251,9 @@ struct FilterView: View {
                     .labelsHidden()
                     .datePickerStyle(.compact)
                     .applyTextColor(SettingsStorage.pickedAppColor)
+                    .onTapGesture(count: 99, perform: {
+                        // TapGesture with big count of taps prevents triggering iOS 17.1 bug as long as taps count is not fulfilled
+                    })
                     .padding(.leading, settingsViewModel.publishedRoleFilterShow ? 10 : 0)
                 
                 Image(systemName: "arrowshape.right.fill")
@@ -257,18 +266,24 @@ struct FilterView: View {
                         }
                     }
                 
-                DatePicker("To date", selection: $toDate, in: endDateRange, displayedComponents: [.date, .hourAndMinute])
-                    .labelsHidden()
-                    .datePickerStyle(.compact)
-                    .applyTextColor(SettingsStorage.pickedAppColor)
-                    .onTapGesture {
-                        dateSetByPicker = .rangeDatePicker
-                    }
-                    .onChange(of: toDate) {
-                        if dateSetByPicker == .rangeDatePicker {
-                            oneDaySet = $0
+                // This Vstack is made to override TapGesture of DatePicker to prevent iOS 17.1 bug
+                VStack(spacing: 0) {
+                    DatePicker("To date", selection: $toDate, in: endDateRange, displayedComponents: [.date, .hourAndMinute])
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
+                        .applyTextColor(SettingsStorage.pickedAppColor)
+                        .onTapGesture(count: 99, perform: {
+                            // TapGesture with big count of taps prevents triggering iOS 17.1 bug as long as taps count is not fulfilled
+                        })
+                        .onChange(of: toDate) {
+                            if dateSetByPicker == .rangeDatePicker {
+                                oneDaySet = $0
+                            }
                         }
-                    }
+                }
+                .onTapGesture {
+                    dateSetByPicker = .rangeDatePicker
+                }
             } else if settingsViewModel.publishedRoleFilterShow {
                 getScrollableThirdFilterRow(proxy: proxy)
             }
