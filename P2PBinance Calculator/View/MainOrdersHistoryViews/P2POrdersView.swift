@@ -17,7 +17,7 @@ struct P2POrdersView: View {
     @State private var loadStatus = (isLoading: false, isResponseGet: false)
     /// Needed when first load is done, so large ProgressView will not appear
     @State private var modalLaoding = false
-    @State private var responseError: BinanceConnection.BinanceError? = nil
+    @State private var responseError: ExchangeConnection.ExchangeError? = nil
     @State private var errorFlag = false
     @State private var presentStatisticsSheet = false
     @State private var presentAPISheet = false

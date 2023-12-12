@@ -103,6 +103,8 @@ struct C2CHistoryResponse: Codable {
         let advertisementRole: C2COrderAdvertisementRole
     }
     
+    
+    
     /// Model for C2COrder that can contain other properties
     struct C2COrderTransformed: Identifiable, Equatable, Hashable {
         let id = UUID()
@@ -156,6 +158,23 @@ struct C2CHistoryResponse: Codable {
             self.counterPartNickName = order.counterPartNickName
             self.advertisementRole = order.advertisementRole
         }
+        
+        init(order: CommexC2CHistoryResponse.CommexC2COrder) {
+            self.orderNumber = order.orderNumber
+            self.advNo = order.adNo
+            self.tradeType = order.tradeType
+            self.asset = order.asset
+            self.fiat = order.fiat
+            self.fiatSymbol = order.fiatSymbol
+            self.amount = Float(order.amount) ?? 0
+            self.totalPrice = Float(order.totalPrice) ?? 0
+            self.unitPrice = order.unitPrice
+            self.orderStatus = order.orderStatus
+            self.createTime = Date(timeIntervalSince1970: TimeInterval(order.createTime / 1000))
+            self.commission = order.commission
+            self.counterPartNickName = order.counterPartNickName
+            self.advertisementRole = order.advertisementRole
+        }
     }
     
     let code: String
@@ -163,4 +182,27 @@ struct C2CHistoryResponse: Codable {
     let data: [C2COrder]
     let total: Int
     let success: Bool
+}
+
+/// Model of response for Commex, to make Orders History API call
+struct CommexC2CHistoryResponse: Codable {
+    struct CommexC2COrder: Codable {
+        let orderNumber: String
+        let adNo: String
+        let tradeType: C2CHistoryResponse.C2COrderType
+        let asset: String
+        let fiat: String
+        let fiatSymbol: String
+        let amount: String
+        let totalPrice: String
+        let unitPrice: Float
+        let orderStatus: C2CHistoryResponse.C2COrderStatus
+        let createTime: Int
+        let commission: Float
+        let counterPartNickName: String
+        let advertisementRole: C2CHistoryResponse.C2COrderAdvertisementRole
+    }
+    
+    let total: Int
+    let data: [CommexC2COrder]
 }

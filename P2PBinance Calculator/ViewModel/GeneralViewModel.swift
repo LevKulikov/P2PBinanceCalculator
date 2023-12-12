@@ -48,34 +48,55 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
         endTimestamp: Date? = nil,
         page: Int? = nil,
         rows: Int? = nil,
-        completionHandler: @escaping (Result<[C2CHistoryResponse.C2COrderTransformed], BinanceConnection.BinanceError>) -> Void
-    ) { 
+        completionHandler: @escaping (Result<[C2CHistoryResponse.C2COrderTransformed], ExchangeConnection.ExchangeError>) -> Void
+    ) {
         guard let selectedAccount else {
             completionHandler(.failure(.apiError))
             return
         }
         
-        let connection = BinanceConnection(
+        let connection = ExchangeConnection(
             apiKey: selectedAccount.apiKey,
             secretKey: selectedAccount.secretKey,
             exchange: selectedAccount.exchange
         )
-        connection.getC2COrderHistory(
-            type: type,
-            startTimestamp: startTimestamp, //!= nil ? startTimestamp!.startOfDay : nil,
-            endTimestamp: endTimestamp, //(endTimestamp ?? Date.now).startOfDay == Date.now.startOfDay ? Date.now : Calendar.current.date(byAdding: .second, value: -1, to: endTimestamp!.dayAfter.startOfDay),
-            page: page,
-            rows: rows
-        ) { result in
-            switch result {
-            case .success(let success):
-                completionHandler(
-                    .success(
-                        success.data.map { C2CHistoryResponse.C2COrderTransformed(order: $0) }
+        
+        switch selectedAccount.exchange {
+        case .binance:
+            connection.getBinanceC2COrderHistory(
+                type: type,
+                startTimestamp: startTimestamp, //!= nil ? startTimestamp!.startOfDay : nil,
+                endTimestamp: endTimestamp, //(endTimestamp ?? Date.now).startOfDay == Date.now.startOfDay ? Date.now : Calendar.current.date(byAdding: .second, value: -1, to: endTimestamp!.dayAfter.startOfDay),
+                page: page,
+                rows: rows
+            ) { result in
+                switch result {
+                case .success(let success):
+                    completionHandler(
+                        .success(
+                            success.data.map { C2CHistoryResponse.C2COrderTransformed(order: $0) }
+                        )
                     )
-                )
-            case .failure(let failure):
-                completionHandler(.failure(failure))
+                case .failure(let failure):
+                    completionHandler(.failure(failure))
+                }
+            }
+        case .commex:
+            connection.getCommexC2COrderHistory(
+                type: type,
+                startTimestamp: startTimestamp,
+                endTimestamp: endTimestamp
+            ) { result in
+                switch result {
+                case .success(let success):
+                    completionHandler(
+                        .success(
+                            success.data.map { C2CHistoryResponse.C2COrderTransformed(order: $0) }
+                        )
+                    )
+                case .failure(let failure):
+                    completionHandler(.failure(failure))
+                }
             }
         }
     }
@@ -108,7 +129,7 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
         dataStorage.getCustomFiatFilter()
     }
     
-    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: BinanceConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
+    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: ExchangeConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
         dataStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, exchange: exchange, completionHandler: completionHandler)
     }
     
@@ -138,7 +159,7 @@ class GeneralViewModel: ObservableObject, DataStorageProtocol {
 }
 
 class GeneralViewModelMock: GeneralViewModel {
-    override func getC2CHistory(type: C2CHistoryResponse.C2COrderType, startTimestamp: Date? = nil, endTimestamp: Date? = nil, page: Int? = nil, rows: Int? = nil, completionHandler: @escaping (Result<[C2CHistoryResponse.C2COrderTransformed], BinanceConnection.BinanceError>) -> Void) {
+    override func getC2CHistory(type: C2CHistoryResponse.C2COrderType, startTimestamp: Date? = nil, endTimestamp: Date? = nil, page: Int? = nil, rows: Int? = nil, completionHandler: @escaping (Result<[C2CHistoryResponse.C2COrderTransformed], ExchangeConnection.ExchangeError>) -> Void) {
         let orders = [
             C2CHistoryResponse.C2COrderTransformed(
                 orderNumber: "02394273598234599238523",

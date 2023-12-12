@@ -13,5 +13,5 @@ struct APIAccount: Identifiable, Equatable, Hashable, Codable {
     var name: String
     var apiKey: String
     var secretKey: String
-    var exchange: BinanceConnection.Exchange = .binance
+    var exchange: ExchangeConnection.Exchange = .binance
 }

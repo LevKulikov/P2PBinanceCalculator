@@ -24,7 +24,7 @@ struct BinanceAccountView: View {
     @State private var accountName = ""
     @State private var apiKey = ""
     @State private var secretKey = ""
-    @State private var exchange: BinanceConnection.Exchange = .binance
+    @State private var exchange: ExchangeConnection.Exchange = .binance
     @State private var instructionAlert = false
     @FocusState private var nameFieldFocused: Bool
     @FocusState private var apiKeyFieldFocused: Bool
@@ -47,7 +47,6 @@ struct BinanceAccountView: View {
                         .padding(.bottom)
                     
                     exchangePicker
-                        .disabled(true)
                         .padding(.horizontal)
                         .padding(.bottom, 40)
                     
@@ -134,7 +133,7 @@ struct BinanceAccountView: View {
     private var exchangePicker: some View {
         LabeledContent {
             Picker("Exchange", selection: $exchange) {
-                ForEach(BinanceConnection.Exchange.allCases, id: \.self) { exch in
+                ForEach(ExchangeConnection.Exchange.allCases, id: \.self) { exch in
                     Text(exch.rawValue)
                         .tag(exch)
                 }
@@ -148,10 +147,11 @@ struct BinanceAccountView: View {
     }
     
     private var instructionLink: some View {
-        Text("How to create Binance API")
+        Text("How to create API keys")
             .foregroundColor(.blue)
             .confirmationDialog(#"Only "Enable Reading" is needed to be set in API restrictions"#, isPresented: $instructionAlert, titleVisibility: .visible) {
-                Link("Open instruction", destination: URL(string: "https://www.binance.com/en-BH/support/faq/how-to-create-api-360002502072")!)
+                Link("Create Binance API", destination: URL(string: "https://www.binance.com/en-BH/support/faq/how-to-create-api-360002502072")!)
+                Link("Create Commex API (russian)", destination: URL(string: "https://fsr-develop.ru/blog_cscalp/tpost/kak-sozdat-kljuchi-api-na-birzhe-commex")!)
             }
             .onTapGesture {
                 instructionAlert.toggle()

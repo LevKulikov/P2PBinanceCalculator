@@ -8,7 +8,7 @@
 import CryptoKit
 import Foundation
 
-class BinanceConnection {
+class ExchangeConnection {
     private struct PayloadBuilder {
         
         enum SecurityType {
@@ -57,7 +57,15 @@ class BinanceConnection {
         case commex = "CommEX"
     }
     
-    enum BinanceError: String, Error {
+    enum BinanceAPIPath: String {
+        case c2cOrderHistory = "/sapi/v1/c2c/orderMatch/listUserOrderHistory"
+    }
+    
+    enum CommexAPIPath: String {
+        case c2cOrderHistory = "/api/v1/c2c/order-match/list-order-history"
+    }
+    
+    enum ExchangeError: String, Error {
         case invalidResponse = "Got invalid response"
         case connectionError = "Connection issues"
         case restrictionOrServerError = "Restriction or Server error"
@@ -83,15 +91,15 @@ class BinanceConnection {
         self.exchange = exchange
     }
     
-    private func performCall<T: Decodable>(withPath path: String, queryString: String, timestamp: Bool, securityType: PayloadBuilder.SecurityType, completionHandler: @escaping (Result<T, BinanceConnection.BinanceError>) -> ()) {
+    private func performCall<T: Decodable>(withPath path: String, queryString: String, timestamp: Bool, securityType: PayloadBuilder.SecurityType, completionHandler: @escaping (Result<T, ExchangeError>) -> ()) {
         let payload = PayloadBuilder(payload: queryString, timestamp: timestamp, security: securityType).build()
         
         let endpoint: String
         switch exchange {
         case .binance:
-            endpoint = BinanceConnection.BinanceEndpoint
+            endpoint = ExchangeConnection.BinanceEndpoint
         case .commex:
-            endpoint = BinanceConnection.CommExEndpoit
+            endpoint = ExchangeConnection.CommExEndpoit
         }
         
         let url = URL(string: "\(endpoint)\(path)?\(payload)")!
@@ -120,19 +128,23 @@ class BinanceConnection {
                 return
             }
             
-            guard let parsedResponse = try? JSONDecoder().decode(T.self, from: data) else {
+            do {
+                let parsedResponse = try JSONDecoder().decode(T.self, from: data)
+                completionHandler(.success(parsedResponse))
+            } catch {
+                print(error)
+                print("\nDATA IS GOT:")
+                let parsed = String(data: data, encoding: .utf8)
+                print(parsed ?? "No value from data")
                 completionHandler(.failure(.apiError))
-                return
             }
-
-            completionHandler(.success(parsedResponse))
         }
         
         task.resume()
     }
     
-    func getSymbolPriceTicker(symbol: String, completionHandler: @escaping (Result<SymbolPriceTicker, BinanceConnection.BinanceError>) -> ()) {
-        performCall(withPath: "/api/v3/ticker/price", queryString: "symbol=\(symbol)", timestamp: false, securityType: .marketData) { (result: Result<BinanceResponse.SymbolPriceTicker, BinanceConnection.BinanceError>) in
+    func getSymbolPriceTicker(symbol: String, completionHandler: @escaping (Result<SymbolPriceTicker, ExchangeError>) -> ()) {
+        performCall(withPath: "/api/v3/ticker/price", queryString: "symbol=\(symbol)", timestamp: false, securityType: .marketData) { (result: Result<SymbolPriceTicker, ExchangeError>) in
             switch result {
             case .success(let response):
                 completionHandler(.success(response))
@@ -142,13 +154,13 @@ class BinanceConnection {
         }
     }
     
-    func getC2COrderHistory(
+    func getBinanceC2COrderHistory(
         type: C2CHistoryResponse.C2COrderType,
         startTimestamp: Date? = nil,
         endTimestamp: Date? = nil,
         page: Int? = nil,
         rows: Int? = nil,
-        completionHandler: @escaping(Result<C2CHistoryResponse, BinanceConnection.BinanceError>) -> Void
+        completionHandler: @escaping(Result<C2CHistoryResponse, ExchangeError>) -> Void
     ) {
         var queryString = "tradeType=\(type.rawValue)"
         queryString += startTimestamp != nil ? "&startTimestamp=\(Int(startTimestamp!.timeIntervalSince1970 * 1000))" : ""
@@ -157,7 +169,7 @@ class BinanceConnection {
         queryString += rows != nil ? "&rows=\(rows!)" : ""
         
         performCall(
-            withPath: "/sapi/v1/c2c/orderMatch/listUserOrderHistory",
+            withPath: BinanceAPIPath.c2cOrderHistory.rawValue,
             queryString: queryString,
             timestamp: true,
             securityType: .userData(secret: secretKey)
@@ -165,4 +177,37 @@ class BinanceConnection {
             completionHandler(result)
         }
     }
+    
+    func getCommexC2COrderHistory(
+        type: C2CHistoryResponse.C2COrderType,
+        startTimestamp: Date? = nil,
+        endTimestamp: Date? = nil,
+        limit: Int = 200,
+        completionHandler: @escaping(Result<CommexC2CHistoryResponse, ExchangeError>) -> Void
+    ) {
+        var queryString = "tradeType=\(type.rawValue)"
+        queryString += startTimestamp != nil ? "&startTime=\(Int(startTimestamp!.timeIntervalSince1970 * 1000))" : ""
+        queryString += endTimestamp != nil ? "&endTime=\(Int(endTimestamp!.timeIntervalSince1970 * 1000))" : ""
+        queryString += "&offset=0"
+        queryString += "&limit=\(limit)"
+        
+        performCall(
+            withPath: CommexAPIPath.c2cOrderHistory.rawValue,
+            queryString: queryString,
+            timestamp: true,
+            securityType: .userData(secret: secretKey)
+        ) { result in
+            completionHandler(result)
+        }
+    }
+    
+    
+//   Commex C2CHistory Response query
+//    tradeType    query    string    false    Possible options: "BUY", "SELL"
+//    startTime    query    long    false    Default: 90 days from current timestamp
+//    endTime    query    long    false    Default: present timestamp
+//    offset    query    integer    true    Default:0
+//    limit    query    integer    true    Default 100; max 200.
+//    recvWindow    query    long    false    The value cannot be greater than 60000
+//    timestamp    query    long    true    none
 }

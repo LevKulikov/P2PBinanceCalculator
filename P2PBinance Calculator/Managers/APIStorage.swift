@@ -33,7 +33,7 @@ protocol APIStorageProtocol: AnyObject {
         name: String,
         apiKey: String,
         secretKey: String,
-        exchange: BinanceConnection.Exchange,
+        exchange: ExchangeConnection.Exchange,
         completionHandler: ((APIAccount?) -> Void)?
     )
     
@@ -114,7 +114,7 @@ final class APIStorage: APIStorageProtocol {
         name: String,
         apiKey: String,
         secretKey: String,
-        exchange: BinanceConnection.Exchange,
+        exchange: ExchangeConnection.Exchange,
         completionHandler: ((APIAccount?) -> Void)? = nil
     ) {
         let newAccount = APIAccount(name: name, apiKey: apiKey, secretKey: secretKey, exchange: exchange)
@@ -222,7 +222,7 @@ final class APIStorageMock: APIStorageProtocol {
         return secretKey
     }
     
-    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: BinanceConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
+    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: ExchangeConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
         let newAccount = APIAccount(name: name, apiKey: apiKey, secretKey: secretKey, exchange: exchange)
         addAPIAccount(newAccount, completionHandler: completionHandler)
     }

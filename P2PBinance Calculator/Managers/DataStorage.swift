@@ -75,7 +75,7 @@ final class DataStorage: DataStorageProtocol {
         return customFiatFilter
     }
     
-    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: BinanceConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
+    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: ExchangeConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
         apiStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, exchange: exchange, completionHandler: completionHandler)
     }
     
@@ -148,7 +148,7 @@ final class DataStorageMock: DataStorageProtocol {
         return customFiatFilter
     }
     
-    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: BinanceConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
+    func addAPIAccount(name: String, apiKey: String, secretKey: String, exchange: ExchangeConnection.Exchange, completionHandler: ((APIAccount?) -> Void)?) {
         apiStorage.addAPIAccount(name: name, apiKey: apiKey, secretKey: secretKey, exchange: exchange, completionHandler: completionHandler)
     }
     

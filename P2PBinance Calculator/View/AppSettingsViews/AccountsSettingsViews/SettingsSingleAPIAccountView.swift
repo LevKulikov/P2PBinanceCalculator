@@ -23,7 +23,7 @@ struct SettingsSingleAPIAccountView: View {
     @State private var accountName = ""
     @State private var apiKey = ""
     @State private var secretKey = ""
-    @State private var exchange: BinanceConnection.Exchange = .binance
+    @State private var exchange: ExchangeConnection.Exchange = .binance
     @State private var instructionAlert = false
     @FocusState private var nameFieldFocused: Bool
     @FocusState private var apiKeyFieldFocused: Bool
@@ -49,7 +49,6 @@ struct SettingsSingleAPIAccountView: View {
                         .padding(.bottom)
                     
                     exchangePicker
-                        .disabled(true)
                         .padding(.horizontal)
                         .padding(.bottom, 40)
                     
@@ -139,7 +138,7 @@ struct SettingsSingleAPIAccountView: View {
     private var exchangePicker: some View {
         LabeledContent {
             Picker("Exchange", selection: $exchange) {
-                ForEach(BinanceConnection.Exchange.allCases, id: \.self) { exch in
+                ForEach(ExchangeConnection.Exchange.allCases, id: \.self) { exch in
                     Text(exch.rawValue)
                         .tag(exch)
                 }
